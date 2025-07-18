@@ -4,13 +4,23 @@ import Btn from "../widgets/button";
 import Spinner from "../widgets/dropdown";
 import { useEffect, useState } from "react";
 import { get_unauth } from "../../utils/access";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../../types";
+
+
+type SignupScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Login">;
+
+interface Props {
+  navigation: SignupScreenNavigationProp;
+}
+
 
 interface dept {
   department_id: string;
   department_name: string;
 }
 
-export default function SignUp() {
+export default function SignUp({ navigation }: Props) {
   const [department, setDepartment] = useState<dept[]>([
     {
       department_name: "Test",
@@ -21,21 +31,7 @@ export default function SignUp() {
   useEffect(() => {
     (async () => {
       const response = await get_unauth("department");
-      // const transformedArray = response.map((obj) => {
-      //   // Create a new object to avoid modifying the original directly
-      //   const newObj = { ...obj };
-      //
-      //   // Check if the old key exists in the current object
-      //   if (newObj.hasOwnProperty("department_id")) {
-      //     // Assign the value of the old key to the new key
-      //     newObj["value"] = newObj["deparment_id"];
-      //     newObj["label"] = newObj["department_name"];
-      //     // Delete the old key
-      //     delete newObj["department_id"];
-      //     delete newObj["department_name"];
-      //   }
-      //   return newObj;
-      // });
+      console.log(response)
       setDepartment(response);
     })();
   }, []);
@@ -45,10 +41,10 @@ export default function SignUp() {
       <View className="gap-2 w-full px-10 bg-slate-200 items-center justify-center p-4 rounded-md">
         <Text className="text-3xl font-bold">Sign Up</Text>
         <Text>Don't have an account yet?</Text>{" "}
-        <Text className="underline">Baka di pa pa talaga nag eexists</Text>
+        <Text className="underline" onPress={() => navigation.navigate("Login")}>Login</Text>
         <Spinner
           data={department}
-          valueField="department_name"
+          valueField="department_id"
           labelField="department_name"
           label="Department"
         />
@@ -57,13 +53,14 @@ export default function SignUp() {
         <Input label="Last Name" />
         <Input label="Email" />
         <Input label="Password" password={true} />
+        <Input label="Confirm Password" password={true} />
         <View className="flex flex-row justify-between items-center w-full">
           <View className="flex flex-row items-center">
             <Switch value={false} />
             <Text>Remember me</Text>
           </View>
         </View>
-        <Btn>Log in</Btn>
+        <Btn>Signup</Btn>
       </View>
     </View>
   );

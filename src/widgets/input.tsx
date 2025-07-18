@@ -22,7 +22,7 @@ export default function Input(props: input) {
         id={name}
         placeholder={props.hint}
         secureTextEntry={props.password ?? false}
-        className="border-[2px] border-black/50 focus:border-[#60affe] rounded-[5px]"
+        className="border-[2px] border-black/50 focus:border-[#60affe] rounded-[5px] p-2"
       />
     </View>
   );
