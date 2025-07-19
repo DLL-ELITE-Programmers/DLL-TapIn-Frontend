@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import { get_unauth } from "../../utils/access";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types";
+import * as Font from "expo-font";
+import Title from "src/component/title";
 
 type SignupScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -47,19 +49,23 @@ export default function SignUp({ navigation }: Props) {
     })();
   }, []);
 
+  // INFO: Font setup
+  // Font.loadAsync({
+  //   "LeagueGothic": require("../../assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf")
+  // })
+
   return (
     <View className="flex flex-col flex-1 justify-center bg-transparent items-center p-4">
+      <Title />
       <View className="gap-2 w-full px-10 bg-white shadow-black shadow-md items-center justify-center p-4 rounded-md">
-        <Text className="text-3xl font-bold">Sign Up</Text>
-        <View className="flex flex-row">
-          <Text>Do you have an account now? </Text>
-          <Text
-            className="underline"
-            onPress={() => navigation.replace("Login")}
-          >
-            Login
-          </Text>
-        </View>
+        <Text
+          style={{
+            fontFamily: "LeagueGothic",
+          }}
+          className="text-3xl"
+        >
+          Sign Up
+        </Text>
         <Spinner
           onchange={(e: dept) => {
             setDepartmentValue(e.department_id);
@@ -77,13 +83,18 @@ export default function SignUp({ navigation }: Props) {
         <Input label="Email" />
         <Input label="Password" password={true} />
         <Input label="Confirm Password" password={true} />
-        <View className="flex flex-row justify-between items-center w-full">
-          <View className="flex flex-row items-center">
-            <Switch value={false} />
-            <Text>Remember me</Text>
-          </View>
+        <View className="w-full mt-4">
+          <Btn>Signup</Btn>
         </View>
-        <Btn>Signup</Btn>
+        <View className="flex flex-row">
+          <Text>Do you have an account now? </Text>
+          <Text
+            className="underline"
+            onPress={() => navigation.replace("Login")}
+          >
+            Login
+          </Text>
+        </View>
       </View>
     </View>
   );
