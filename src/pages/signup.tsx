@@ -7,13 +7,14 @@ import { get_unauth } from "../../utils/access";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types";
 
-
-type SignupScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Login">;
+type SignupScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
 interface Props {
   navigation: SignupScreenNavigationProp;
 }
-
 
 interface dept {
   department_id: string;
@@ -21,6 +22,17 @@ interface dept {
 }
 
 export default function SignUp({ navigation }: Props) {
+  // INFO: Data handle setup
+  const [studentID, setStudentID] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [middlename, setMiddleName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setCOnfirm] = useState("");
+  const [departmentValue, setDepartmentValue] = useState("BSIT");
+
+  // INFO: Department List Setup
   const [department, setDepartment] = useState<dept[]>([
     {
       department_name: "Test",
@@ -31,23 +43,34 @@ export default function SignUp({ navigation }: Props) {
   useEffect(() => {
     (async () => {
       const response = await get_unauth("department");
-      console.log(response)
       setDepartment(response);
     })();
   }, []);
 
   return (
-    <View className="flex-1 justify-center items-center p-4">
+    <View className="flex flex-col flex-1 justify-center bg-transparent items-center p-4">
       <View className="gap-2 w-full px-10 bg-slate-200 items-center justify-center p-4 rounded-md">
         <Text className="text-3xl font-bold">Sign Up</Text>
-        <Text>Don't have an account yet?</Text>{" "}
-        <Text className="underline" onPress={() => navigation.navigate("Login")}>Login</Text>
+        <View className="flex flex-row">
+          <Text>Do you have an account now? </Text>
+          <Text
+            className="underline"
+            onPress={() => navigation.replace("Login")}
+          >
+            Login
+          </Text>
+        </View>
         <Spinner
+          onchange={(e: dept) => {
+            setDepartmentValue(e.department_id);
+          }}
+          value={departmentValue}
           data={department}
           valueField="department_id"
           labelField="department_name"
           label="Department"
         />
+        <Input hint="012A-3456" label="Student ID" />
         <Input label="First Name" />
         <Input label="Middle Name" />
         <Input label="Last Name" />

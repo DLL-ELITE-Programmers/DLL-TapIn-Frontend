@@ -8,7 +8,7 @@ interface button {
 export default function Btn(props: button) {
   return (
     <Button
-      className="bg-blue-500 rounded-md w-full flex-1"
+      className="flex-1 w-full bg-blue-500 rounded-md"
       onPress={() => {
         props.onclick;
       }}

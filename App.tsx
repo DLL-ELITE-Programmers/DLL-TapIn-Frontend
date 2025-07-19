@@ -2,9 +2,9 @@ import "./global.css";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, StatusBar as sb } from "react-native";
 import Page from "./src/pages/index";
+import { Stack } from "expo-router";
 
 export default function App() {
-
   return (
     <View className="flex flex-col bg-[#ffffff] w-full h-full">
       <StatusBar style="auto" />

@@ -3,10 +3,13 @@ import { Dropdown } from "react-native-element-dropdown";
 
 interface spinner {
   label: string;
-  data: unknown;
+  data: any[];
   valueField: string;
   labelField: string;
   name?: string;
+  placeholder?: string;
+  onchange: (e: any) => void;
+  value?: string;
 }
 
 export default function Spinner(props: spinner) {
@@ -23,11 +26,14 @@ export default function Spinner(props: spinner) {
     <View className={`w-full`}>
       <Text className="text-sm">{capitalized(props.label)}</Text>
       <Dropdown
-        id={name}
+        onChange={props.onchange}
+        // id={name}
+        value={props.value}
+        placeholder={props.placeholder ?? props.label}
         data={props.data}
         valueField={props.valueField}
         labelField={props.labelField}
-        className="border-[2px] border-black/50 focus:border-[#60affe] rounded-[5px]"
+        className="border-[2px] border-solid border[#333333] p-4 focus:border-[#60affe] rounded-[5px]"
       />
     </View>
   );

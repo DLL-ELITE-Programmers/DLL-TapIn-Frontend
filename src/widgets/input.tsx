@@ -6,6 +6,7 @@ interface input {
   name?: string;
   password?: boolean;
   hint?: string;
+  onchange?: void;
 }
 
 export default function Input(props: input) {
@@ -19,6 +20,7 @@ export default function Input(props: input) {
     <View className={`w-full`}>
       <Text className="text-sm">{capitalized(props.label)}</Text>
       <TextInput
+        onChange={props.onchange}
         id={name}
         placeholder={props.hint}
         secureTextEntry={props.password ?? false}
