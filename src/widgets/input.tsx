@@ -1,12 +1,12 @@
-import { Text, TextInput } from "react-native";
+import { Text, TextInput, TextInputProps } from "react-native";
 import { View } from "react-native";
 
 interface input {
   label: string;
-  name?: string;
   password?: boolean;
   hint?: string;
-  onchange?: void;
+  value?: string;
+  onchange?: (e: string) => void;
 }
 
 export default function Input(props: input) {
@@ -14,14 +14,13 @@ export default function Input(props: input) {
     text = text.replace(/_/g, " ");
     return text[0].toUpperCase() + text.substring(1);
   };
-  const name = props.name ?? props.label.replace(/\s/gi, "_").toLowerCase();
 
   return (
     <View className={`w-full`}>
       <Text className="text-sm">{capitalized(props.label)}</Text>
       <TextInput
         onChange={props.onchange}
-        id={name}
+        value={props.value}
         placeholder={props.hint}
         secureTextEntry={props.password ?? false}
         className="border-[2px] border-black/50 focus:border-[#60affe] rounded-[5px] p-2"

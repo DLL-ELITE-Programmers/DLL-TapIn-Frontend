@@ -1,4 +1,10 @@
-import { Switch, SwitchChangeEvent, Text, View } from "react-native";
+import {
+  ImageBackground,
+  Switch,
+  Text,
+  TextInputProps,
+  View,
+} from "react-native";
 import Input from "../widgets/input";
 import Btn from "../widgets/button";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -20,9 +26,8 @@ export default function Login({ navigation }: Props) {
   const [rememberMe, setRememberMe] = useState(false);
 
   return (
-    <View className="flex-1 justify-center items-center p-4">
-      <Text className="text-[2rem]">QR Tap In</Text>
-      <View className="gap-2 w-full px-10 bg-slate-200 items-center justify-center p-4 rounded-md">
+    <View className="flex-1 niggs justify-center items-center p-4">
+      <View className="gap-2 w-full px-10 bg-white shadow-black shadow-md items-center justify-center p-4 rounded-md">
         <Text className="text-3xl font-bold">Login</Text>
         <View className="flex flex-row">
           <Text>Don't have an account yet? </Text>
@@ -35,8 +40,22 @@ export default function Login({ navigation }: Props) {
             Signup
           </Text>
         </View>
-        <Input hint="012A-3456" label="Student ID" />
-        <Input label="Password" password={true} />
+        <Input
+          onchange={(e) => {
+            setStudentID(e);
+          }}
+          hint="012A-3456"
+          label="Student ID"
+          value={studentID}
+        />
+        <Input
+          onchange={(e) => {
+            setPassword(e);
+          }}
+          value={password}
+          label="Password"
+          password={true}
+        />
         <View className="flex flex-row justify-between items-center w-full">
           <View className="flex flex-row items-center">
             <Switch
