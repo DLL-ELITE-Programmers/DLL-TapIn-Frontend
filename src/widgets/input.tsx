@@ -19,7 +19,7 @@ export default function Input(props: input) {
     <View className={`w-full`}>
       <Text className="text-sm">{capitalized(props.label)}</Text>
       <TextInput
-        onChange={props.onchange}
+        onChangeText={props.onchange}
         value={props.value}
         placeholder={props.hint}
         secureTextEntry={props.password ?? false}

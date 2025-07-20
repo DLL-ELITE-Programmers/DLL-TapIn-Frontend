@@ -1,13 +1,13 @@
-import { Switch, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import Input from "../widgets/input";
 import Btn from "../widgets/button";
 import Spinner from "../widgets/dropdown";
 import { useEffect, useState } from "react";
-import { get_unauth } from "../../utils/access";
+import { get_unauth, post_unauth } from "../../utils/access";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types";
-import * as Font from "expo-font";
 import Title from "src/component/title";
+import { Snackbar } from "react-native-paper";
 
 type SignupScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -31,7 +31,7 @@ export default function SignUp({ navigation }: Props) {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirm, setCOnfirm] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [departmentValue, setDepartmentValue] = useState("BSIT");
 
   // INFO: Department List Setup
@@ -41,6 +41,8 @@ export default function SignUp({ navigation }: Props) {
       department_id: "HIHI",
     },
   ]);
+  const [visible, setVisible] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -54,6 +56,30 @@ export default function SignUp({ navigation }: Props) {
   //   "LeagueGothic": require("../../assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf")
   // })
 
+  const signup = async () => {
+    if (password !== confirm) {
+      setError("Password are not match. Parang kayo");
+      setVisible(true);
+    }
+
+    const data = await post_unauth("users/register", {
+      student_id: studentID,
+      first_name: firstname,
+      middle_name: middlename,
+      last_name: lastname,
+      email: email,
+      password: password,
+      department_id: departmentValue,
+    });
+    if (data.error) {
+      setError(data.error);
+      setVisible(true);
+    }
+    if (data.message) {
+      setError(data.message);
+      setVisible(true);
+    }
+  };
   return (
     <View className="flex flex-col flex-1 gap-4 bg-transparent items-center p-4">
       <Title />
@@ -76,15 +102,15 @@ export default function SignUp({ navigation }: Props) {
           labelField="department_name"
           label="Department"
         />
-        <Input hint="012A-3456" label="Student ID" />
-        <Input label="First Name" />
-        <Input label="Middle Name" />
-        <Input label="Last Name" />
-        <Input label="Email" />
-        <Input label="Password" password={true} />
-        <Input label="Confirm Password" password={true} />
+        <Input hint="012A-3456" onchange={setStudentID} label="Student ID" />
+        <Input label="First Name" onchange={setFirstname} />
+        <Input label="Middle Name" onchange={setMiddleName} />
+        <Input label="Last Name" onchange={setLastname} />
+        <Input label="Email" onchange={setEmail} />
+        <Input label="Password" password={true} onchange={setPassword} />
+        <Input label="Confirm Password" password={true} onchange={setConfirm} />
         <View className="w-full mt-4">
-          <Btn>Signup</Btn>
+          <Btn onclick={signup}>Signup</Btn>
         </View>
         <View className="flex flex-row">
           <Text>Do you have an account now? </Text>
@@ -96,6 +122,18 @@ export default function SignUp({ navigation }: Props) {
           </Text>
         </View>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: "Close",
+          onPress: () => {
+            setVisible(false);
+          },
+        }}
+      >
+        {error}
+      </Snackbar>
     </View>
   );
 }

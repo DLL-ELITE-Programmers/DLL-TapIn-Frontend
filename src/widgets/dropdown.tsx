@@ -30,10 +30,10 @@ export default function Spinner(props: spinner) {
         // id={name}
         value={props.value}
         placeholder={props.placeholder ?? props.label}
-        data={props.data}
+        data={props.data ?? []}
         valueField={props.valueField}
         labelField={props.labelField}
-        className="border-[2px] border-solid border[#333333] p-4 focus:border-[#60affe] rounded-[5px]"
+        className="border-[2px] border-solid border-[#333333] p-4 focus:border-[#60affe] rounded-[5px]"
       />
     </View>
   );

@@ -9,6 +9,7 @@ import Header from "../component/header";
 import { LinearGradient } from "expo-linear-gradient";
 import ForgotPassword from "./forgot_password";
 import Hero from "./hero";
+import { GetItem } from "src/control/data";
 
 const Stack = createNativeStackNavigator();
 

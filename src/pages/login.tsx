@@ -5,7 +5,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../types";
 import { useState } from "react";
 import Title from "src/component/title";
-import * as Font from "expo-font";
+import { post_unauth } from "utils/access";
+import { Snackbar } from "react-native-paper";
+import { SetItem } from "src/control/data";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -21,9 +23,31 @@ export default function Login({ navigation }: Props) {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
+  const [visible, setVisible] = useState(false);
+  const [error, setError] = useState("");
+
   // Font.loadAsync({
   //   "LeagueGothic": require("../../assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf")
   // })
+
+  const login = async (navigation: LoginScreenNavigationProp) => {
+    if (!studentID || !password) {
+      setError("Please insert your Student ID and/or Password");
+      setVisible(true);
+    }
+    const response = await post_unauth("users/login", {
+      username: studentID,
+      password: password,
+    });
+    if (response.error) {
+      setError(response.error);
+      setVisible(true);
+    }
+    if (response.message) {
+      SetItem("user", response.user);
+      navigation.replace("QRGenerator");
+    }
+  };
 
   return (
     <View className="flex-1 gap-6 items-center p-4">
@@ -49,17 +73,13 @@ export default function Login({ navigation }: Props) {
           </Text>
         </View>
         <Input
-          onchange={(e) => {
-            setStudentID(e);
-          }}
+          onchange={setStudentID}
           hint="012A-3456"
           label="Student ID"
           value={studentID}
         />
         <Input
-          onchange={(e) => {
-            setPassword(e);
-          }}
+          onchange={setPassword}
           value={password}
           label="Password"
           password={true}
@@ -92,13 +112,25 @@ export default function Login({ navigation }: Props) {
         <View className="w-full mt-4">
           <Btn
             onclick={() => {
-              navigation.replace("QRGenerator");
+              login(navigation);
             }}
           >
             Log in
           </Btn>
         </View>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: "Close",
+          onPress: () => {
+            setVisible(false);
+          },
+        }}
+      >
+        {error}
+      </Snackbar>
     </View>
   );
 }
