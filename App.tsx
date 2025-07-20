@@ -2,9 +2,14 @@ import "./global.css";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, StatusBar as sb } from "react-native";
 import Page from "./src/pages/index";
-import { Stack } from "expo-router";
+import * as Font from "expo-font";
 
 export default function App() {
+  Font.loadAsync({
+    LeagueGothic: require("./assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf"),
+    Monteserat: require("./assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf"),
+  });
+
   return (
     <View className="flex flex-col bg-[#ffffff] w-full h-full">
       <StatusBar style="auto" />

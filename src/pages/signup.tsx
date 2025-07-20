@@ -55,7 +55,7 @@ export default function SignUp({ navigation }: Props) {
   // })
 
   return (
-    <View className="flex flex-col flex-1 justify-center bg-transparent items-center p-4">
+    <View className="flex flex-col flex-1 gap-4 bg-transparent items-center p-4">
       <Title />
       <View className="gap-2 w-full px-10 bg-white shadow-black shadow-md items-center justify-center p-4 rounded-md">
         <Text

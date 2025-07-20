@@ -1,27 +1,22 @@
 import { Text, View } from "react-native";
-import * as Font from "expo-font";
 
 export default function Title() {
-  Font.loadAsync({
-    LeagueGothic: require("../../assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf"),
-    Monteserat: require("../../assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf"),
-  });
-
   return (
-    <View className="flex items-center">
+    <View className="flex flwx-col items-center justify-center w-full">
       <Text
         style={{
           fontFamily: "LeagueGothic",
         }}
-        className="text-6xl"
+        className="text-6xl w-full text-center justify-center items-center"
       >
         DLL TAP-IN
       </Text>
       <Text
         style={{
+          fontWeight: "bold",
           fontFamily: "Monteserat",
         }}
-        className="text-md font-bold"
+        className="text-md w-full text-center"
       >
         AUTOMATED ATTENDANCE SYSTEM
       </Text>

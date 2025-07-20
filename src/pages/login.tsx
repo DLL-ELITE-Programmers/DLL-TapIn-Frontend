@@ -26,7 +26,7 @@ export default function Login({ navigation }: Props) {
   // })
 
   return (
-    <View className="flex-1 niggs justify-center items-center p-4">
+    <View className="flex-1 gap-6 items-center p-4">
       <Title />
       <View className="gap-2 w-full px-10 bg-white shadow-black shadow-md items-center justify-center p-4 rounded-md">
         <Text
@@ -80,7 +80,14 @@ export default function Login({ navigation }: Props) {
               {rememberMe ? "Remembered" : "Remember me"}
             </Text>
           </View>
-          <Text className="underline">Forgot password</Text>
+          <Text
+            onPress={() => {
+              navigation.navigate("ForgotPassword");
+            }}
+            className="underline"
+          >
+            Forgot password
+          </Text>
         </View>
         <View className="w-full mt-4">
           <Btn
