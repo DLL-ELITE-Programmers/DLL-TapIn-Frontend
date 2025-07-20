@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // const url = "https://n7dwb6cv-80.asse.devtunnels.ms/api";
-const url = "http://192.168.0.139:8000/api";
+const url = "http://192.168.0.134:8000/api";
 
 const endpoint_middleware = (endpoint: string) => {
   if (!endpoint.startsWith("/")) {

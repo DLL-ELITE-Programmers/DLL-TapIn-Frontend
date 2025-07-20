@@ -64,7 +64,7 @@ export default function Login({ navigation }: Props) {
         <View className="flex flex-row">
           <Text>Don't have an account yet? </Text>
           <Text
-            className="underline"
+            className="underline text-blue-700 font-bold"
             onPress={() => {
               navigation.replace("Signup");
             }}

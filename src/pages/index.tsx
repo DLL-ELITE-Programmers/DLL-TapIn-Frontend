@@ -5,11 +5,10 @@ import SignUp from "./signup";
 import QRGenerator from "./qr_generate";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Header from "../component/header";
 import { LinearGradient } from "expo-linear-gradient";
 import ForgotPassword from "./forgot_password";
 import Hero from "./hero";
-import { GetItem } from "src/control/data";
+import Splash from "./splash";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,9 +18,8 @@ export default function Page() {
       source={require("../../assets/bg.png")}
       className="flex-1 w-full h-full"
     >
-      {/* }<Header /> */}
       {/* TODO: To manage all things we need to manage in. */}
-      {/* //   <Login /> */}
+
       <LinearGradient
         colors={[
           "#ffff0090",
@@ -50,8 +48,9 @@ export default function Page() {
                 backgroundColor: "transparent",
               },
             }}
-            initialRouteName="Hero"
+            initialRouteName="Splash"
           >
+            <Stack.Screen name="Splash" component={Splash} />
             <Stack.Screen name="Hero" component={Hero} />
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Signup" component={SignUp} />

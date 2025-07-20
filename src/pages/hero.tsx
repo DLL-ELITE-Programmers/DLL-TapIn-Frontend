@@ -15,7 +15,7 @@ interface Props {
 
 export default function Hero({ navigation }: Props) {
   return (
-    <View className="flex flex-col w-full flex-1 p-4 items-center justify-center gap-4">
+    <View className="flex flex-col w-full flex-1 p-4 items-center justify-center gap-4 pb-6">
       <View className="w-full gap-4 justify-center items-center flex-1">
         <View className="w-1/3 aspect-square">
           <Image

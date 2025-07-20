@@ -4,6 +4,7 @@ export type RootStackParamList = {
   QRGenerator: undefined;
   ForgotPassword: undefined;
   Hero: undefined;
+  Splash: undefined;
 };
 
 export interface UserProps {
