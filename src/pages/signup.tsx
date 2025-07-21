@@ -24,6 +24,11 @@ interface dept {
   department_name: string;
 }
 
+interface six {
+  index: number
+  sex: string
+}
+
 export default function SignUp({ navigation }: Props) {
   // INFO: Data handle setup
   const [studentID, setStudentID] = useState("");
@@ -65,6 +70,7 @@ export default function SignUp({ navigation }: Props) {
       middle_name: middlename,
       last_name: lastname,
       email: email,
+      sex: sex,
       password: password,
       department_id: departmentValue,
     });
@@ -107,8 +113,8 @@ export default function SignUp({ navigation }: Props) {
           <Input label="Middle Name" onchange={setMiddleName} />
           <Input label="Last Name" onchange={setLastname} />
           <Spinner
-            onchange={(e: dept) => {
-              setDepartmentValue(e.department_id);
+            onchange={(e: six) => {
+              setSex(e.index);
             }}
             value={sex}
             data={[
@@ -118,7 +124,7 @@ export default function SignUp({ navigation }: Props) {
               },
               {
                 "index": 1,
-                "sex": "Mle"
+                "sex": "Male"
               },
               {
                 "index": 2,

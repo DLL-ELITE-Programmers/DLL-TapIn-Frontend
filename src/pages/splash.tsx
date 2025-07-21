@@ -51,7 +51,13 @@ export default function Splash({ navigation }: Props) {
           />
         </View>
         <Title />
-        <Text>Developed by BSIT Department</Text>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontFamily: "Monteserat",
+          }}
+          className="text-md w-full text-center"
+        >Developed by BSIT Department</Text>
       </View>
     </View>
   );
