@@ -11,18 +11,14 @@ export default function App() {
   });
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View className="flex flex-col bg-[#ffffff] w-full h-full">
-          <StatusBar style="auto" />
-          {/* NOTE: mt-[30px] was the one who created the gap for the statusbar */}
-          <View
-            className={`bg-slate-900 android:mt-[30px] ios:mt-[30px] w-full h-full flex-1 items-center justify-center`}
-            >
-            <Page />
-          </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    <View className="flex flex-col bg-[#ffffff] w-full h-full">
+      <StatusBar style="auto" />
+      {/* NOTE: mt-[30px] was the one who created the gap for the statusbar */}
+      <View
+        className={`bg-slate-900 android:mt-[30px] ios:mt-[30px] w-full h-full flex-1 items-center justify-center`}
+        >
+        <Page />
+      </View>
+    </View>
   );
 }

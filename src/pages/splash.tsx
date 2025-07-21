@@ -51,6 +51,7 @@ export default function Splash({ navigation }: Props) {
           />
         </View>
         <Title />
+        <Text>Developed by BSIT Department</Text>
       </View>
     </View>
   );

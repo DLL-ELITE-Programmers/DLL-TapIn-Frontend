@@ -1,4 +1,4 @@
-import { ImageBackground, View } from "react-native";
+import { ImageBackground, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, View } from "react-native";
 import Login from "./login";
 import SignUp from "./signup";
 import QRGenerator from "./qr_generate";
@@ -26,7 +26,7 @@ export default function Page() {
           "#ffffff90",
           "#ffffff90",
           "#ffffff90",
-          "#ffffff90",
+          "#aaedff90",
           "#aaedff90",
         ]}
         start={{
@@ -39,24 +39,28 @@ export default function Page() {
         }}
         className="flex-1 w-full h-full"
       >
-        <NavigationContainer>
-          <Stack.Navigator
-            screenOptions={{
-              headerShown: false,
-              contentStyle: {
-                backgroundColor: "transparent",
-              },
-            }}
-            initialRouteName="Splash"
-          >
-            <Stack.Screen name="Splash" component={Splash} />
-            <Stack.Screen name="Hero" component={Hero} />
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Signup" component={SignUp} />
-            <Stack.Screen name="QRGenerator" component={QRGenerator} />
-            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <NavigationContainer>
+              <Stack.Navigator
+                screenOptions={{
+                  headerShown: false,
+                  contentStyle: {
+                    backgroundColor: "transparent",
+                  },
+                }}
+                initialRouteName="Splash"
+              >
+                <Stack.Screen name="Splash" component={Splash} />
+                <Stack.Screen name="Hero" component={Hero} />
+                <Stack.Screen name="Login" component={Login} />
+                <Stack.Screen name="Signup" component={SignUp} />
+                <Stack.Screen name="QRGenerator" component={QRGenerator} />
+                <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+              </Stack.Navigator>
+            </NavigationContainer>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </LinearGradient>
     </ImageBackground>
   );
