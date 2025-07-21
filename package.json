@@ -1,5 +1,5 @@
 {
-  "name": "qr-tapin-app",
+  "name": "dll-tap-in",
   "license": "0BSD",
   "version": "0.1.0",
   "main": "index.ts",
@@ -7,7 +7,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "tunnel": "expo start --tunnel"
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",

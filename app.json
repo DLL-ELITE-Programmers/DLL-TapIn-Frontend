@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "QR-TapIn-App",
-    "slug": "QR-TapIn-App",
+    "name": "DLL-TapIn",
+    "slug": "DLL-TapIn",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
