@@ -1,5 +1,4 @@
-import { ReactNode } from "react";
-import { Button, View } from "react-native";
+import { Button } from "react-native";
 
 interface button {
   children: string;
@@ -8,7 +7,7 @@ interface button {
 export default function Btn(props: button) {
   return (
     <Button
-      className="w-full bg-blue-500 rounded-md"
+      className="w-full bg-blue-500 rounded-sm"
       onPress={props.onclick}
       title={props.children}
     />

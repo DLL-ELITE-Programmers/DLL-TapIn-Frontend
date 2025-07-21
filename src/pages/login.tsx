@@ -1,8 +1,8 @@
 import { Switch, Text, View } from "react-native";
-import Input from "../widgets/input";
-import Btn from "../widgets/button";
+import Input from "src/widgets/input";
+import Btn from "src/widgets/button";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList } from "types";
 import { useState } from "react";
 import Title from "src/component/title";
 import { post_unauth } from "utils/access";

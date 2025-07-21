@@ -1,4 +1,3 @@
-// import { Text, View } from "react-native";
 import { ImageBackground, View } from "react-native";
 import Login from "./login";
 import SignUp from "./signup";

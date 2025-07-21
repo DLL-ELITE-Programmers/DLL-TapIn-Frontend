@@ -32,7 +32,12 @@ export default function Spinner(props: spinner) {
         data={props.data ?? []}
         valueField={props.valueField}
         labelField={props.labelField}
-        className="border-[2px] border-solid border-[#333333] p-4 focus:border-[#60affe] rounded-[5px]"
+        style={{
+          borderWidth: 2,
+          borderColor: "rgba(0, 0, 0, 0.5)",
+          padding: 8,
+          borderRadius: 5,
+        }}
       />
     </View>
   );
