@@ -2,7 +2,7 @@
   "expo": {
     "name": "DLL-TapIn",
     "slug": "DLL-TapIn",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -27,6 +27,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "de860fa4-1e1f-405b-86d2-ffd4ff8765ea"
+      }
     }
   }
 }

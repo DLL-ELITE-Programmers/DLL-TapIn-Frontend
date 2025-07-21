@@ -5,7 +5,6 @@ import QRCode from "react-qr-code";
 import Header from "src/component/header";
 import { GetItem, Remove } from "src/control/data";
 import { RootStackParamList, UserProps } from "types";
-import { SvgUri } from "react-native-svg";
 import { IconButton } from "react-native-paper";
 
 type QRScreenNavigationProp = NativeStackNavigationProp<

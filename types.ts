@@ -5,6 +5,7 @@ export type RootStackParamList = {
   ForgotPassword: undefined;
   Hero: undefined;
   Splash: undefined;
+  QRScanner: undefined
 };
 
 export interface UserProps {

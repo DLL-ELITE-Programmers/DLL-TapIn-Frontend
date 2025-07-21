@@ -8,6 +8,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import ForgotPassword from "./forgot_password";
 import Hero from "./hero";
 import Splash from "./splash";
+import QRScanner from "./qr_scanner";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,13 +50,14 @@ export default function Page() {
                     backgroundColor: "transparent",
                   },
                 }}
-                initialRouteName="Splash"
+                initialRouteName="QRScanner"
               >
                 <Stack.Screen name="Splash" component={Splash} />
                 <Stack.Screen name="Hero" component={Hero} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Signup" component={SignUp} />
                 <Stack.Screen name="QRGenerator" component={QRGenerator} />
+                <Stack.Screen name="QRScanner" component={QRScanner} />
                 <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
               </Stack.Navigator>
             </NavigationContainer>
