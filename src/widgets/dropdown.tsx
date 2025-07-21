@@ -9,7 +9,7 @@ interface spinner {
   name?: string;
   placeholder?: string;
   onchange: (e: any) => void;
-  value?: string;
+  value?: string | number;
 }
 
 export default function Spinner(props: spinner) {
@@ -27,7 +27,6 @@ export default function Spinner(props: spinner) {
       <Text className="text-sm">{capitalized(props.label)}</Text>
       <Dropdown
         onChange={props.onchange}
-        // id={name}
         value={props.value}
         placeholder={props.placeholder ?? props.label}
         data={props.data ?? []}

@@ -29,6 +29,7 @@ export default function SignUp({ navigation }: Props) {
   const [firstname, setFirstname] = useState("");
   const [middlename, setMiddleName] = useState("");
   const [lastname, setLastname] = useState("");
+  const [sex, setSex] = useState(0)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -106,6 +107,29 @@ export default function SignUp({ navigation }: Props) {
         <Input label="First Name" onchange={setFirstname} />
         <Input label="Middle Name" onchange={setMiddleName} />
         <Input label="Last Name" onchange={setLastname} />
+        <Spinner
+          onchange={(e: dept) => {
+            setDepartmentValue(e.department_id);
+          }}
+          value={sex}
+          data={[
+            {
+              "index": 0,
+              "sex": "Female"
+            },
+            {
+              "index": 1,
+              "sex": "Mle"
+            },
+            {
+              "index": 2,
+              "sex": "Others"
+            },
+          ]}
+          valueField="index"
+          labelField="sex"
+          label="Department"
+        />
         <Input label="Email" onchange={setEmail} />
         <Input label="Password" password={true} onchange={setPassword} />
         <Input label="Confirm Password" password={true} onchange={setConfirm} />
