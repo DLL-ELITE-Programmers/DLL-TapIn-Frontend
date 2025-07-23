@@ -33,7 +33,7 @@ export default function Splash({ navigation }: Props) {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (data.username) {
-        navigation.replace("QRGenerator");
+        navigation.replace("LoggedIn");
       } else {
         navigation.replace("Hero");
       }
@@ -57,7 +57,9 @@ export default function Splash({ navigation }: Props) {
             fontFamily: "Monteserat",
           }}
           className="text-md w-full text-center"
-        >Developed by BSIT Department</Text>
+        >
+          Developed by BSIT Department
+        </Text>
       </View>
     </View>
   );

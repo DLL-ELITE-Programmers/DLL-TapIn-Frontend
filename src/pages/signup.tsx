@@ -5,10 +5,11 @@ import Spinner from "src/widgets/dropdown";
 import { useEffect, useState } from "react";
 import { get_unauth, post_unauth } from "utils/access";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
+import { dept, RootStackParamList } from "types";
 import Title from "src/component/title";
 import { Snackbar } from "react-native-paper";
-import Scroller from "src/widgets/scroller";
+import Scroller from "src/component/scroller";
+import Card from "src/component/card";
 
 type SignupScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -19,14 +20,9 @@ interface Props {
   navigation: SignupScreenNavigationProp;
 }
 
-interface dept {
-  department_id: string;
-  department_name: string;
-}
-
 interface six {
-  index: number
-  sex: string
+  index: number;
+  sex: string;
 }
 
 export default function SignUp({ navigation }: Props) {
@@ -35,7 +31,7 @@ export default function SignUp({ navigation }: Props) {
   const [firstname, setFirstname] = useState("");
   const [middlename, setMiddleName] = useState("");
   const [lastname, setLastname] = useState("");
-  const [sex, setSex] = useState(0)
+  const [sex, setSex] = useState(0);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -82,22 +78,23 @@ export default function SignUp({ navigation }: Props) {
       setError(data.message);
       setVisible(true);
       setTimeout(() => {
-        navigation.replace("Login")
-      }, 1500)
+        navigation.replace("Login");
+      }, 1500);
     }
   };
   return (
     <View className="flex flex-col flex-1 gap-4 bg-transparent items-center p-4">
       <Title />
-      <Scroller>
-          <Text
-            style={{
-              fontFamily: "LeagueGothic",
-            }}
-            className="text-3xl"
-          >
-            Sign Up
-          </Text>
+      <Card>
+        <Text
+          style={{
+            fontFamily: "LeagueGothic",
+          }}
+          className="text-3xl"
+        >
+          Sign Up
+        </Text>
+        <Scroller>
           <Spinner
             onchange={(e: dept) => {
               setDepartmentValue(e.department_id);
@@ -119,16 +116,16 @@ export default function SignUp({ navigation }: Props) {
             value={sex}
             data={[
               {
-                "index": 0,
-                "sex": "Female"
+                index: 0,
+                sex: "Female",
               },
               {
-                "index": 1,
-                "sex": "Male"
+                index: 1,
+                sex: "Male",
               },
               {
-                "index": 2,
-                "sex": "Others"
+                index: 2,
+                sex: "Others",
               },
             ]}
             valueField="index"
@@ -149,8 +146,10 @@ export default function SignUp({ navigation }: Props) {
             >
               Login
             </Text>
+
           </View>
-      </Scroller>
+        </Scroller>
+      </Card>
       <Snackbar
         visible={visible}
         onDismiss={() => setVisible(false)}

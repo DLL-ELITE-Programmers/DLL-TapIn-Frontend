@@ -8,6 +8,7 @@ import Title from "src/component/title";
 import { post_unauth } from "utils/access";
 import { Snackbar } from "react-native-paper";
 import { SetItem } from "src/control/data";
+import Card from "src/component/card";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -45,14 +46,14 @@ export default function Login({ navigation }: Props) {
     }
     if (response.message) {
       SetItem("user", response.user);
-      navigation.replace("QRGenerator");
+      navigation.replace("LoggedIn");
     }
   };
 
   return (
     <View className="flex-1 gap-6 items-center p-4">
       <Title />
-      <View className="gap-2 w-full px-10 bg-white shadow-black shadow-md items-center justify-center p-4 rounded-md">
+      <Card>
         <Text
           style={{
             fontFamily: "LeagueGothic",
@@ -118,7 +119,7 @@ export default function Login({ navigation }: Props) {
             Log in
           </Btn>
         </View>
-      </View>
+      </Card>
       <Snackbar
         visible={visible}
         onDismiss={() => setVisible(false)}

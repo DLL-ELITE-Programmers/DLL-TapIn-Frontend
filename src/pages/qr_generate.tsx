@@ -6,6 +6,7 @@ import Header from "src/component/header";
 import { GetItem, Remove } from "src/control/data";
 import { RootStackParamList, UserProps } from "types";
 import { IconButton } from "react-native-paper";
+import Card from "src/component/card";
 
 type QRScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -45,7 +46,7 @@ export default function QRGenerator({ navigation }: Props) {
         />
       </Header>
       <View className="flex-1 w-full justify-center items-center p-4">
-        <View className="gap-2 w-full px-10 bg-white shadow-black shadow-md items-center justify-center p-4 rounded-md">
+        <Card>
           <QRCode
             size={256}
             value={JSON.stringify(user)}
@@ -57,7 +58,7 @@ export default function QRGenerator({ navigation }: Props) {
               {user.last_name}, {user.first_name} {user.middle_name ?? ""}
             </Text>
           </View>
-        </View>
+        </Card>
       </View>
     </View>
   );

@@ -1,4 +1,11 @@
-import { ImageBackground, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, View } from "react-native";
+import {
+  ImageBackground,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Login from "./login";
 import SignUp from "./signup";
 import QRGenerator from "./qr_generate";
@@ -9,6 +16,8 @@ import ForgotPassword from "./forgot_password";
 import Hero from "./hero";
 import Splash from "./splash";
 import QRScanner from "./qr_scanner";
+import EventMaker from "./event_maker";
+import LoggedIn from "./loggedin";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +49,10 @@ export default function Page() {
         }}
         className="flex-1 w-full h-full"
       >
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{flex: 1}}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+        >
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <NavigationContainer>
               <Stack.Navigator
@@ -50,15 +62,20 @@ export default function Page() {
                     backgroundColor: "transparent",
                   },
                 }}
-                initialRouteName="QRScanner"
+                initialRouteName="Splash"
               >
                 <Stack.Screen name="Splash" component={Splash} />
                 <Stack.Screen name="Hero" component={Hero} />
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Signup" component={SignUp} />
                 <Stack.Screen name="QRGenerator" component={QRGenerator} />
-                <Stack.Screen name="QRScanner" component={QRScanner} />
-                <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+                {/* <Stack.Screen name="QRScanner" component={QRScanner} /> */}
+                <Stack.Screen
+                  name="ForgotPassword"
+                  component={ForgotPassword}
+                />
+                <Stack.Screen name="EventMaker" component={EventMaker} />
+                <Stack.Screen name="LoggedIn" component={LoggedIn} />
               </Stack.Navigator>
             </NavigationContainer>
           </TouchableWithoutFeedback>

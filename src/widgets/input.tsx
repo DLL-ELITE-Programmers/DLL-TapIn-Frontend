@@ -11,8 +11,8 @@ interface input {
 }
 
 export default function Input(props: input) {
-  const [showPass, setShowPass] = useState(props.password)
-  const [textShow, setText] = useState("Show")
+  const [showPass, setShowPass] = useState(props.password);
+  const [textShow, setText] = useState("Show");
 
   const capitalized = (text: string) => {
     text = text.replace(/_/g, " ");
@@ -29,16 +29,19 @@ export default function Input(props: input) {
           placeholder={props.hint}
           secureTextEntry={showPass}
           className="border-[2px] border-black/50 focus:border-[#60affe] rounded-[5px] p-2 flex-1"
-          />
-        {
-          props.password ? 
-          <Button className="" onPress={() => {
-            setShowPass(prev => !prev)
-            setText(showPass ? "Show" : "Hide")
-          }} title={textShow}>{textShow}</Button>
-          :
-          null
-        }
+        />
+        {props.password ? (
+          <Button
+            className=""
+            onPress={() => {
+              setShowPass((prev) => !prev);
+              setText(showPass ? "Hide" : "Show");
+            }}
+            title={textShow}
+          >
+            {textShow}
+          </Button>
+        ) : null}
       </View>
     </View>
   );

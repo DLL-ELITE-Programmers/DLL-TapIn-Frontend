@@ -9,7 +9,7 @@ interface Props {
 export default function Header({ children }: Props) {
   return (
     <View className="flex flex-row w-full h-[60px] bg-blue-50 py-1 px-2 gap-3 justify-between items-center">
-      <View className="flex flex-row">
+      <View className="flex flex-row gap-4">
         <Image
           className="h-[50px] w-[50px] aspect-square rounded-full"
           source={Logo}
