@@ -27,6 +27,7 @@ export default function ForgotPassword({ navigation }: Props) {
       setVisible(true);
     }
   };
+
   return (
     <View className="flex-1 w-full items-center pt-6 p-4 gap-4">
       <Title />

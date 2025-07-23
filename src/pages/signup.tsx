@@ -138,7 +138,7 @@ export default function SignUp({ navigation }: Props) {
           <View className="w-full mt-4">
             <Btn onclick={signup}>Signup</Btn>
           </View>
-          <View className="flex flex-row">
+          <View className="pt-4 flex flex-row">
             <Text>Do you have an account now? </Text>
             <Text
               className="underline text-blue-700 font-bold"

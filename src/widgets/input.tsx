@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button, Text, TextInput } from "react-native";
 import { View } from "react-native";
 
@@ -8,6 +8,7 @@ interface input {
   hint?: string;
   value?: string;
   onchange?: (e: string) => void;
+  type?: React.ComponentProps<typeof TextInput>["textContentType"];
 }
 
 export default function Input(props: input) {
@@ -28,6 +29,7 @@ export default function Input(props: input) {
           value={props.value}
           placeholder={props.hint}
           secureTextEntry={showPass}
+          textContentType={props.type ?? "none"}
           className="border-[2px] border-black/50 focus:border-[#60affe] rounded-[5px] p-2 flex-1"
         />
         {props.password ? (

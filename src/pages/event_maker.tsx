@@ -9,6 +9,7 @@ import Scroller from "src/component/scroller";
 import { dept, RootStackParamList } from "types";
 import { get_unauth } from "utils/access";
 import Card from "src/component/card";
+import Header from "src/component/header";
 
 type EventMakerScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -34,8 +35,8 @@ export default function EventMaker({ navigation }: Props) {
   }, []);
 
   return (
-    <View className="flex-1 w-full gap-2 p-4">
-      <Title />
+    <View className="flex-1 w-full gap-2">
+      <Header />
       <Card className="gap-4">
         <View className="w-full items-center justify-center">
           <Text
@@ -60,6 +61,15 @@ export default function EventMaker({ navigation }: Props) {
               }}
             />
             <Input label="Event name" />
+            <Input label="Event Description" />
+            <Input label="Event Venue" />
+            <Input
+              password={true}
+              label="Event Admin Code"
+              hint="Any passphrase to share with the event coordinators"
+            />
+            <Input label="Time in" type="dateTime" />
+            <Input label="Time out" type="dateTime" />
             <Btn>Add event</Btn>
           </View>
         </Scroller>

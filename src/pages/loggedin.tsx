@@ -42,12 +42,18 @@ export default function LoggedIn({ navigation }: Props) {
           <View className="w-full gap-2">
             <Btn
               onclick={() => {
-                navigation.replace("QRGenerator");
+                navigation.navigate("QRGenerator");
               }}
             >
               Attend to an event
             </Btn>
-            <Btn>Create an Event</Btn>
+            <Btn
+              onclick={() => {
+                navigation.navigate("EventMaker");
+              }}
+            >
+              Create an Event
+            </Btn>
           </View>
         </Scroller>
       </Card>
