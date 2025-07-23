@@ -22,7 +22,7 @@ export default function Hero({ navigation }: Props) {
     >
       <View className="flex flex-col w-full flex-1 p-4 items-center justify-end gap-4 mb-10 pb-6">
         <View className="flex justify-end w-full items-center">
-          <View className="w-3/5 aspect-square">
+          <View className="w-2/5 aspect-square">
             <Image
               className="w-full h-full"
               source={require("../../assets/dll_logo.png")}
