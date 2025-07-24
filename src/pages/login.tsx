@@ -27,10 +27,6 @@ export default function Login({ navigation }: Props) {
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
 
-  // Font.loadAsync({
-  //   "LeagueGothic": require("../../assets/fonts/League_Gothic/LeagueGothic-Regular-VariableFont_wdth.ttf")
-  // })
-
   const login = async (navigation: LoginScreenNavigationProp) => {
     if (!studentID || !password) {
       setError("Please insert your Student ID and/or Password");
@@ -46,6 +42,7 @@ export default function Login({ navigation }: Props) {
     }
     if (response.message) {
       SetItem("user", response.user);
+      SetItem("token", response.access)
       navigation.replace("LoggedIn");
     }
   };

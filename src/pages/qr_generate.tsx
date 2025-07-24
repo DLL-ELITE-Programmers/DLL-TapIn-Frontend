@@ -46,17 +46,31 @@ export default function QRGenerator({ navigation }: Props) {
         />
       </Header>
       <View className="flex-1 w-full justify-center items-center p-4">
-        <Card>
+        <Card className="gap-4">
+          <View className="w-full items-center justify-center">
+            <Text
+              style={{
+                fontFamily: "LeagueGothic",
+              }}
+              className="text-3xl"
+            >
+              User information
+            </Text>
+            <Text>
+              Please let the organizer scan this QR Code for your attendance.
+            </Text>
+          </View>
           <QRCode
             size={256}
-            value={JSON.stringify(user)}
+            value={user.username}
             viewBox={"0 0 256 256"}
           />
-          <View className="text-center w-full items-center justify-center">
-            <Text>{user.username}</Text>
+          <View className="w-full ">
+            <Text>Student ID: {user.username}</Text>
             <Text>
-              {user.last_name}, {user.first_name} {user.middle_name ?? ""}
+              Name: {user.last_name}, {user.first_name} {user.middle_name ?? ""}
             </Text>
+            <Text>Department: {user.department}</Text>
           </View>
         </Card>
       </View>
