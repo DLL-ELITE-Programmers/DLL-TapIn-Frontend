@@ -54,6 +54,13 @@ export default function LoggedIn({ navigation }: Props) {
             >
               Create an Event
             </Btn>
+            <Btn
+              onclick={() => {
+                navigation.navigate("QRScanner");
+              }}
+            >
+              Test Button for scanner
+            </Btn>
           </View>
         </Scroller>
       </Card>

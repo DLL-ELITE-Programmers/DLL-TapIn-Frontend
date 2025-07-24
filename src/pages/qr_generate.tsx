@@ -60,17 +60,12 @@ export default function QRGenerator({ navigation }: Props) {
               Please let the organizer scan this QR Code for your attendance.
             </Text>
           </View>
-          <QRCode
-            size={256}
-            value={user.username}
-            viewBox={"0 0 256 256"}
-          />
+          <QRCode size={256} value={user.username} viewBox={"0 0 256 256"} />
           <View className="w-full ">
             <Text>Student ID: {user.username}</Text>
             <Text>
               Name: {user.last_name}, {user.first_name} {user.middle_name ?? ""}
             </Text>
-            <Text>Department: {user.department}</Text>
           </View>
         </Card>
       </View>

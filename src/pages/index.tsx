@@ -69,7 +69,7 @@ export default function Page() {
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Signup" component={SignUp} />
                 <Stack.Screen name="QRGenerator" component={QRGenerator} />
-                {/* <Stack.Screen name="QRScanner" component={QRScanner} /> */}
+                <Stack.Screen name="QRScanner" component={QRScanner} />
                 <Stack.Screen
                   name="ForgotPassword"
                   component={ForgotPassword}
