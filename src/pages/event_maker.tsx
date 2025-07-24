@@ -66,7 +66,7 @@ export default function EventMaker({ navigation }: Props) {
             <Input
               password={true}
               label="Event Admin Code"
-              hint="Any passphrase to share with the event coordinators"
+              hint="Any passphrase related to the event which may give to the coordinators"
             />
             <Input label="Time in" type="dateTime" />
             <Input label="Time out" type="dateTime" />

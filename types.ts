@@ -17,6 +17,11 @@ export interface UserProps {
   last_name: string;
   email: string;
   is_superuser: boolean;
+  department_info?: {
+    id: number;
+    department_id: string;
+    department_name: string;
+  };
 }
 
 export interface dept {

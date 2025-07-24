@@ -42,7 +42,6 @@ export default function Login({ navigation }: Props) {
     }
     if (response.message) {
       SetItem("user", response.user);
-      SetItem("token", response.access)
       navigation.replace("LoggedIn");
     }
   };

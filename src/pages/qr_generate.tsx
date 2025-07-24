@@ -18,6 +18,7 @@ interface Props {
 }
 
 export default function QRGenerator({ navigation }: Props) {
+  const [token, setToken] = useState("")
   const [user, setUser] = useState<UserProps>({
     username: "",
     first_name: "",
@@ -30,6 +31,9 @@ export default function QRGenerator({ navigation }: Props) {
     (async () => {
       const data = await GetItem("user");
       setUser(data);
+
+      const dataToken = await GetItem("token")
+      setToken(dataToken)
     })();
   }, []);
 
@@ -60,7 +64,7 @@ export default function QRGenerator({ navigation }: Props) {
               Please let the organizer scan this QR Code for your attendance.
             </Text>
           </View>
-          <QRCode size={256} value={user.username} viewBox={"0 0 256 256"} />
+          <QRCode size={256} value={token} viewBox={"0 0 256 256"} />
           <View className="w-full ">
             <Text>Student ID: {user.username}</Text>
             <Text>
