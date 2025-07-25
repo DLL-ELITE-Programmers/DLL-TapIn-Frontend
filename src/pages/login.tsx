@@ -1,25 +1,15 @@
 import { Switch, Text, View } from "react-native";
 import Input from "src/widgets/input";
 import Btn from "src/widgets/button";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "types";
 import { useState } from "react";
 import Title from "src/component/title";
 import { post_unauth } from "utils/access";
 import { Snackbar } from "react-native-paper";
 import { SetItem } from "src/control/data";
 import Card from "src/component/card";
+import { LoginProps } from "src/interfaces/navigation_props";
 
-type LoginScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Login"
->;
-
-interface Props {
-  navigation: LoginScreenNavigationProp;
-}
-
-export default function Login({ navigation }: Props) {
+export default function Login({ navigation }: LoginProps) {
   const [studentID, setStudentID] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);

@@ -1,24 +1,15 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import QRCode from "react-qr-code";
 import Header from "src/component/header";
 import { GetItem, Remove } from "src/control/data";
-import { RootStackParamList, UserProps } from "types";
 import { IconButton } from "react-native-paper";
 import Card from "src/component/card";
+import { UserProps } from "types";
+import { QRGeneratorProps } from "src/interfaces/navigation_props";
 
-type QRScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "QRGenerator"
->;
-
-interface Props {
-  navigation: QRScreenNavigationProp;
-}
-
-export default function QRGenerator({ navigation }: Props) {
-  const [token, setToken] = useState("")
+export default function QRGenerator({ navigation }: QRGeneratorProps) {
+  const [token, setToken] = useState("");
   const [user, setUser] = useState<UserProps>({
     username: "",
     first_name: "",
@@ -32,8 +23,8 @@ export default function QRGenerator({ navigation }: Props) {
       const data = await GetItem("user");
       setUser(data);
 
-      const dataToken = await GetItem("token")
-      setToken(dataToken)
+      const dataToken = await GetItem("token");
+      setToken(dataToken);
     })();
   }, []);
 

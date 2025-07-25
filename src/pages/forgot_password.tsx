@@ -1,22 +1,12 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useState } from "react";
 import { Text, View } from "react-native";
 import { Snackbar } from "react-native-paper";
 import Title from "src/component/title";
 import Btn from "src/widgets/button";
 import Input from "src/widgets/input";
-import { RootStackParamList } from "types";
+import { ForgotPasswordProps } from "src/interfaces/navigation_props"
 
-type ForgotPasswordScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "ForgotPassword"
->;
-
-interface Props {
-  navigation: ForgotPasswordScreenNavigationProp;
-}
-
-export default function ForgotPassword({ navigation }: Props) {
+export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [visible, setVisible] = useState(false);

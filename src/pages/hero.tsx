@@ -1,19 +1,9 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Image, Text, View } from "react-native";
 import Title from "src/component/title";
+import { HeroProps } from "src/interfaces/navigation_props";
 import Btn from "src/widgets/button";
-import { RootStackParamList } from "types";
 
-type HeroScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Hero"
->;
-
-interface Props {
-  navigation: HeroScreenNavigationProp;
-}
-
-export default function Hero({ navigation }: Props) {
+export default function Hero({ navigation }: HeroProps) {
   return (
     <View className="flex flex-col w-full flex-1 p-4 items-center justify-center gap-4 pb-6">
       <View className="w-full gap-4 justify-center items-center flex-1">

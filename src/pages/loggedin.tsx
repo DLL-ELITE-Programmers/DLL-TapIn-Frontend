@@ -1,19 +1,14 @@
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Text, View } from "react-native";
 import Btn from "src/widgets/button";
-import Title from "src/component/title";
 import Scroller from "src/component/scroller";
-import { RootStackParamList } from "types";
 import Card from "src/component/card";
 import Header from "src/component/header";
 import { IconButton } from "react-native-paper";
 import { Remove } from "src/control/data";
+import { LoggedInProps } from "src/interfaces/navigation_props";
 
-interface Props {
-  navigation: NativeStackNavigationProp<RootStackParamList, "LoggedIn">;
-}
-
-export default function LoggedIn({ navigation }: Props) {
+export default function LoggedIn({ navigation }: LoggedInProps) {
   return (
     <View className="flex-1 w-full">
       <Header>

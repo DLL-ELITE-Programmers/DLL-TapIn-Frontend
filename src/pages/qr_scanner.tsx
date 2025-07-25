@@ -1,7 +1,4 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Alert, View } from "react-native";
-import { RootStackParamList, UserProps } from "types";
-
+import { View } from "react-native";
 import {
   BarcodeScanningResult,
   CameraView,
@@ -13,17 +10,10 @@ import Card from "src/component/card";
 import { get } from "utils/access";
 import Btn from "src/widgets/button";
 import Header from "src/component/header";
+import { QRScannerProps } from "src/interfaces/navigation_props";
+import { UserProps } from "types";
 
-type QRScannerScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "QRScanner"
->;
-
-interface Props {
-  navigation: QRScannerScreenNavigationProp;
-}
-
-export default function QRScanner({ navigation }: Props) {
+export default function QRScanner({ navigation }: QRScannerProps) {
   const [permission, requestPermission] = useCameraPermissions();
   const [student, setStudent] = useState<UserProps>();
 
@@ -70,7 +60,10 @@ export default function QRScanner({ navigation }: Props) {
         />
         <View className="w-full">
           <Text>Student ID: {student?.username}</Text>
-          <Text>Name: {student?.last_name}, {student?.first_name} {student?.middle_name}</Text>
+          <Text>
+            Name: {student?.last_name}, {student?.first_name}{" "}
+            {student?.middle_name}
+          </Text>
         </View>
         {student?.username ? <Btn>Test</Btn> : null}
       </Card>

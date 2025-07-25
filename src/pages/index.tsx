@@ -4,7 +4,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
-  View,
 } from "react-native";
 import Login from "./login";
 import SignUp from "./signup";

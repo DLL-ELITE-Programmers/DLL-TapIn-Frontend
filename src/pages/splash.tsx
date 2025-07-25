@@ -1,20 +1,11 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import Title from "src/component/title";
 import { GetItem } from "src/control/data";
-import { RootStackParamList, UserProps } from "types";
+import { SplashProps } from "src/interfaces/navigation_props";
+import { UserProps } from "types";
 
-type SplashScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Splash"
->;
-
-interface Props {
-  navigation: SplashScreenNavigationProp;
-}
-
-export default function Splash({ navigation }: Props) {
+export default function Splash({ navigation }: SplashProps) {
   const [data, setData] = useState<UserProps>({
     username: "",
     first_name: "",

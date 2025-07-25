@@ -1,36 +1,26 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
-import Title from "src/component/title";
 import Btn from "src/widgets/button";
 import Spinner from "src/widgets/dropdown";
 import Input from "src/widgets/input";
 import Scroller from "src/component/scroller";
-import { dept, RootStackParamList } from "types";
 import { get_unauth } from "utils/access";
 import Card from "src/component/card";
 import Header from "src/component/header";
+import { EventMakerProps } from "src/interfaces/navigation_props";
+import { org } from "types";
+import { useEffect, useState } from "react";
 
-type EventMakerScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "EventMaker"
->;
-
-interface Props {
-  navigation: EventMakerScreenNavigationProp;
-}
-
-export default function EventMaker({ navigation }: Props) {
+export default function EventMaker({ navigation }: EventMakerProps) {
   // INFO: Initiation of data
-  const [department, setDepartment] = useState("");
+  const [organization, setOrganization] = useState("");
 
   // INFO: Syncronized data
-  const [departmentList, setDepartmentList] = useState<dept[]>([]);
+  const [orgList, setOrgList] = useState(())<org[]>([]);
 
   useEffect(() => {
     (async () => {
-      const response = await get_unauth("department");
-      setDepartmentList(response);
+      const response = await get_unauth("organization");
+      setOrgList(response);
     })();
   }, []);
 
@@ -52,12 +42,12 @@ export default function EventMaker({ navigation }: Props) {
         <Scroller>
           <View className="w-full gap-2">
             <Spinner
-              data={departmentList}
-              valueField="department_id"
-              labelField="department_name"
-              label="Department"
+              data={orgList}
+              valueField="organization_id"
+              labelField="organization_name"
+              label="Organization"
               onchange={(e: dept) => {
-                setDepartment(e.department_id);
+                setOrganization(e.organization_id);
               }}
             />
             <Input label="Event name" />

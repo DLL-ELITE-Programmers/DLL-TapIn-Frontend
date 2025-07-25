@@ -4,28 +4,18 @@ import Btn from "src/widgets/button";
 import Spinner from "src/widgets/dropdown";
 import { useEffect, useState } from "react";
 import { get_unauth, post_unauth } from "utils/access";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { dept, RootStackParamList } from "types";
-import Title from "src/component/title";
-import { Snackbar } from "react-native-paper";
 import Scroller from "src/component/scroller";
 import Card from "src/component/card";
-
-type SignupScreenNavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  "Login"
->;
-
-interface Props {
-  navigation: SignupScreenNavigationProp;
-}
+import { SignupProps } from "src/interfaces/navigation_props";
+import Title from "src/component/title";
+import { Snackbar } from "react-native-paper";
 
 interface six {
   index: number;
   sex: string;
 }
 
-export default function SignUp({ navigation }: Props) {
+export default function SignUp({ navigation }: SignupProps) {
   // INFO: Data handle setup
   const [studentID, setStudentID] = useState("");
   const [firstname, setFirstname] = useState("");
@@ -134,7 +124,11 @@ export default function SignUp({ navigation }: Props) {
           />
           <Input label="Email" onchange={setEmail} />
           <Input label="Password" password={true} onchange={setPassword} />
-          <Input label="Confirm Password" password={true} onchange={setConfirm} />
+          <Input
+            label="Confirm Password"
+            password={true}
+            onchange={setConfirm}
+          />
           <View className="w-full mt-4">
             <Btn onclick={signup}>Signup</Btn>
           </View>
@@ -146,7 +140,6 @@ export default function SignUp({ navigation }: Props) {
             >
               Login
             </Text>
-
           </View>
         </Scroller>
       </Card>
