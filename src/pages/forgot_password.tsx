@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Text, View } from "react-native";
 import { Snackbar } from "react-native-paper";
 import Title from "src/component/title";
+import { ForgotPasswordProps } from "src/interfaces/navigation_props";
 import Btn from "src/widgets/button";
 import Input from "src/widgets/input";
-import { ForgotPasswordProps } from "src/interfaces/navigation_props"
 
 export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
   const [email, setEmail] = useState("");
@@ -17,7 +17,6 @@ export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
       setVisible(true);
     }
   };
-
   return (
     <View className="flex-1 w-full items-center pt-6 p-4 gap-4">
       <Title />
