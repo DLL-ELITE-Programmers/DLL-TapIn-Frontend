@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import {
   BarcodeScanningResult,
   CameraView,
@@ -16,18 +16,30 @@ import { UserProps } from "types";
 export default function QRScanner({ navigation }: QRScannerProps) {
   const [permission, requestPermission] = useCameraPermissions();
   const [student, setStudent] = useState<UserProps>();
-
+  const [pleaseWait, setPleaseWait] = useState(false);
   useEffect(() => {
     if (!permission?.granted) {
       requestPermission();
     }
   }, []);
 
+  useEffect(() => {
+    setPleaseWait(false);
+  }, [student]);
+
   const scannedResult = async ({ data }: BarcodeScanningResult) => {
-    if (data) {
+    if (data && !pleaseWait) {
+      setPleaseWait(true);
+      console.log("Checking");
+
       const response = await get("/users/self", {
         token: data,
       });
+
+      if (response.error) {
+        Alert.alert("Title", response.error);
+      }
+      console.log(response);
       setStudent(response);
     }
   };
