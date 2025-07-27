@@ -18,6 +18,7 @@ type RootStackParamList = {
   QRScanner: undefined;
   EventMaker: undefined;
   LoggedIn: undefined;
+  Terms: undefined;
 };
 
 export interface EventMakerProps {
@@ -54,4 +55,8 @@ export interface SignupProps {
 
 export interface SplashProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "Splash">;
+}
+
+export interface TermsProps {
+  navigation: NativeStackNavigationProp<RootStackParamList, "Terms">;
 }

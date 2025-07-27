@@ -84,6 +84,15 @@ export default function SignUp({ navigation }: SignupProps) {
         >
           Sign Up
         </Text>
+        <View className="pt-4 flex flex-row text-center items-center justify-center">
+          <Text>Do you have an account now? </Text>
+          <Text
+            className="underline text-blue-700 font-bold"
+            onPress={() => navigation.replace("Login")}
+          >
+            Login
+          </Text>
+        </View>
         <Scroller>
           <Spinner
             onchange={(e: dept) => {
@@ -132,13 +141,17 @@ export default function SignUp({ navigation }: SignupProps) {
           <View className="w-full mt-4">
             <Btn onclick={signup}>Signup</Btn>
           </View>
-          <View className="pt-4 flex flex-row">
-            <Text>Do you have an account now? </Text>
-            <Text
-              className="underline text-blue-700 font-bold"
-              onPress={() => navigation.replace("Login")}
-            >
-              Login
+          <View className="w-full">
+            <Text>
+              By signing up with this application, you agee with our{" "}
+              <Text
+                className="text-blue-700 underline"
+                onPress={() => {
+                  navigation.navigate("Terms");
+                }}
+              >
+                Terms and Conditions
+              </Text>
             </Text>
           </View>
         </Scroller>

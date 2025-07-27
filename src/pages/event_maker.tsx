@@ -4,18 +4,19 @@ import Btn from "src/widgets/button";
 import Spinner from "src/widgets/dropdown";
 import Input from "src/widgets/input";
 import Scroller from "src/component/scroller";
-import { dept } from "types";
+import { dept, org } from "types";
 import { get_unauth } from "utils/access";
 import Card from "src/component/card";
 import Header from "src/component/header";
 import { EventMakerProps } from "src/interfaces/navigation_props";
+import PageHeadings from "src/component/page_heading";
 
 export default function EventMaker({ navigation }: EventMakerProps) {
   // INFO: Initiation of data
   const [organization, setOrganization] = useState("");
 
   // INFO: Syncronized data
-  const [orgList, setOrgList] = useState<dept[]>([]);
+  const [orgList, setOrgList] = useState<org[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -28,17 +29,10 @@ export default function EventMaker({ navigation }: EventMakerProps) {
     <View className="flex-1 w-full gap-2">
       <Header />
       <Card className="gap-4">
-        <View className="w-full items-center justify-center">
-          <Text
-            style={{
-              fontFamily: "LeagueGothic",
-            }}
-            className="text-3xl"
-          >
-            Event Maker
-          </Text>
-          <Text>Create an event for your department</Text>
-        </View>
+        <PageHeadings
+          title="Event Maker"
+          subtitle="Create an event for your organization"
+        />
         <Scroller>
           <View className="w-full gap-2">
             <Spinner
@@ -47,11 +41,11 @@ export default function EventMaker({ navigation }: EventMakerProps) {
               labelField="organization_name"
               label="Organization"
               onchange={(e: dept) => {
-                seOrganization(e.organization_id);
+                setOrganization(e.organization_id);
               }}
             />
             <Input label="Event name" />
-            <Input label="Event Description" />
+            <Input multiline={true} label="Event Description" />
             <Input label="Event Venue" />
             <Input
               password={true}

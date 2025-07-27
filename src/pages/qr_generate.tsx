@@ -7,6 +7,7 @@ import { IconButton } from "react-native-paper";
 import Card from "src/component/card";
 import { UserProps } from "types";
 import { QRGeneratorProps } from "src/interfaces/navigation_props";
+import PageHeadings from "src/component/page_heading";
 
 export default function QRGenerator({ navigation }: QRGeneratorProps) {
   const [token, setToken] = useState("");
@@ -42,19 +43,10 @@ export default function QRGenerator({ navigation }: QRGeneratorProps) {
       </Header>
       <View className="flex-1 w-full justify-center items-center p-4">
         <Card className="gap-4">
-          <View className="w-full items-center justify-center">
-            <Text
-              style={{
-                fontFamily: "LeagueGothic",
-              }}
-              className="text-3xl"
-            >
-              User information
-            </Text>
-            <Text>
-              Please let the organizer scan this QR Code for your attendance.
-            </Text>
-          </View>
+          <PageHeadings
+            title="User Information"
+            subtitle="Please let the organizer scan this QR Code for your attendance."
+          />
           <QRCode size={256} value={token} viewBox={"0 0 256 256"} />
           <View className="w-full ">
             <Text>Student ID: {user.username}</Text>

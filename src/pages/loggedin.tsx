@@ -7,6 +7,7 @@ import Header from "src/component/header";
 import { IconButton } from "react-native-paper";
 import { Remove } from "src/control/data";
 import { LoggedInProps } from "src/interfaces/navigation_props";
+import PageHeadings from "src/component/page_heading";
 
 export default function LoggedIn({ navigation }: LoggedInProps) {
   return (
@@ -22,17 +23,10 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
         />
       </Header>
       <Card className="gap-4">
-        <View className="w-full items-center justify-center">
-          <Text
-            style={{
-              fontFamily: "LeagueGothic",
-            }}
-            className="text-3xl"
-          >
-            Account management
-          </Text>
-          <Text>Please select your action.</Text>
-        </View>
+        <PageHeadings
+          title="Account Management"
+          subtitle="Please select your action."
+        />
         <Scroller>
           <View className="w-full gap-2">
             <Btn
@@ -54,7 +48,7 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
                 navigation.navigate("QRScanner");
               }}
             >
-              Test Button for scanner
+              Take in attendance
             </Btn>
           </View>
         </Scroller>

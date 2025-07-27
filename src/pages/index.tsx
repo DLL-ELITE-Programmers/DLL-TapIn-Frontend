@@ -17,6 +17,7 @@ import Splash from "./splash";
 import QRScanner from "./qr_scanner";
 import EventMaker from "./event_maker";
 import LoggedIn from "./loggedin";
+import Terms from "./terms";
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +76,7 @@ export default function Page() {
                 />
                 <Stack.Screen name="EventMaker" component={EventMaker} />
                 <Stack.Screen name="LoggedIn" component={LoggedIn} />
+                <Stack.Screen name="Terms" component={Terms} />
               </Stack.Navigator>
             </NavigationContainer>
           </TouchableWithoutFeedback>

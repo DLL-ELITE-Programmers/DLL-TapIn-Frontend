@@ -24,7 +24,15 @@ export default function Spinner(props: spinner) {
 
   return (
     <View className={`w-full`}>
-      <Text className="text-sm">{capitalized(props.label)}</Text>
+      <Text
+        style={{
+          fontFamily: "Monteserat",
+          fontWeight: "bold",
+        }}
+        className="text-sm"
+      >
+        {capitalized(props.label)}
+      </Text>
       <Dropdown
         onChange={props.onchange}
         value={props.value}

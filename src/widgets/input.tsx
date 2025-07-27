@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import { Button, Text, TextInput } from "react-native";
-import { View } from "react-native";
+import { Button, Text, TextInput, View } from "react-native";
 
 interface input {
   label: string;
   password?: boolean;
   hint?: string;
   value?: string;
+  multiline?: boolean;
+  maxline?: number;
   onchange?: (e: string) => void;
   type?: React.ComponentProps<typeof TextInput>["textContentType"];
+  required?: boolean;
 }
 
 export default function Input(props: input) {
@@ -22,9 +24,19 @@ export default function Input(props: input) {
 
   return (
     <View className={`w-full`}>
-      <Text className="text-sm">{capitalized(props.label)}</Text>
+      <Text
+        className="text-sm"
+        style={{
+          fontFamily: "Monteserat",
+          fontWeight: "bold",
+        }}
+      >
+        {capitalized(props.label)}
+      </Text>
       <View className="flex flex-row gap-1">
         <TextInput
+          multiline={props.multiline ?? false}
+          numberOfLines={props.maxline ?? 5}
           onChangeText={props.onchange}
           value={props.value}
           placeholder={props.hint}
@@ -34,15 +46,14 @@ export default function Input(props: input) {
         />
         {props.password ? (
           <Button
-            className=""
+            color="transparent"
             onPress={() => {
               setShowPass((prev) => !prev);
               setText(showPass ? "Hide" : "Show");
             }}
+            accessibilityLabel={textShow}
             title={textShow}
-          >
-            {textShow}
-          </Button>
+          />
         ) : null}
       </View>
     </View>

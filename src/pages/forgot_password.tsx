@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Text, View } from "react-native";
 import { Snackbar } from "react-native-paper";
+import Card from "src/component/card";
+import PageHeadings from "src/component/page_heading";
 import Title from "src/component/title";
 import { ForgotPasswordProps } from "src/interfaces/navigation_props";
 import Btn from "src/widgets/button";
@@ -20,17 +22,9 @@ export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
   return (
     <View className="flex-1 w-full items-center pt-6 p-4 gap-4">
       <Title />
-      <View className="bg-white w-full p-4 gap-2 rounded-md shador-black shadow-md">
-        <Text
-          style={{
-            fontFamily: "LeagueGothic",
-          }}
-          className="text-3xl w-full text-center"
-        >
-          Forgot password
-        </Text>
-        <Text className="text-md w-full text-center">Change your password</Text>
-        <View className="gap-4">
+      <Card>
+        <PageHeadings title="Forgot Password" subtitle="Change your password" />
+        <View className="gap-4 w-full">
           <Input
             onchange={setEmail}
             label="Email Address"
@@ -38,7 +32,7 @@ export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
           />
           <Btn onclick={sendMail}>Reset Password</Btn>
         </View>
-      </View>
+      </Card>
       <Snackbar
         visible={visible}
         onDismiss={() => setVisible(false)}
