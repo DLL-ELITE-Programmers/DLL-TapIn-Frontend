@@ -16,19 +16,23 @@ export default function Login({ navigation }: LoginProps) {
 
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
 
   const login = async (navigation: LoginScreenNavigationProp) => {
     if (!studentID || !password) {
       setError("Please insert your Student ID and/or Password");
       setVisible(true);
     }
+    setSending(true);
     const response = await post_unauth("users/login", {
       username: studentID,
       password: password,
     });
+
     if (response.error) {
       setError(response.error);
       setVisible(true);
+      setSending(false);
     }
     if (response.message) {
       SetItem("user", response.user);
@@ -96,15 +100,17 @@ export default function Login({ navigation }: LoginProps) {
             Forgot password
           </Text>
         </View>
-        <View className="w-full mt-4">
-          <Btn
-            onclick={() => {
-              login(navigation);
-            }}
-          >
-            Log in
-          </Btn>
-        </View>
+        {sending ? null : (
+          <View className="w-full mt-4">
+            <Btn
+              onclick={() => {
+                login(navigation);
+              }}
+            >
+              Log in
+            </Btn>
+          </View>
+        )}
       </Card>
       <Snackbar
         visible={visible}

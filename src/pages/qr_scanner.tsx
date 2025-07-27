@@ -7,11 +7,11 @@ import {
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import Card from "src/component/card";
-import { get } from "utils/access";
+import { get, get_unauth } from "utils/access";
 import Btn from "src/widgets/button";
 import Header from "src/component/header";
 import { QRScannerProps } from "src/interfaces/navigation_props";
-import { UserProps } from "types";
+import { event_interface, UserProps } from "types";
 import Input from "src/widgets/input";
 import PageHeadings from "src/component/page_heading";
 
@@ -19,8 +19,8 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   const [permission, requestPermission] = useCameraPermissions();
   const [student, setStudent] = useState<UserProps>();
   const [pleaseWait, setPleaseWait] = useState(false);
-
   const [eventID, setEventID] = useState("");
+  const [eventInfo, setEventInfo] = useState<event_interface>();
 
   useEffect(() => {
     if (!permission?.granted) {
@@ -49,10 +49,19 @@ export default function QRScanner({ navigation }: QRScannerProps) {
     }
   };
 
+  const checkEvent = async () => {
+    const response = await get_unauth("events", {
+      key: eventID,
+    });
+    if (response.event_id) {
+      setEventInfo(response);
+    }
+  };
+
   return (
     <View className="w-full flex-1">
       <Header />
-      {eventID ? (
+      {eventInfo ? (
         <Card>
           <View className="w-full items-center">
             <Text
@@ -92,8 +101,12 @@ export default function QRScanner({ navigation }: QRScannerProps) {
             subtitle="Please enter the key of your event given by the event creator"
           />
           <View className="w-full items-center gap-4">
-            <Input label="Event Passcode" password={true} />
-            <Btn onclick={() => {}}>Check passcode</Btn>
+            <Input
+              onchange={setEventID}
+              label="Event Passcode"
+              password={true}
+            />
+            <Btn onclick={checkEvent}>Check passcode</Btn>
           </View>
         </Card>
       )}

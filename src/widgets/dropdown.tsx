@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Text, View } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
@@ -6,21 +7,17 @@ interface spinner {
   data: any[];
   valueField: string;
   labelField: string;
-  name?: string;
   placeholder?: string;
   onchange: (e: any) => void;
   value?: string | number;
 }
 
 export default function Spinner(props: spinner) {
+  const [isFocused, setFocus] = useState(false);
   const capitalized = (text: string) => {
     text = text.replace(/_/g, " ");
     return text[0].toUpperCase() + text.substring(1);
   };
-
-  const name = props.name
-    ? props.name
-    : props.label.replace(/\s/gi, "_").toLowerCase();
 
   return (
     <View className={`w-full`}>
@@ -29,24 +26,28 @@ export default function Spinner(props: spinner) {
           fontFamily: "Monteserat",
           fontWeight: "bold",
         }}
-        className="text-sm"
+        className={`text-sm ${isFocused ? "text-blue-700" : "text-black"}`}
       >
         {capitalized(props.label)}
       </Text>
-      <Dropdown
-        onChange={props.onchange}
-        value={props.value}
-        placeholder={props.placeholder ?? props.label}
-        data={props.data ?? []}
-        valueField={props.valueField}
-        labelField={props.labelField}
-        style={{
-          borderWidth: 2,
-          borderColor: "rgba(0, 0, 0, 0.5)",
-          padding: 8,
-          borderRadius: 5,
-        }}
-      />
+      <View
+        className={`border-2 p-2 rounded-md ${isFocused ? "border-blue-700" : "border-[#00000090]"}`}
+      >
+        <Dropdown
+          onChange={props.onchange}
+          value={props.value}
+          placeholder={props.placeholder ?? props.label}
+          data={props.data ?? []}
+          valueField={props.valueField}
+          labelField={props.labelField}
+          onFocus={() => {
+            setFocus(true);
+          }}
+          onBlur={() => {
+            setFocus(false);
+          }}
+        />
+      </View>
     </View>
   );
 }

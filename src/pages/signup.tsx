@@ -36,6 +36,7 @@ export default function SignUp({ navigation }: SignupProps) {
   ]);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -50,6 +51,8 @@ export default function SignUp({ navigation }: SignupProps) {
       setVisible(true);
     }
 
+    setSending(true);
+
     const data = await post_unauth("users/register", {
       student_id: studentID,
       first_name: firstname,
@@ -63,6 +66,7 @@ export default function SignUp({ navigation }: SignupProps) {
     if (data.error) {
       setError(data.error);
       setVisible(true);
+      setSending(false);
     }
     if (data.message) {
       setError(data.message);
@@ -138,14 +142,16 @@ export default function SignUp({ navigation }: SignupProps) {
             password={true}
             onchange={setConfirm}
           />
-          <View className="w-full mt-4">
-            <Btn onclick={signup}>Signup</Btn>
-          </View>
-          <View className="w-full">
+          {sending ? null : (
+            <View className="w-full mt-4">
+              <Btn onclick={signup}>Signup</Btn>
+            </View>
+          )}
+          <View className="w-full mt-2">
             <Text>
               By signing up with this application, you agee with our{" "}
               <Text
-                className="text-blue-700 underline"
+                className="text-blue-700 underline font-bold"
                 onPress={() => {
                   navigation.navigate("Terms");
                 }}

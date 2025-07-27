@@ -1,3 +1,15 @@
+export type RootStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+  QRGenerator: undefined;
+  ForgotPassword: undefined;
+  Hero: undefined;
+  Splash: undefined;
+  QRScanner: undefined;
+  EventMaker: undefined;
+  LoggedIn: undefined;
+};
+
 export interface UserProps {
   username: string;
   first_name: string;
@@ -10,6 +22,14 @@ export interface UserProps {
     department_id: string;
     department_name: string;
   };
+}
+
+export interface event_interface {
+  event_id: string;
+  event_name: string;
+  event_description: string;
+  event_venue: string;
+  organization: number[];
 }
 
 export interface org {

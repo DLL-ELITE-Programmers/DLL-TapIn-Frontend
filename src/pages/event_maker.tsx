@@ -25,6 +25,8 @@ export default function EventMaker({ navigation }: EventMakerProps) {
     })();
   }, []);
 
+  const submitEvent = () => {};
+
   return (
     <View className="flex-1 w-full gap-2">
       <Header />
