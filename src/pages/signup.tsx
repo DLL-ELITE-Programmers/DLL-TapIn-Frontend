@@ -9,6 +9,7 @@ import Card from "src/component/card";
 import { SignupProps } from "src/interfaces/navigation_props";
 import Title from "src/component/title";
 import { Snackbar } from "react-native-paper";
+import { dept } from "types";
 
 interface six {
   index: number;

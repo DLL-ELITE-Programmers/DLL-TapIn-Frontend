@@ -58,7 +58,7 @@ export default function Input(props: input) {
               setShowPass((prev) => !prev);
               setText(showPass ? "Hide" : "Show");
             }}
-            className="p-2 w-[50px] bg-red-100 align-middle text-center h-full items-center justify-center"
+            className="p-2 w-[50px] align-middle text-center h-full items-center justify-center"
             accessibilityLabel={textShow}
           >
             <Image
