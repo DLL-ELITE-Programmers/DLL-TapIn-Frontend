@@ -23,8 +23,8 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   const [eventID, setEventID] = useState("");
   const [eventInfo, setEventInfo] = useState<event_interface>();
 
-  const [error, setError] = useState("")
-  const [visible, setVisible] = useState(false)
+  const [error, setError] = useState("");
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (!permission?.granted) {
@@ -40,13 +40,17 @@ export default function QRScanner({ navigation }: QRScannerProps) {
     if (data && !pleaseWait) {
       setPleaseWait(true);
       console.log("Checking");
-
+      console.log(data);
       const response = await get("/users/self", {
-        token: data,
+        params: {
+          token: data,
+        },
       });
 
       if (response.error) {
-        Alert.alert("Title", response.error);
+        setError(response.error);
+        setVisible(true);
+        setPleaseWait(false);
       }
       console.log(response);
       setStudent(response);
@@ -57,13 +61,16 @@ export default function QRScanner({ navigation }: QRScannerProps) {
     const response = await get_unauth("events", {
       key: eventID,
     });
-    if(response.error){
-      setError(response.error)
-      setVisible(true)
+    if (response.error) {
+      setError(response.error);
+      setVisible(true);
     }
     if (response.event_id) {
       setEventInfo(response);
+      setError("Done");
+      setVisible(true);
     }
+    console.log(response);
   };
 
   return (
@@ -94,16 +101,17 @@ export default function QRScanner({ navigation }: QRScannerProps) {
             onBarcodeScanned={scannedResult}
           />
           <View className="w-full">
-            <Text>Student ID: {student?.username}</Text>
+            <Text>Student ID: {student?.username ?? "012A-3456"}</Text>
             <Text>
-              Name: {student?.last_name}, {student?.first_name}{" "}
-              {student?.middle_name}
+              Name: {student?.last_name ?? "Last name"},{" "}
+              {student?.first_name ?? "First name"}{" "}
+              {student?.middle_name ?? "Middle name"}
             </Text>
           </View>
-          {student?.username ? <Btn>Test</Btn> : null})
+          {student?.username ? <Btn>Present</Btn> : null})
         </Card>
       ) : (
-        <Card className="gap-4">
+        <Card>
           <PageHeadings
             title="Organizer Verification"
             subtitle="Please enter the key of your event given by the event creator"

@@ -28,7 +28,9 @@ export async function get_unauth(
   endpoint: string,
   params?: Record<string, any>,
 ) {
-  const { data } = await axios.get(endpoint_middleware(endpoint), params || {});
+  const { data } = await axios.get(endpoint_middleware(endpoint), {
+    params: params || {},
+  });
   return data;
 }
 

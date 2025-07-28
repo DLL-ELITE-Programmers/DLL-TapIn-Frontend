@@ -7,6 +7,7 @@ interface CardProps {
 }
 
 export default function Card(props: CardProps) {
+  const className = ``;
   return (
     <View className="w-full p-4 flex-1">
       <View
