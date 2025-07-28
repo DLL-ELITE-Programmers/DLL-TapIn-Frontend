@@ -14,6 +14,7 @@ import { QRScannerProps } from "src/interfaces/navigation_props";
 import { event_interface, UserProps } from "types";
 import Input from "src/widgets/input";
 import PageHeadings from "src/component/page_heading";
+import { Snackbar } from "react-native-paper";
 
 export default function QRScanner({ navigation }: QRScannerProps) {
   const [permission, requestPermission] = useCameraPermissions();
@@ -21,6 +22,9 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   const [pleaseWait, setPleaseWait] = useState(false);
   const [eventID, setEventID] = useState("");
   const [eventInfo, setEventInfo] = useState<event_interface>();
+
+  const [error, setError] = useState("")
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     if (!permission?.granted) {
@@ -53,6 +57,10 @@ export default function QRScanner({ navigation }: QRScannerProps) {
     const response = await get_unauth("events", {
       key: eventID,
     });
+    if(response.error){
+      setError(response.error)
+      setVisible(true)
+    }
     if (response.event_id) {
       setEventInfo(response);
     }
@@ -110,6 +118,18 @@ export default function QRScanner({ navigation }: QRScannerProps) {
           </View>
         </Card>
       )}
+      <Snackbar
+        visible={visible}
+        onDismiss={() => setVisible(false)}
+        action={{
+          label: "Close",
+          onPress: () => {
+            setVisible(false);
+          },
+        }}
+      >
+        {error}
+      </Snackbar>
     </View>
   );
 }
