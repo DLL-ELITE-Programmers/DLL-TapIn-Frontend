@@ -47,7 +47,7 @@ export default function QRGenerator({ navigation }: QRGeneratorProps) {
             title="User Information"
             subtitle="Please let the organizer scan this QR Code for your attendance."
           />
-          <QRCode size={256} value={token} viewBox={"0 0 256 256"} />
+          <QRCode size={256} value={user.username} viewBox={"0 0 256 256"} />
           <View className="w-full ">
             <Text>Student ID: {user.username}</Text>
             <Text>

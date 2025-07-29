@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import Card from "src/component/card";
-import { get, get_unauth } from "utils/access";
+import { get, get_unauth, post_unauth } from "utils/access";
 import Btn from "src/widgets/button";
 import Header from "src/component/header";
 import { QRScannerProps } from "src/interfaces/navigation_props";
@@ -36,24 +36,37 @@ export default function QRScanner({ navigation }: QRScannerProps) {
     setPleaseWait(false);
   }, [student]);
 
-  const scannedResult = async ({ data }: BarcodeScanningResult) => {
-    if (data && !pleaseWait) {
+  const submitStudent = async () => {
+    if (!pleaseWait) {
       setPleaseWait(true);
-      console.log("Checking");
-      console.log(data);
-      const response = await get("/users/self", {
-        params: {
-          token: data,
-        },
+      const response = await post_unauth("participants", {
+        event: eventID,
+        participant: student?.username,
       });
-
       if (response.error) {
         setError(response.error);
         setVisible(true);
         setPleaseWait(false);
+      } else {
+        setError(response.message);
+        setVisible(true);
+        setStudent({});
       }
-      console.log(response);
-      setStudent(response);
+    }
+  };
+
+  const scannedResult = async ({ data }: BarcodeScanningResult) => {
+    if (data && !pleaseWait) {
+      setPleaseWait(true);
+      const user_info = await get_unauth("users", {
+        user: data,
+      });
+      if (user_info.error) {
+        setError(user_info.error);
+        setVisible(true);
+      } else {
+        setStudent(user_info);
+      }
     }
   };
 
@@ -70,7 +83,6 @@ export default function QRScanner({ navigation }: QRScannerProps) {
       setError("Done");
       setVisible(true);
     }
-    console.log(response);
   };
 
   return (
@@ -108,7 +120,9 @@ export default function QRScanner({ navigation }: QRScannerProps) {
               {student?.middle_name ?? "Middle name"}
             </Text>
           </View>
-          {student?.username ? <Btn>Present</Btn> : null}
+          {student?.username ? (
+            <Btn onclick={submitStudent}>Present</Btn>
+          ) : null}
         </Card>
       ) : (
         <Card>

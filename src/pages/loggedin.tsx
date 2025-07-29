@@ -36,13 +36,13 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
             >
               Attend to an event
             </Btn>
-            <Btn
-              onclick={() => {
-                navigation.navigate("EventMaker");
-              }}
-            >
-              Create an Event
-            </Btn>
+            {/* <Btn */}
+            {/*   onclick={() => { */}
+            {/*     navigation.navigate("EventMaker"); */}
+            {/*   }} */}
+            {/* > */}
+            {/*   Create an Event */}
+            {/* </Btn> */}
             <Btn
               onclick={() => {
                 navigation.navigate("QRScanner");
