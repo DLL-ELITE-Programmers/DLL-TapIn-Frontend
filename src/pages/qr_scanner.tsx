@@ -108,7 +108,7 @@ export default function QRScanner({ navigation }: QRScannerProps) {
               {student?.middle_name ?? "Middle name"}
             </Text>
           </View>
-          {student?.username ? <Btn>Present</Btn> : null})
+          {student?.username ? <Btn>Present</Btn> : null}
         </Card>
       ) : (
         <Card>
