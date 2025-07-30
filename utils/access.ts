@@ -11,7 +11,7 @@ import axios from "axios";
 import { GetItem } from "src/control/data";
 
 const url = "https://n7dwb6cv-80.asse.devtunnels.ms/seems-so-bad"; // INFO: Deployment test
-// const url = "http://192.168.0.132:8000/seems-so-bad"; // INFO: Localhost test
+// const url = "http://192.168.0.142:8000/seems-so-bad"; // INFO: Localhost test
 
 const endpoint_middleware = (endpoint: string) => {
   // TODO: To create a middleware which may control the url path and endpoint
@@ -29,7 +29,7 @@ export async function get_unauth(
   params?: Record<string, any>,
 ) {
   const { data } = await axios.get(endpoint_middleware(endpoint), {
-    params: params || {},
+    params: params,
   });
   return data;
 }

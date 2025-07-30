@@ -4,6 +4,7 @@ import Title from "src/component/title";
 import { GetItem } from "src/control/data";
 import { SplashProps } from "src/interfaces/navigation_props";
 import { UserProps } from "types";
+import { get_unauth } from "utils/access";
 
 export default function Splash({ navigation }: SplashProps) {
   const [data, setData] = useState<UserProps>({
@@ -17,7 +18,20 @@ export default function Splash({ navigation }: SplashProps) {
   useEffect(() => {
     (async () => {
       const response = await GetItem("user");
-      setData(response);
+      const info = await get_unauth("users/self", {
+        token: response,
+      });
+      if (info.error) {
+        setData({
+          username: "",
+          first_name: "",
+          last_name: "",
+          email: "",
+          is_superuser: false,
+        });
+      } else {
+        setData(response);
+      }
     })();
   }, []);
 
