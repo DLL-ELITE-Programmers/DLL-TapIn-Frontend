@@ -22,22 +22,28 @@ export default function Login({ navigation }: LoginProps) {
     if (!studentID || !password) {
       setError("Please insert your Student ID and/or Password");
       setVisible(true);
+      return;
+    }
+    if (/^(\d+\[a-zA-Z]{1})-(\d+)/i.test(studentID)) {
+      setError("Please check your Student ID.");
+      setVisible(true);
+      return;
     }
     setSending(true);
-    const response = await post_unauth("users/login", {
-      username: studentID,
-      password: password,
-    });
-
-    if (response.error) {
-      setError(response.error);
-      setVisible(true);
-      setSending(false);
-    }
-    if (response.message) {
-      SetItem("user", response.user);
-      navigation.replace("LoggedIn");
-    }
+    // const response = await post_unauth("users/login", {
+    //   username: studentID,
+    //   password: password,
+    // });
+    //
+    // if (response.error) {
+    //   setError(response.error);
+    //   setVisible(true);
+    //   setSending(false);
+    // }
+    // if (response.message) {
+    //   SetItem("user", response.user);
+    //   navigation.replace("LoggedIn");
+    // }
   };
 
   return (
@@ -100,17 +106,17 @@ export default function Login({ navigation }: LoginProps) {
             Forgot password
           </Text>
         </View>
-        {sending ? null : (
-          <View className="w-full mt-4">
-            <Btn
-              onclick={() => {
-                login(navigation);
-              }}
-            >
-              Log in
-            </Btn>
-          </View>
-        )}
+
+        <View className="w-full mt-4">
+          <Btn
+            onclick={() => {
+              login(navigation);
+            }}
+            loading={sending}
+          >
+            Log in
+          </Btn>
+        </View>
       </Card>
       <Snackbar
         visible={visible}
