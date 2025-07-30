@@ -22,7 +22,7 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
           className="w-[25px] h-[25px]"
         />
       </Header>
-      <Card className="gap-4">
+      <Card>
         <PageHeadings
           title="Account Management"
           subtitle="Please select your action."

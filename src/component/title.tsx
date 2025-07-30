@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 
 export default function Title() {
   return (
-    <View className="flex flwx-col items-center justify-center w-full">
+    <View className="flex flwx-col items-center justify-center w-full p-4 pt-6">
       <Text
         style={{
           fontFamily: "LeagueGothic",

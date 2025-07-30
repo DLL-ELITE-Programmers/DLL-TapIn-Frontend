@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
 
 interface Props {
     children: ReactNode;
@@ -11,9 +11,11 @@ export default function Scroller(props: Props) {
         <ScrollView
             contentContainerStyle={{ flexGrow: 1 }}
             keyboardShouldPersistTaps="handled"
-            className="w-full"
+            className={`w-full`}
         >
-            {props.children}
+            <View className={`w-full gap-2 ${props.className ?? ""}`}>
+                {props.children}
+            </View>
         </ScrollView>
     );
 }

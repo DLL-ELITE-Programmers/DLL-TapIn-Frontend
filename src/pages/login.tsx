@@ -19,35 +19,49 @@ export default function Login({ navigation }: LoginProps) {
   const [sending, setSending] = useState(false);
 
   const login = async (navigation: LoginScreenNavigationProp) => {
+    const loginRegex = /^(\d+)([a-zA-Z]){1}-(\d+)$/i;
+
+    // TODO: To check if there's input
     if (!studentID || !password) {
       setError("Please insert your Student ID and/or Password");
       setVisible(true);
       return;
     }
-    if (/^(\d+\[a-zA-Z]{1})-(\d+)/i.test(studentID)) {
+
+    // TODO: Student ID validation
+    if (!loginRegex.test(studentID)) {
       setError("Please check your Student ID.");
       setVisible(true);
       return;
     }
+
+    // TODO: Password validation
+    if (password.length < 6) {
+      setError("Password must be atleast 6 characters");
+      setVisible(true);
+      return;
+    }
+
+    // TODO: Accept all requirements
     setSending(true);
-    // const response = await post_unauth("users/login", {
-    //   username: studentID,
-    //   password: password,
-    // });
-    //
-    // if (response.error) {
-    //   setError(response.error);
-    //   setVisible(true);
-    //   setSending(false);
-    // }
-    // if (response.message) {
-    //   SetItem("user", response.user);
-    //   navigation.replace("LoggedIn");
-    // }
+    const response = await post_unauth("users/login", {
+      username: studentID,
+      password: password,
+    });
+
+    if (response.error) {
+      setError(response.error);
+      setVisible(true);
+      setSending(false);
+    }
+    if (response.message) {
+      SetItem("user", response.user);
+      navigation.replace("LoggedIn");
+    }
   };
 
   return (
-    <View className="flex-1 gap-6 items-center p-4">
+    <View className="flex-1 gap-6 items-center">
       <Title />
       <Card>
         <Text
@@ -90,6 +104,7 @@ export default function Login({ navigation }: LoginProps) {
               }}
             />
             <Text
+              className="font-xs"
               onPress={() => {
                 setRememberMe((prev) => !prev);
               }}
@@ -101,7 +116,7 @@ export default function Login({ navigation }: LoginProps) {
             onPress={() => {
               navigation.navigate("ForgotPassword");
             }}
-            className="underline"
+            className="underline font-xs"
           >
             Forgot password
           </Text>

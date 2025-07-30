@@ -7,11 +7,10 @@ interface CardProps {
 }
 
 export default function Card(props: CardProps) {
-  const className = ``;
   return (
-    <View className="w-full p-4 flex-1">
+    <View className="w-full p-3 flex-1">
       <View
-        className={`gap-2 w-full px-10 bg-white shadow-black shadow-md items-center justify-center p-4 rounded-md ${props.className ?? ""}`}
+        className={`gap-2 w-full bg-white shadow-black shadow-sm items-center justify-center p-4 rounded-md ${props.className ?? ""}`}
       >
         {props.children}
       </View>

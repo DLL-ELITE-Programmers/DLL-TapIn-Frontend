@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import Input from "src/widgets/input";
 import Btn from "src/widgets/button";
 import Spinner from "src/widgets/dropdown";
@@ -39,6 +39,8 @@ export default function SignUp({ navigation }: SignupProps) {
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 
+  const IDRegex = /^(\d+)([a-zA-Z]){1}-(\d+)$/i;
+
   useEffect(() => {
     (async () => {
       const response = await get_unauth("department");
@@ -47,11 +49,59 @@ export default function SignUp({ navigation }: SignupProps) {
   }, []);
 
   const signup = async () => {
+    const req = [];
+
+    // TODO: Adding requirements
+    if (!studentID) {
+      req.push("Student ID");
+    }
+    if (!firstname) {
+      req.push("First name");
+    }
+    if (!lastname) {
+      req.push("Last name");
+    }
+    if (!email) {
+      req.push("Email");
+    }
+    if (!password) {
+      req.push("Password");
+    }
+    if (!confirm) {
+      req.push("Confirm Password");
+    }
+
+    if (req.length > 0) {
+      const msg = `Kindly fill-up the following input: \n\n${req.join("\n")}`;
+      // setAlertVisible(true)
+      Alert.alert("Notice", msg, [
+        {
+          text: "Close",
+        },
+      ]);
+      return;
+    }
+
+    // TODO: Validators
+    if (!IDRegex.test(studentID)) {
+      setError("Please enter a valid Student ID");
+      setVisible(true);
+      return;
+    }
+
     if (password !== confirm) {
       setError("Password are not match. Parang kayo");
       setVisible(true);
+      return;
     }
 
+    if (password.length < 6) {
+      setError("Password must be atleast 6 characters long");
+      setVisible(true);
+      return;
+    }
+
+    // TODO: Process
     setSending(true);
 
     const data = await post_unauth("users/register", {
@@ -77,10 +127,11 @@ export default function SignUp({ navigation }: SignupProps) {
       }, 1500);
     }
   };
+
   return (
-    <View className="flex flex-col flex-1 gap-4 bg-transparent items-center p-4">
+    <View className="flex flex-col flex-1 gap-4 bg-transparent items-center">
       <Title />
-      <Card>
+      <Card className="flex-1">
         <Text
           style={{
             fontFamily: "LeagueGothic",
@@ -143,26 +194,28 @@ export default function SignUp({ navigation }: SignupProps) {
             password={true}
             onchange={setConfirm}
           />
-          {sending ? null : (
-            <View className="w-full mt-4">
-              <Btn onclick={signup}>Signup</Btn>
-            </View>
-          )}
-          <View className="w-full mt-2">
-            <Text>
-              By signing up with this application, you agee with our{" "}
-              <Text
-                className="text-blue-700 underline font-bold"
-                onPress={() => {
-                  navigation.navigate("Terms");
-                }}
-              >
-                Terms and Conditions
-              </Text>
-            </Text>
-          </View>
         </Scroller>
+        <View className="w-full mt-4">
+          <Btn onclick={signup} loading={sending}>
+            Signup
+          </Btn>
+        </View>
+
+        <View className="w-full mt-2">
+          <Text>
+            By signing up with this application, you agee with our{" "}
+            <Text
+              className="text-blue-700 underline font-bold"
+              onPress={() => {
+                navigation.navigate("Terms");
+              }}
+            >
+              Terms and Conditions
+            </Text>
+          </Text>
+        </View>
       </Card>
+
       <Snackbar
         visible={visible}
         onDismiss={() => setVisible(false)}

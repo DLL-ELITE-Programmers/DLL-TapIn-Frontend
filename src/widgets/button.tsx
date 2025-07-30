@@ -1,11 +1,4 @@
-import {
-  ActivityIndicator,
-  Button,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-import { LoaderKitView } from "react-native-loader-kit";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 interface button {
   children: string;
@@ -17,7 +10,7 @@ export default function Btn(props: button) {
   return (
     <View className="w-full">
       <TouchableOpacity
-        className="w-full bg-blue-500 rounded-sm items-center p-3"
+        className="w-full bg-blue-500 rounded-sm items-center p-3 shadow-sm shadow-black"
         onPress={props.onclick}
         disabled={props.loading ?? false}
       >
