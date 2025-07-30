@@ -134,7 +134,7 @@ export default function SignUp({ navigation }: SignupProps) {
             ]}
             valueField="index"
             labelField="sex"
-            label="Department"
+            label="Sex"
           />
           <Input label="Email" onchange={setEmail} />
           <Input label="Password" password={true} onchange={setPassword} />
