@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Alert, AlertButton, Image, Linking, Text, View } from "react-native";
 import Title from "src/component/title";
 import { GetItem } from "src/control/data";
 import { SplashProps } from "src/interfaces/navigation_props";
 import { UserProps } from "types";
 import { get_unauth } from "utils/access";
+
+import Contants from "expo-constants";
+
+interface buttonsProps {
+  text: string;
+  onPress?: void;
+}
 
 export default function Splash({ navigation }: SplashProps) {
   const [data, setData] = useState<UserProps>({
@@ -14,13 +21,44 @@ export default function Splash({ navigation }: SplashProps) {
     email: "",
     is_superuser: false,
   });
+  const [update, setUpdate] = useState(false);
+  const [needed, setNeeded] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const version = Contants.manifest2.extra.expoClient.version;
+      const response = await get_unauth("updates");
+      if (response.version !== version) {
+        const buttons: AlertButton[] = [
+          {
+            text: "Update",
+            onPress: async () => {
+              await Linking.openURL(response.link);
+            },
+          },
+        ];
+        if (!response.require) {
+          buttons.push({
+            text: "Cancel",
+          });
+        }
+        Alert.alert(
+          "New Verson Update",
+          `${response.message}\n\n${response.new.join("\n")} `,
+          buttons,
+          {
+            cancelable: response.require ? false : true,
+          },
+        );
+        setNeeded(response.require ?? false);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
       const response = await GetItem("user");
-      const info = await get_unauth("users/self", {
-        token: response,
-      });
+      const info = await get_unauth("users/self", response);
       if (info.error) {
         setData({
           username: "",
@@ -33,18 +71,20 @@ export default function Splash({ navigation }: SplashProps) {
         setData(response);
       }
     })();
-  }, []);
+  }, [update]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (data.username) {
-        navigation.replace("LoggedIn");
-      } else {
-        navigation.replace("Hero");
+      if (!needed) {
+        if (data.username) {
+          navigation.replace("LoggedIn");
+        } else {
+          navigation.replace("Hero");
+        }
       }
     }, 2000);
     return () => clearTimeout(timer);
-  }, [data]);
+  }, [data, needed]);
 
   return (
     <View className="flex-1 w-full justify-center items-center">
