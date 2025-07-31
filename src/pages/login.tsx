@@ -9,6 +9,9 @@ import { SetItem } from "src/control/data";
 import Card from "src/component/card";
 import { LoginProps,  } from "src/interfaces/navigation_props";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParamList } from "types";
+
+type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Login">
 
 export default function Login({ navigation }: LoginProps) {
   const [studentID, setStudentID] = useState("");
