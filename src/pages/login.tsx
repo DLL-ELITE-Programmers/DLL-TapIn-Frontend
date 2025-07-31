@@ -7,7 +7,8 @@ import { post_unauth } from "utils/access";
 import { Snackbar } from "react-native-paper";
 import { SetItem } from "src/control/data";
 import Card from "src/component/card";
-import { LoginProps } from "src/interfaces/navigation_props";
+import { LoginProps, RootStackParamList } from "src/interfaces/navigation_props";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function Login({ navigation }: LoginProps) {
   const [studentID, setStudentID] = useState("");
@@ -18,7 +19,7 @@ export default function Login({ navigation }: LoginProps) {
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 
-  const login = async (navigation: LoginScreenNavigationProp) => {
+  const login = async (navigation: NativeStackNavigationProp<RootStackParamList, "Login">) => {
     if (!studentID || !password) {
       setError("Please insert your Student ID and/or Password");
       setVisible(true);

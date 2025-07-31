@@ -8,7 +8,7 @@
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   QRGenerator: undefined;
@@ -36,6 +36,7 @@ export interface HeroProps {
 export interface LoginProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
 }
+
 
 export interface LoggedInProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "LoggedIn">;
