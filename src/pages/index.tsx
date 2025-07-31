@@ -47,7 +47,7 @@ export default function Page() {
           x: 1,
           y: 1,
         }}
-        className="flex-1 w-full h-full"
+        className="flex-1 w-full h-full pb-[75px]"
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}

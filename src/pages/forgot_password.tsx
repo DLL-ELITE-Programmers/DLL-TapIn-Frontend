@@ -20,7 +20,7 @@ export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
     }
   };
   return (
-    <View className="flex-1 w-full items-center pt-6 p-4 gap-4">
+    <View className="flex-1 w-full items-center pt-6 gap-4">
       <Title />
       <Card>
         <PageHeadings title="Forgot Password" subtitle="Change your password" />

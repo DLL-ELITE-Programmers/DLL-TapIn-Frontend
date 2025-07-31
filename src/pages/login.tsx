@@ -7,7 +7,7 @@ import { post_unauth } from "utils/access";
 import { Snackbar } from "react-native-paper";
 import { SetItem } from "src/control/data";
 import Card from "src/component/card";
-import { LoginProps, RootStackParamList } from "src/interfaces/navigation_props";
+import { LoginProps,  } from "src/interfaces/navigation_props";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export default function Login({ navigation }: LoginProps) {
@@ -19,11 +19,31 @@ export default function Login({ navigation }: LoginProps) {
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 
-  const login = async (navigation: NativeStackNavigationProp<RootStackParamList, "Login">) => {
+  const login = async (navigation: LoginScreenNavigationProp) => {
+    const loginRegex = /^(\d+)([a-zA-Z]){1}-(\d+)$/i;
+
+    // TODO: To check if there's input
     if (!studentID || !password) {
       setError("Please insert your Student ID and/or Password");
       setVisible(true);
+      return;
     }
+
+    // TODO: Student ID validation
+    if (!loginRegex.test(studentID)) {
+      setError("Please check your Student ID.");
+      setVisible(true);
+      return;
+    }
+
+    // TODO: Password validation
+    if (password.length < 6) {
+      setError("Password must be atleast 6 characters");
+      setVisible(true);
+      return;
+    }
+
+    // TODO: Accept all requirements
     setSending(true);
     const response = await post_unauth("users/login", {
       username: studentID,
@@ -42,7 +62,7 @@ export default function Login({ navigation }: LoginProps) {
   };
 
   return (
-    <View className="flex-1 gap-6 items-center p-4">
+    <View className="flex-1 gap-6 items-center">
       <Title />
       <Card>
         <Text
@@ -85,6 +105,7 @@ export default function Login({ navigation }: LoginProps) {
               }}
             />
             <Text
+              className="font-xs"
               onPress={() => {
                 setRememberMe((prev) => !prev);
               }}
@@ -96,22 +117,22 @@ export default function Login({ navigation }: LoginProps) {
             onPress={() => {
               navigation.navigate("ForgotPassword");
             }}
-            className="underline"
+            className="underline font-xs"
           >
             Forgot password
           </Text>
         </View>
-        {sending ? null : (
-          <View className="w-full mt-4">
-            <Btn
-              onclick={() => {
-                login(navigation);
-              }}
-            >
-              Log in
-            </Btn>
-          </View>
-        )}
+
+        <View className="w-full mt-4">
+          <Btn
+            onclick={() => {
+              login(navigation);
+            }}
+            loading={sending}
+          >
+            Log in
+          </Btn>
+        </View>
       </Card>
       <Snackbar
         visible={visible}
