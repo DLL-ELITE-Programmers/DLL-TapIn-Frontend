@@ -18,6 +18,7 @@ import QRScanner from "./qr_scanner";
 import EventMaker from "./event_maker";
 import LoggedIn from "./loggedin";
 import Terms from "./terms";
+import Feedback from "./feedback"
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +78,7 @@ export default function Page() {
                 <Stack.Screen name="EventMaker" component={EventMaker} />
                 <Stack.Screen name="LoggedIn" component={LoggedIn} />
                 <Stack.Screen name="Terms" component={Terms} />
+                <Stack.Screen name="Feedback" component={Feedback} />
               </Stack.Navigator>
             </NavigationContainer>
           </TouchableWithoutFeedback>

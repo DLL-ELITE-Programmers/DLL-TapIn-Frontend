@@ -8,10 +8,15 @@ import { get_unauth } from "utils/access";
 
 import Contants from "expo-constants";
 
-interface buttonsProps {
-  text: string;
-  onPress?: void;
-}
+// NOTE: This is crucial key for future updates
+// TODO: If the update is required to the specific version
+// kindly add +1 to the value given below if you
+// require the update, this is to make
+// all the version safe up to the latest feature added
+// to the application, as well as to maintain the
+// required feature for future updates, kindly check the
+// core/viewsets/updates.py on the backend part.
+const currentVersion = 0;
 
 export default function Splash({ navigation }: SplashProps) {
   const [data, setData] = useState<UserProps>({
@@ -22,7 +27,7 @@ export default function Splash({ navigation }: SplashProps) {
     is_superuser: false,
   });
   const [update, setUpdate] = useState(false);
-  const [needed, setNeeded] = useState(false);
+  const [needed, setNeeded] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -47,10 +52,10 @@ export default function Splash({ navigation }: SplashProps) {
           `${response.message}\n\n${response.new.join("\n")} `,
           buttons,
           {
-            cancelable: response.require ? false : true,
+            cancelable: response.require >= currentVersion,
           },
         );
-        setNeeded(response.require ?? false);
+        setNeeded(response.require);
       }
     })();
   }, []);
@@ -75,7 +80,7 @@ export default function Splash({ navigation }: SplashProps) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (!needed) {
+      if (currentVersion >= needed) {
         if (data.username) {
           navigation.replace("LoggedIn");
         } else {

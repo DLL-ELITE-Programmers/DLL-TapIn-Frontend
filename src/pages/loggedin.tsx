@@ -50,6 +50,9 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
             >
               Take in attendance
             </Btn>
+            <Btn onclick={() => {
+              navigation.replace("Feedback")
+            }}>Send Feedback</Btn>
           </View>
         </Scroller>
       </Card>

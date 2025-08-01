@@ -1,7 +1,7 @@
 {
 	"name": "dll-tap-in",
 	"license": "0BSD",
-	"version": "0.1.1",
+	"version": "0.1.0",
 	"main": "index.ts",
 	"scripts": {
 		"start": "expo start",
