@@ -26,7 +26,7 @@ export default function Splash({ navigation }: SplashProps) {
     email: "",
     is_superuser: false,
   });
-  const [update, setUpdate] = useState(false);
+
   const [needed, setNeeded] = useState(0);
 
   useEffect(() => {
@@ -42,17 +42,23 @@ export default function Splash({ navigation }: SplashProps) {
             },
           },
         ];
-        if (!response.require) {
+        if (response.require <= currentVersion) {
           buttons.push({
             text: "Cancel",
           });
         }
+
+        const added: string[] = [];
+        const objs = Object.keys(response.new);
+        for (const n of objs) {
+          added.push(`${n}:\n${response.new[n].join("\n")}`);
+        }
         Alert.alert(
           "New Verson Update",
-          `${response.message}\n\n${response.new.join("\n")} `,
+          `${response.message}\n\n${added.join("\n\n")} `,
           buttons,
           {
-            cancelable: response.require >= currentVersion,
+            cancelable: response.require <= currentVersion,
           },
         );
         setNeeded(response.require);
@@ -76,7 +82,7 @@ export default function Splash({ navigation }: SplashProps) {
         setData(response);
       }
     })();
-  }, [update]);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
