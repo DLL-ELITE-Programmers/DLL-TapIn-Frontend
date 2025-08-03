@@ -16,7 +16,7 @@ import Contants from "expo-constants";
 // to the application, as well as to maintain the
 // required feature for future updates, kindly check the
 // core/viewsets/updates.py on the backend part.
-const currentVersion = 0;
+const currentVersion = -1;
 
 export default function Splash({ navigation }: SplashProps) {
   const [data, setData] = useState<UserProps>({
