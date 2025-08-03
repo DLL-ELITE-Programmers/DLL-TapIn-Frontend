@@ -1,13 +1,6 @@
 import "./global.css";
 import { StatusBar } from "expo-status-bar";
-import {
-  Keyboard,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  View,
-  StatusBar as sb,
-} from "react-native";
+import { View } from "react-native";
 import Page from "./src/pages/index";
 import * as Font from "expo-font";
 
@@ -18,7 +11,7 @@ export default function App() {
   });
 
   return (
-    <View className="flex flex-col bg-[#ffffff] w-full h-full">
+    <View className="flex flex-col flex-1 bg-[#ffffff] w-full h-full">
       <StatusBar style="auto" />
       {/* NOTE: mt-[30px] was the one who created the gap for the statusbar */}
       <View

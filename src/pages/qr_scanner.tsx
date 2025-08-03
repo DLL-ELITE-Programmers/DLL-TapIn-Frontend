@@ -1,4 +1,4 @@
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import {
   BarcodeScanningResult,
   CameraView,
@@ -7,8 +7,8 @@ import {
 import { useEffect, useState } from "react";
 import { Text } from "react-native";
 import Card from "src/component/card";
-import { get, get_unauth, post_unauth } from "utils/access";
-import Btn from "src/widgets/button";
+import { get_unauth, post_unauth } from "utils/access";
+import Button from "src/widgets/button";
 import Header from "src/component/header";
 import { QRScannerProps } from "src/interfaces/navigation_props";
 import { event_interface, UserProps } from "types";
@@ -121,7 +121,7 @@ export default function QRScanner({ navigation }: QRScannerProps) {
             </Text>
           </View>
           {student?.username ? (
-            <Btn onclick={submitStudent}>Present</Btn>
+            <Button onclick={submitStudent}>Present</Button>
           ) : null}
         </Card>
       ) : (
@@ -136,7 +136,7 @@ export default function QRScanner({ navigation }: QRScannerProps) {
               label="Event Passcode"
               password={true}
             />
-            <Btn onclick={checkEvent}>Check passcode</Btn>
+            <Button onclick={checkEvent}>Check passcode</Button>
           </View>
         </Card>
       )}

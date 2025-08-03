@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import Btn from "src/widgets/button";
+import { View } from "react-native";
+import Button from "src/widgets/button";
 import Spinner from "src/widgets/dropdown";
 import Input from "src/widgets/input";
 import Scroller from "src/component/scroller";
@@ -56,7 +56,7 @@ export default function EventMaker({ navigation }: EventMakerProps) {
             />
             <Input label="Time in" type="dateTime" />
             <Input label="Time out" type="dateTime" />
-            <Btn>Add event</Btn>
+            <Button>Add event</Button>
           </View>
         </Scroller>
       </Card>

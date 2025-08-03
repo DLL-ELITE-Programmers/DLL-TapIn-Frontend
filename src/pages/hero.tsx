@@ -1,7 +1,7 @@
 import { Image, Text, View } from "react-native";
 import Title from "src/component/title";
 import { HeroProps } from "src/interfaces/navigation_props";
-import Btn from "src/widgets/button";
+import Button from "src/widgets/button";
 
 export default function Hero({ navigation }: HeroProps) {
   return (
@@ -16,13 +16,13 @@ export default function Hero({ navigation }: HeroProps) {
         <Title />
 
         <View className="w-full mt-10">
-          <Btn
+          <Button
             onclick={() => {
               navigation.navigate("Login");
             }}
           >
             Login
-          </Btn>
+          </Button>
         </View>
       </View>
       <View className="flex flex-row justify-end">

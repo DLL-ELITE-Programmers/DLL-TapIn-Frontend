@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { Snackbar } from "react-native-paper";
 import Card from "src/component/card";
 import PageHeadings from "src/component/page_heading";
 import Title from "src/component/title";
 import { ForgotPasswordProps } from "src/interfaces/navigation_props";
-import Btn from "src/widgets/button";
+import Button from "src/widgets/button";
 import Input from "src/widgets/input";
 
 export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
@@ -30,7 +30,7 @@ export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
             label="Email Address"
             hint="myemail@gmail.com"
           />
-          <Btn onclick={sendMail}>Reset Password</Btn>
+          <Button onclick={sendMail}>Reset Password</Button>
         </View>
       </Card>
       <Snackbar

@@ -63,21 +63,31 @@ export async function get(endpoint: string, params?: Record<string, any>) {
   return data;
 }
 
-export async function post(endpoint: string, params?: Record<string, any>) {
+export async function post(endpoint: string, params: Record<string, any>) {
   const token = await GetItem("token");
   if (!token) {
     return {
       error: "Unknown token",
     };
   }
-  const { data } = await axios.post(
-    endpoint_middleware(endpoint),
-    params || {},
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const { data } = await axios.post(endpoint_middleware(endpoint), params, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
   return data;
+}
+
+export async function put(endpoint: string, paras: Record<string, any>) {
+  const token = await GetItem("token");
+  if (!token) {
+    return {
+      error: "Unknown token",
+    };
+  }
+  const { data } = await axios.put(endpoint_middleware(endpoint), params, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }

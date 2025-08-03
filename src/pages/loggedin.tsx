@@ -1,6 +1,5 @@
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Text, View } from "react-native";
-import Btn from "src/widgets/button";
+import { View } from "react-native";
+import Button from "src/widgets/button";
 import Scroller from "src/component/scroller";
 import Card from "src/component/card";
 import Header from "src/component/header";
@@ -29,30 +28,34 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
         />
         <Scroller>
           <View className="w-full gap-2">
-            <Btn
+            <Button
               onclick={() => {
                 navigation.navigate("QRGenerator");
               }}
             >
               Attend to an event
-            </Btn>
-            {/* <Btn */}
+            </Button>
+            {/* <Button */}
             {/*   onclick={() => { */}
             {/*     navigation.navigate("EventMaker"); */}
             {/*   }} */}
             {/* > */}
             {/*   Create an Event */}
-            {/* </Btn> */}
-            <Btn
+            {/* </Button> */}
+            <Button
               onclick={() => {
                 navigation.navigate("QRScanner");
               }}
             >
               Take in attendance
-            </Btn>
-            <Btn onclick={() => {
-              navigation.replace("Feedback")
-            }}>Send Feedback</Btn>
+            </Button>
+            <Button
+              onclick={() => {
+                navigation.replace("Feedback");
+              }}
+            >
+              Send Feedback
+            </Button>
           </View>
         </Scroller>
       </Card>

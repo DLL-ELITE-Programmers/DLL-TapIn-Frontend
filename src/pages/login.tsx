@@ -7,16 +7,31 @@ import { post_unauth } from "utils/access";
 import { Snackbar } from "react-native-paper";
 import { SetItem } from "src/control/data";
 import Card from "src/component/card";
-import { LoginProps,  } from "src/interfaces/navigation_props";
+import { LoginProps } from "src/interfaces/navigation_props";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "types";
 
-type LoginScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, "Login">
+type LoginScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
+
+interface loginForm {
+  username: string;
+  password: string;
+  rememberMe: boolean;
+}
 
 export default function Login({ navigation }: LoginProps) {
-  const [studentID, setStudentID] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  // const [studentID, setStudentID] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [rememberMe, setRememberMe] = useState(false);
+
+  const [loginData, setLogin] = useState<loginForm>({
+    username: "",
+    password: "",
+    rememberMe: false,
+  });
 
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
@@ -26,21 +41,21 @@ export default function Login({ navigation }: LoginProps) {
     const loginRegex = /^(\d+)([a-zA-Z]){1}-(\d+)$/i;
 
     // TODO: To check if there's input
-    if (!studentID || !password) {
+    if (!loginData.username || !loginData.password) {
       setError("Please insert your Student ID and/or Password");
       setVisible(true);
       return;
     }
 
     // TODO: Student ID validation
-    if (!loginRegex.test(studentID)) {
+    if (!loginRegex.test(loginData.username)) {
       setError("Please check your Student ID.");
       setVisible(true);
       return;
     }
 
     // TODO: Password validation
-    if (password.length < 6) {
+    if (loginData.password.length < 6) {
       setError("Password must be atleast 6 characters");
       setVisible(true);
       return;
@@ -48,10 +63,7 @@ export default function Login({ navigation }: LoginProps) {
 
     // TODO: Accept all requirements
     setSending(true);
-    const response = await post_unauth("users/login", {
-      username: studentID,
-      password: password,
-    });
+    const response = await post_unauth("users/login", loginData);
 
     if (response.error) {
       setError(response.error);
@@ -88,32 +100,36 @@ export default function Login({ navigation }: LoginProps) {
           </Text>
         </View>
         <Input
-          onchange={setStudentID}
+          onchange={(text) => {
+            setLogin({ ...loginData, username: text });
+          }}
           hint="012A-3456"
           label="Student ID"
-          value={studentID}
+          value={loginData.username}
         />
         <Input
-          onchange={setPassword}
-          value={password}
+          onchange={(text) => {
+            setLogin({ ...loginData, password: text });
+          }}
+          value={loginData.password}
           label="Password"
           password={true}
         />
         <View className="flex flex-row justify-between items-center w-full">
           <View className="flex flex-row items-center">
             <Switch
-              value={rememberMe}
+              value={loginData.rememberMe}
               onValueChange={(val: boolean) => {
-                setRememberMe(val);
+                setLogin({ ...loginData, rememberMe: val });
               }}
             />
             <Text
               className="font-xs"
               onPress={() => {
-                setRememberMe((prev) => !prev);
+                setLogin({ ...loginData, rememberMe: !loginData.rememberMe });
               }}
             >
-              {rememberMe ? "Remembered" : "Remember me"}
+              {loginData.rememberMe ? "Remembered" : "Remember me"}
             </Text>
           </View>
           <Text

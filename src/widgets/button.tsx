@@ -6,7 +6,7 @@ interface button {
   loading?: boolean;
 }
 
-export default function Btn(props: button) {
+export default function Button(props: button) {
   return (
     <View className="w-full">
       <TouchableOpacity

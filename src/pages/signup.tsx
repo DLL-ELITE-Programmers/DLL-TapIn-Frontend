@@ -1,6 +1,6 @@
 import { Alert, Text, View } from "react-native";
 import Input from "src/widgets/input";
-import Btn from "src/widgets/button";
+import Button from "src/widgets/button";
 import Spinner from "src/widgets/dropdown";
 import { useEffect, useState } from "react";
 import { get_unauth, post_unauth } from "utils/access";
@@ -16,17 +16,30 @@ interface six {
   sex: string;
 }
 
+interface signupProps {
+  studentID: string;
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  email: string;
+  sex: number;
+  password: string;
+  department_id: string;
+}
+
 export default function SignUp({ navigation }: SignupProps) {
   // INFO: Data handle setup
-  const [studentID, setStudentID] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [middlename, setMiddleName] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [sex, setSex] = useState(0);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirm, setConfirm] = useState("");
-  const [departmentValue, setDepartmentValue] = useState("BSIT");
+  const [confirm, setConfirm] = useState("")
+  const [signupData, setSignup] = useState<signupProps>({
+    studentID: "",
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    email: "",
+    sex: 2,
+    password: "",
+    department_id: "BSIT",
+  });
 
   // INFO: Department List Setup
   const [department, setDepartment] = useState<dept[]>([
@@ -50,22 +63,34 @@ export default function SignUp({ navigation }: SignupProps) {
 
   const signup = async () => {
     const req = [];
+    interface signKeys {
+      studentID: string;
+      first_name: string;
+      middle_name?: string;
+      last_name: string;
+      email: string;
+      sex: string;
+      password: string;
+      department_id: string;
+    }
+
+    const key_: signKeys = {
+      studentID: "Student ID",
+      first_name: "First Name",
+      last_name: "Last Name",
+      email: "Email Address",
+      sex: "Sex",
+      department_id: "Department",
+      password: "Password"
+    };
 
     // TODO: Adding requirements
-    if (!studentID) {
-      req.push("Student ID");
-    }
-    if (!firstname) {
-      req.push("First name");
-    }
-    if (!lastname) {
-      req.push("Last name");
-    }
-    if (!email) {
-      req.push("Email");
-    }
-    if (!password) {
-      req.push("Password");
+    const keys = Object.keys(signupData);
+    for (const key of keys) {
+      const data = signupData[key];
+      if (!data && key !== "middle_name") {
+        req.push(key_[key]);
+      }
     }
     if (!confirm) {
       req.push("Confirm Password");
@@ -83,19 +108,19 @@ export default function SignUp({ navigation }: SignupProps) {
     }
 
     // TODO: Validators
-    if (!IDRegex.test(studentID)) {
+    if (!IDRegex.test(signupData.studentID)) {
       setError("Please enter a valid Student ID");
       setVisible(true);
       return;
     }
 
-    if (password !== confirm) {
+    if (signupData.password !== confirm) {
       setError("Password are not match. Parang kayo");
       setVisible(true);
       return;
     }
 
-    if (password.length < 6) {
+    if (signupData.password.length < 6) {
       setError("Password must be atleast 6 characters long");
       setVisible(true);
       return;
@@ -104,16 +129,7 @@ export default function SignUp({ navigation }: SignupProps) {
     // TODO: Process
     setSending(true);
 
-    const data = await post_unauth("users/register", {
-      student_id: studentID,
-      first_name: firstname,
-      middle_name: middlename,
-      last_name: lastname,
-      email: email,
-      sex: sex,
-      password: password,
-      department_id: departmentValue,
-    });
+    const data = await post_unauth("users/register", signupData);
     if (data.error) {
       setError(data.error);
       setVisible(true);
@@ -152,23 +168,44 @@ export default function SignUp({ navigation }: SignupProps) {
         <Scroller>
           <Spinner
             onchange={(e: dept) => {
-              setDepartmentValue(e.department_id);
+              setSignup({ ...signupData, department_id: e.department_id });
             }}
-            value={departmentValue}
+            value={signupData.department_id}
             data={department}
             valueField="department_id"
             labelField="department_name"
             label="Department"
           />
-          <Input hint="012A-3456" onchange={setStudentID} label="Student ID" />
-          <Input label="First Name" onchange={setFirstname} />
-          <Input label="Middle Name" onchange={setMiddleName} />
-          <Input label="Last Name" onchange={setLastname} />
+          <Input
+            hint="012A-3456"
+            onchange={(text: string) => {
+              setSignup({ ...signupData, studentID: text });
+            }}
+            label="Student ID"
+          />
+          <Input
+            label="First Name"
+            onchange={(text: string) => {
+              setSignup({ ...signupData, first_name: text });
+            }}
+          />
+          <Input
+            label="Middle Name"
+            onchange={(text: string) => {
+              setSignup({ ...signupData, middle_name: text });
+            }}
+          />
+          <Input
+            label="Last Name"
+            onchange={(text: string) => {
+              setSignup({ ...signupData, last_name: text });
+            }}
+          />
           <Spinner
             onchange={(e: six) => {
-              setSex(e.index);
+              setSignup({ ...signupData, sex: e.index });
             }}
-            value={sex}
+            value={signupData.sex}
             data={[
               {
                 index: 0,
@@ -187,8 +224,19 @@ export default function SignUp({ navigation }: SignupProps) {
             labelField="sex"
             label="Sex"
           />
-          <Input label="Email" onchange={setEmail} />
-          <Input label="Password" password={true} onchange={setPassword} />
+          <Input
+            label="Email"
+            onchange={(text: string) => {
+              setSignup({ ...signupData, email: text });
+            }}
+          />
+          <Input
+            label="Password"
+            password={true}
+            onchange={(text: string) => {
+              setSignup({ ...signupData, password: text });
+            }}
+          />
           <Input
             label="Confirm Password"
             password={true}
@@ -196,9 +244,9 @@ export default function SignUp({ navigation }: SignupProps) {
           />
         </Scroller>
         <View className="w-full mt-4">
-          <Btn onclick={signup} loading={sending}>
+          <Button onclick={signup} loading={sending}>
             Signup
-          </Btn>
+          </Button>
         </View>
 
         <View className="w-full mt-2">
