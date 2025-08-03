@@ -3,31 +3,27 @@ import Button from "src/widgets/button";
 import Scroller from "src/component/scroller";
 import Card from "src/component/card";
 import Header from "src/component/header";
-import { IconButton } from "react-native-paper";
-import { Remove } from "src/control/data";
 import { LoggedInProps } from "src/interfaces/navigation_props";
 import PageHeadings from "src/component/page_heading";
+import { Remove } from "src/control/data";
 
 export default function LoggedIn({ navigation }: LoggedInProps) {
   return (
     <View className="flex-1 w-full">
-      <Header>
-        <IconButton
-          onPress={async () => {
-            Remove("user");
-            navigation.replace("Login");
-          }}
-          icon={require("../../assets/logout.png")}
-          className="w-[25px] h-[25px]"
-        />
-      </Header>
-      <Card>
+      <Header />
+      <Card className="w-full">
         <PageHeadings
           title="Account Management"
           subtitle="Please select your action."
         />
-        <Scroller>
-          <View className="w-full gap-2">
+        {/*
+         * TODO: For future developers, if ever that there are buttons are not visible
+         * Kindly add `flex-1` in <Card> tag and in the <View> beneath this commend
+         * This is just to make it visible.
+         * - RyannKim327
+         */}
+        <View className="w-full gap-3">
+          <Scroller>
             <Button
               onclick={() => {
                 navigation.navigate("QRGenerator");
@@ -35,13 +31,13 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
             >
               Attend to an event
             </Button>
-            {/* <Button */}
-            {/*   onclick={() => { */}
-            {/*     navigation.navigate("EventMaker"); */}
-            {/*   }} */}
-            {/* > */}
-            {/*   Create an Event */}
-            {/* </Button> */}
+            <Button
+              onclick={() => {
+                navigation.navigate("EventMaker");
+              }}
+            >
+              Create an Event
+            </Button>
             <Button
               onclick={() => {
                 navigation.navigate("QRScanner");
@@ -56,8 +52,16 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
             >
               Send Feedback
             </Button>
-          </View>
-        </Scroller>
+          </Scroller>
+          <Button
+            onclick={async () => {
+              Remove("user");
+              navigation.replace("Login");
+            }}
+          >
+            Sign Out
+          </Button>
+        </View>
       </Card>
     </View>
   );

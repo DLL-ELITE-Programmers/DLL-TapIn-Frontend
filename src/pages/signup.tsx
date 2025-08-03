@@ -29,7 +29,7 @@ interface signupProps {
 
 export default function SignUp({ navigation }: SignupProps) {
   // INFO: Data handle setup
-  const [confirm, setConfirm] = useState("")
+  const [confirm, setConfirm] = useState("");
   const [signupData, setSignup] = useState<signupProps>({
     studentID: "",
     first_name: "",
@@ -42,12 +42,7 @@ export default function SignUp({ navigation }: SignupProps) {
   });
 
   // INFO: Department List Setup
-  const [department, setDepartment] = useState<dept[]>([
-    {
-      department_name: "Test",
-      department_id: "HIHI",
-    },
-  ]);
+  const [department, setDepartment] = useState<dept[]>([]);
   const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
@@ -62,7 +57,7 @@ export default function SignUp({ navigation }: SignupProps) {
   }, []);
 
   const signup = async () => {
-    const req = [];
+    const req: string[] = [];
     interface signKeys {
       studentID: string;
       first_name: string;
@@ -77,21 +72,23 @@ export default function SignUp({ navigation }: SignupProps) {
     const key_: signKeys = {
       studentID: "Student ID",
       first_name: "First Name",
+      middle_name: "Middle Name",
       last_name: "Last Name",
       email: "Email Address",
       sex: "Sex",
       department_id: "Department",
-      password: "Password"
+      password: "Password",
     };
 
     // TODO: Adding requirements
-    const keys = Object.keys(signupData);
+    const keys: string[] = Object.keys(signupData);
     for (const key of keys) {
       const data = signupData[key];
       if (!data && key !== "middle_name") {
         req.push(key_[key]);
       }
     }
+
     if (!confirm) {
       req.push("Confirm Password");
     }
@@ -127,21 +124,45 @@ export default function SignUp({ navigation }: SignupProps) {
     }
 
     // TODO: Process
-    setSending(true);
+    const info: string[] = [];
+    for (const key of keys) {
+      if (key === "sex") {
+        const sex = ["Female", "Male", "Others"];
+        info.push(`${key_[key]}: ${sex[signupData[key]]}`);
+      } else {
+        info.push(`${key_[key]}: ${signupData[key]}`);
+      }
+    }
 
-    const data = await post_unauth("users/register", signupData);
-    if (data.error) {
-      setError(data.error);
-      setVisible(true);
-      setSending(false);
-    }
-    if (data.message) {
-      setError(data.message);
-      setVisible(true);
-      setTimeout(() => {
-        navigation.replace("Login");
-      }, 1500);
-    }
+    Alert.alert(
+      "Confirmation",
+      `Please confirm the information below:\n\n${info.join("\n")}`,
+      [
+        {
+          text: "Confirm",
+          onPress: async () => {
+            setSending(true);
+
+            const data = await post_unauth("users/register", signupData);
+            if (data.error) {
+              setError(data.error);
+              setVisible(true);
+              setSending(false);
+            }
+            if (data.message) {
+              setError(data.message);
+              setVisible(true);
+              setTimeout(() => {
+                navigation.replace("Login");
+              }, 1500);
+            }
+          },
+        },
+        {
+          text: "Cancel",
+        },
+      ],
+    );
   };
 
   return (
@@ -263,7 +284,6 @@ export default function SignUp({ navigation }: SignupProps) {
           </Text>
         </View>
       </Card>
-
       <Snackbar
         visible={visible}
         onDismiss={() => setVisible(false)}

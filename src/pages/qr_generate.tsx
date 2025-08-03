@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 import QRCode from "react-qr-code";
 import Header from "src/component/header";
-import { GetItem, Remove } from "src/control/data";
-import { IconButton } from "react-native-paper";
+import { GetItem } from "src/control/data";
 import Card from "src/component/card";
 import { UserProps } from "types";
 import { QRGeneratorProps } from "src/interfaces/navigation_props";
@@ -31,16 +30,7 @@ export default function QRGenerator({ navigation }: QRGeneratorProps) {
 
   return (
     <View className="flex-1 items-center">
-      <Header>
-        <IconButton
-          onPress={async () => {
-            Remove("user");
-            navigation.replace("Login");
-          }}
-          icon={require("../../assets/logout.png")}
-          className="w-[25px] h-[25px]"
-        />
-      </Header>
+      <Header />
       <View className="flex-1 w-full justify-center items-center p-4">
         <Card className="gap-4">
           <PageHeadings

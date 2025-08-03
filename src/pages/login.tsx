@@ -23,14 +23,10 @@ interface loginForm {
 }
 
 export default function Login({ navigation }: LoginProps) {
-  // const [studentID, setStudentID] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [rememberMe, setRememberMe] = useState(false);
-
+  const [remember, setRemember] = useState(false);
   const [loginData, setLogin] = useState<loginForm>({
     username: "",
     password: "",
-    rememberMe: false,
   });
 
   const [visible, setVisible] = useState(false);
@@ -118,18 +114,18 @@ export default function Login({ navigation }: LoginProps) {
         <View className="flex flex-row justify-between items-center w-full">
           <View className="flex flex-row items-center">
             <Switch
-              value={loginData.rememberMe}
+              value={remember}
               onValueChange={(val: boolean) => {
-                setLogin({ ...loginData, rememberMe: val });
+                setRemember(val);
               }}
             />
             <Text
               className="font-xs"
               onPress={() => {
-                setLogin({ ...loginData, rememberMe: !loginData.rememberMe });
+                setRemember((prev) => !prev);
               }}
             >
-              {loginData.rememberMe ? "Remembered" : "Remember me"}
+              {remember ? "Remembered" : "Remember me"}
             </Text>
           </View>
           <Text
