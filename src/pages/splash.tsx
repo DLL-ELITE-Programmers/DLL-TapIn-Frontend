@@ -31,9 +31,11 @@ export default function Splash({ navigation }: SplashProps) {
 
   useEffect(() => {
     (async () => {
-      const version = Contants.manifest2.extra.expoClient.version;
+      const version = Contants?.manifest2?.extra?.expoClient?.version;
       const response = await get_unauth("updates");
-      if (response.version !== version) {
+      const ver = response.version;
+      setNeeded(ver ?? currentVersion);
+      if (ver !== version) {
         const buttons: AlertButton[] = [
           {
             text: "Update",
@@ -64,27 +66,7 @@ export default function Splash({ navigation }: SplashProps) {
       }
       setNeeded(response.require);
     })();
-  }, []);
 
-  useEffect(() => {
-    (async () => {
-      const response = await GetItem("user");
-      const info = await get_unauth("users/self", response);
-      if (info.error) {
-        setData({
-          username: "",
-          first_name: "",
-          last_name: "",
-          email: "",
-          is_superuser: false,
-        });
-      } else {
-        setData(response);
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
     const timer = setTimeout(() => {
       if (currentVersion >= needed) {
         if (data.username) {
@@ -95,7 +77,25 @@ export default function Splash({ navigation }: SplashProps) {
       }
     }, 2000);
     return () => clearTimeout(timer);
-  }, [needed]);
+  }, []);
+
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await GetItem("user");
+  //     const info = await get_unauth("users/self", response);
+  //     if (info.error) {
+  //       setData({
+  //         username: "",
+  //         first_name: "",
+  //         last_name: "",
+  //         email: "",
+  //         is_superuser: false,
+  //       });
+  //     } else {
+  //       setData(response);
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <View className="flex-1 w-full justify-center items-center">
