@@ -15,7 +15,8 @@
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/e79cae3d-f666-4d94-a454-75667199dc08"
     },
     "ios": {
       "supportsTablet": true,
@@ -31,7 +32,13 @@
       },
       "edgeToEdgeEnabled": true,
       "bundler": "metro",
-      "package": "com.dll.tapin"
+      "package": "com.dll.tapin",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -51,6 +58,7 @@
       "eas": {
         "projectId": "e79cae3d-f666-4d94-a454-75667199dc08"
       }
-    }
+    },
+    "runtimeVersion": "1.0.0"
   }
 }
