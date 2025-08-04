@@ -19,7 +19,6 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
 interface loginForm {
   username: string;
   password: string;
-  rememberMe: boolean;
 }
 
 export default function Login({ navigation }: LoginProps) {
