@@ -83,9 +83,10 @@ export default function SignUp({ navigation }: SignupProps) {
     // TODO: Adding requirements
     const keys: string[] = Object.keys(signupData);
     for (const key of keys) {
-      const data = signupData[key];
+      const data = signupData[key as keyof signKeys];
       if (!data && key !== "middle_name") {
-        req.push(key_[key]);
+        const k: any = key_[key as keyof signKeys]
+        req.push(k);
       }
     }
 
@@ -130,7 +131,7 @@ export default function SignUp({ navigation }: SignupProps) {
         const sex = ["Female", "Male", "Others"];
         info.push(`${key_[key]}: ${sex[signupData[key]]}`);
       } else {
-        info.push(`${key_[key]}: ${signupData[key]}`);
+        info.push(`${key_[key as keyof signKeys]}: ${signupData[key as keyof signupProps]}`);
       }
     }
 
