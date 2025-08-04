@@ -27,7 +27,7 @@ export default function Splash({ navigation }: SplashProps) {
     is_superuser: false,
   });
 
-  const [needed, setNeeded] = useState(-999);
+  const [needed, setNeeded] = useState(currentVersion);
 
   useEffect(() => {
     (async () => {
@@ -66,23 +66,23 @@ export default function Splash({ navigation }: SplashProps) {
     })();
   }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await GetItem("user");
-  //     const info = await get_unauth("users/self", response);
-  //     if (info.error) {
-  //       setData({
-  //         username: "",
-  //         first_name: "",
-  //         last_name: "",
-  //         email: "",
-  //         is_superuser: false,
-  //       });
-  //     } else {
-  //       setData(response);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const response = await GetItem("user");
+      const info = await get_unauth("users/self", response);
+      if (info.error) {
+        setData({
+          username: "",
+          first_name: "",
+          last_name: "",
+          email: "",
+          is_superuser: false,
+        });
+      } else {
+        setData(response);
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

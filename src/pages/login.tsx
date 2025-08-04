@@ -1,6 +1,6 @@
 import { Switch, Text, View } from "react-native";
 import Input from "src/widgets/input";
-import Btn from "src/widgets/button";
+import Button from "src/widgets/button";
 import { useState } from "react";
 import Title from "src/component/title";
 import { post_unauth } from "utils/access";
@@ -32,7 +32,7 @@ export default function Login({ navigation }: LoginProps) {
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 
-  const login = async (navigation: LoginScreenNavigationProp) => {
+  const login = async (navigation: any) => {
     const loginRegex = /^(\d+)([a-zA-Z]){1}-(\d+)$/i;
 
     // TODO: To check if there's input
@@ -138,14 +138,14 @@ export default function Login({ navigation }: LoginProps) {
         </View>
 
         <View className="w-full mt-4">
-          <Btn
+          <Button
             onclick={() => {
               login(navigation);
             }}
             loading={sending}
           >
             Log in
-          </Btn>
+          </Button>
         </View>
       </Card>
       <Snackbar

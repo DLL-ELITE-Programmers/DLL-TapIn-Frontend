@@ -78,7 +78,7 @@ export async function post(endpoint: string, params: Record<string, any>) {
   return data;
 }
 
-export async function put(endpoint: string, paras: Record<string, any>) {
+export async function put(endpoint: string, params: Record<string, any>) {
   const token = await GetItem("token");
   if (!token) {
     return {
