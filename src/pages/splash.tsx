@@ -27,7 +27,7 @@ export default function Splash({ navigation }: SplashProps) {
     is_superuser: false,
   });
 
-  const [needed, setNeeded] = useState(0);
+  const [needed, setNeeded] = useState(-999);
 
   useEffect(() => {
     (async () => {
@@ -61,28 +61,28 @@ export default function Splash({ navigation }: SplashProps) {
             cancelable: response.require <= currentVersion,
           },
         );
-        setNeeded(response.require);
       }
+      setNeeded(response.require);
     })();
   }, []);
 
-  useEffect(() => {
-    (async () => {
-      const response = await GetItem("user");
-      const info = await get_unauth("users/self", response);
-      if (info.error) {
-        setData({
-          username: "",
-          first_name: "",
-          last_name: "",
-          email: "",
-          is_superuser: false,
-        });
-      } else {
-        setData(response);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response = await GetItem("user");
+  //     const info = await get_unauth("users/self", response);
+  //     if (info.error) {
+  //       setData({
+  //         username: "",
+  //         first_name: "",
+  //         last_name: "",
+  //         email: "",
+  //         is_superuser: false,
+  //       });
+  //     } else {
+  //       setData(response);
+  //     }
+  //   })();
+  // }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -95,7 +95,7 @@ export default function Splash({ navigation }: SplashProps) {
       }
     }, 2000);
     return () => clearTimeout(timer);
-  }, [data, needed]);
+  }, [needed]);
 
   return (
     <View className="flex-1 w-full justify-center items-center">
