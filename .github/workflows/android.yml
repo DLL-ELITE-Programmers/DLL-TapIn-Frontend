@@ -1,4 +1,4 @@
-name: EAS Build (Expo Only)
+name: EAS Build Android (Expo Only)
 
 on:
   push:
