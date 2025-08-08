@@ -24,7 +24,7 @@ export default function Splash({ navigation }: SplashProps) {
     first_name: "",
     last_name: "",
     email: "",
-    is_superuser: false,
+    sex: 0
   });
 
   const [needed, setNeeded] = useState(currentVersion);

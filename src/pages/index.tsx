@@ -1,3 +1,14 @@
+/*
+ * INFO: This index file controls the entire system of this application.
+ * It all has the access to the pages of each application as initiation where
+ * every page needs to access each other by using the navigation.
+ *
+ * TODO: The requirement for this are the Stack.Screen also the interfaces under
+ * the src/interfaces/navigation_props.ts. All of it are visible there as it was all in format
+ *
+ * Author: Ryann Kim Sesgundo [08-08-25]
+ */
+
 import {
   ImageBackground,
   Keyboard,
