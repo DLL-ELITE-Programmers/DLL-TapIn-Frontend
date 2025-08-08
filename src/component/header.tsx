@@ -13,6 +13,8 @@ export default function Header({ children }: Props) {
         <Image
           className="h-[50px] w-[50px] aspect-square rounded-full"
           source={Logo}
+          height={50}
+          width={50}
         />
         <View className="flex flex-col h-full justify-center">
           <Text>DLL Tap-In</Text>

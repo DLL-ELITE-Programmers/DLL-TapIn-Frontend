@@ -63,6 +63,8 @@ export default function Input(props: input) {
           >
             <Image
               className="w-[25px] h-[25px]"
+              width={25}
+              height={25}
               source={
                 showPass
                   ? require("assets/eye.png")

@@ -47,11 +47,14 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
             </Button>
             <Button
               onclick={() => {
-                navigation.replace("Feedback");
+                navigation.navigate("Feedback");
               }}
             >
               Send Feedback
             </Button>
+            <Button onclick={() => {
+              navigation.navigate("EditAccount")
+            }}>Modify Account</Button>
           </Scroller>
           <Button
             onclick={async () => {

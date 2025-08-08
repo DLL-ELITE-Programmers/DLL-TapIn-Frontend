@@ -19,15 +19,20 @@ export type RootStackParamList = {
   EventMaker: undefined;
   LoggedIn: undefined;
   Terms: undefined;
-  Feedback: undefined
+  Feedback: undefined;
+  EditAccount: undefined;
 };
+
+export interface EditAccountProps {
+  navigation: NativeStackNavigationProp<RootStackParamList, "EditAccount">;
+}
 
 export interface EventMakerProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "EventMaker">;
 }
 
 export interface FeedbackProps {
-  navigation: NativeStackNavigationProp<RootStackParamList, "Feedback">
+  navigation: NativeStackNavigationProp<RootStackParamList, "Feedback">;
 }
 
 export interface ForgotPasswordProps {
@@ -41,7 +46,6 @@ export interface HeroProps {
 export interface LoginProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
 }
-
 
 export interface LoggedInProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "LoggedIn">;

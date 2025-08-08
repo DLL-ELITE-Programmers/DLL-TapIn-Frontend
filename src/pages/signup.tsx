@@ -17,7 +17,7 @@ interface six {
 }
 
 interface signupProps {
-  studentID: string;
+  username: string;
   first_name: string;
   middle_name?: string;
   last_name: string;
@@ -31,7 +31,7 @@ export default function SignUp({ navigation }: SignupProps) {
   // INFO: Data handle setup
   const [confirm, setConfirm] = useState("");
   const [signupData, setSignup] = useState<signupProps>({
-    studentID: "",
+    username: "",
     first_name: "",
     middle_name: "",
     last_name: "",
@@ -59,7 +59,7 @@ export default function SignUp({ navigation }: SignupProps) {
   const signup = async () => {
     const req: string[] = [];
     interface signKeys {
-      studentID: string;
+      username: string;
       first_name: string;
       middle_name?: string;
       last_name: string;
@@ -70,7 +70,7 @@ export default function SignUp({ navigation }: SignupProps) {
     }
 
     const key_: signKeys = {
-      studentID: "Student ID",
+      username: "Student ID",
       first_name: "First Name",
       middle_name: "Middle Name",
       last_name: "Last Name",
@@ -85,7 +85,7 @@ export default function SignUp({ navigation }: SignupProps) {
     for (const key of keys) {
       const data = signupData[key as keyof signKeys];
       if (!data && key !== "middle_name") {
-        const k: any = key_[key as keyof signKeys]
+        const k: any = key_[key as keyof signKeys];
         req.push(k);
       }
     }
@@ -105,8 +105,18 @@ export default function SignUp({ navigation }: SignupProps) {
       return;
     }
 
+    // TODO: Student ID automation formatting
+    if (
+      !signupData.username.at(4) !== "-" ||
+      /([\W\s]+)/gi.test(signupData.username)
+    ) {
+      const username = signupData.username.replace(/([\W\s]+)/gi, "");
+      const user = username.substring(0, 4) + "-" + username.substring(4);
+      signupData.username = user;
+    }
+
     // TODO: Validators
-    if (!IDRegex.test(signupData.studentID)) {
+    if (!IDRegex.test(signupData.username)) {
       setError("Please enter a valid Student ID");
       setVisible(true);
       return;
@@ -131,7 +141,9 @@ export default function SignUp({ navigation }: SignupProps) {
         const sex = ["Female", "Male", "Others"];
         info.push(`${key_[key]}: ${sex[signupData[key]]}`);
       } else {
-        info.push(`${key_[key as keyof signKeys]}: ${signupData[key as keyof signupProps]}`);
+        info.push(
+          `${key_[key as keyof signKeys]}: ${signupData[key as keyof signupProps]}`,
+        );
       }
     }
 
@@ -201,27 +213,31 @@ export default function SignUp({ navigation }: SignupProps) {
           <Input
             hint="012A-3456"
             onchange={(text: string) => {
-              setSignup({ ...signupData, studentID: text });
+              setSignup({ ...signupData, username: text });
             }}
             label="Student ID"
+            value={signupData.username}
           />
           <Input
             label="First Name"
             onchange={(text: string) => {
               setSignup({ ...signupData, first_name: text });
             }}
+            value={signupData.first_name}
           />
           <Input
             label="Middle Name"
             onchange={(text: string) => {
               setSignup({ ...signupData, middle_name: text });
             }}
+            value={signupData.middle_name}
           />
           <Input
             label="Last Name"
             onchange={(text: string) => {
               setSignup({ ...signupData, last_name: text });
             }}
+            value={signupData.last_name}
           />
           <Spinner
             onchange={(e: six) => {
@@ -251,6 +267,7 @@ export default function SignUp({ navigation }: SignupProps) {
             onchange={(text: string) => {
               setSignup({ ...signupData, email: text });
             }}
+            value={signupData.email}
           />
           <Input
             label="Password"
@@ -258,11 +275,13 @@ export default function SignUp({ navigation }: SignupProps) {
             onchange={(text: string) => {
               setSignup({ ...signupData, password: text });
             }}
+            value={signupData.password}
           />
           <Input
             label="Confirm Password"
             password={true}
             onchange={setConfirm}
+            value={confirm}
           />
         </Scroller>
         <View className="w-full mt-4">
