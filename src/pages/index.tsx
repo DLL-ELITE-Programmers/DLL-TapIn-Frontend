@@ -1,3 +1,14 @@
+/*
+ * INFO: This index file controls the entire system of this application.
+ * It all has the access to the pages of each application as initiation where
+ * every page needs to access each other by using the navigation.
+ *
+ * TODO: The requirement for this are the Stack.Screen also the interfaces under
+ * the src/interfaces/navigation_props.ts. All of it are visible there as it was all in format
+ *
+ * Author: Ryann Kim Sesgundo [08-08-25]
+ */
+
 import {
   ImageBackground,
   Keyboard,
@@ -18,7 +29,8 @@ import QRScanner from "./qr_scanner";
 import EventMaker from "./event_maker";
 import LoggedIn from "./loggedin";
 import Terms from "./terms";
-import Feedback from "./feedback"
+import Feedback from "./feedback";
+import EditAccount from "./edit_account";
 
 const Stack = createNativeStackNavigator();
 
@@ -79,6 +91,7 @@ export default function Page() {
                 <Stack.Screen name="LoggedIn" component={LoggedIn} />
                 <Stack.Screen name="Terms" component={Terms} />
                 <Stack.Screen name="Feedback" component={Feedback} />
+                <Stack.Screen name="EditAccount" component={EditAccount} />
               </Stack.Navigator>
             </NavigationContainer>
           </TouchableWithoutFeedback>

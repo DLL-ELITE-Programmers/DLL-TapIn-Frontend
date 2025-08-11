@@ -21,7 +21,12 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   const [student, setStudent] = useState<UserProps>();
   const [pleaseWait, setPleaseWait] = useState(false);
   const [eventID, setEventID] = useState("");
-  const [eventInfo, setEventInfo] = useState<event_interface>();
+  const [eventInfo, setEventInfo] = useState<event_interface>({
+    event_description: "",
+    event_id: "123",
+    event_venue: "",
+    organization: 1,
+  });
 
   const [error, setError] = useState("");
   const [visible, setVisible] = useState(false);
@@ -57,9 +62,19 @@ export default function QRScanner({ navigation }: QRScannerProps) {
 
   const scannedResult = async ({ data }: BarcodeScanningResult) => {
     if (data && !pleaseWait) {
+      const info = JSON.parse(data);
+      const time = new Date();
       setPleaseWait(true);
+
+      console.log(time.getTime() - info.time);
+      // TODO: Time monitorer
+      if (time.getTime() - info.time <= 60000) {
+        console.log("Still");
+      } else {
+        console.log("Failed");
+      }
       const user_info = await get_unauth("users", {
-        user: data,
+        user: info.user,
       });
       if (user_info.error) {
         setError(user_info.error);

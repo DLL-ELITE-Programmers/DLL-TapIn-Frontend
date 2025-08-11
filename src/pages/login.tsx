@@ -42,6 +42,15 @@ export default function Login({ navigation }: LoginProps) {
       return;
     }
 
+    if (
+      !loginData.username.at(4) !== "-" ||
+      /([\W\s]+)/gi.test(loginData.username)
+    ) {
+      const username = loginData.username.replace(/([\W\s])/gi, "");
+      const user = username.substring(0, 4) + "-" + username.substring(4);
+      loginData.username = user;
+    }
+
     // TODO: Student ID validation
     if (!loginRegex.test(loginData.username)) {
       setError("Please check your Student ID.");

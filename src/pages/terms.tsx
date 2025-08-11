@@ -3,7 +3,6 @@ import { Text, View } from "react-native";
 import Card from "src/component/card";
 import Header from "src/component/header";
 import PageHeadings from "src/component/page_heading";
-import Scroller from "src/component/scroller";
 import { GetItem, SetItem } from "src/control/data";
 import { TermsProps } from "src/interfaces/navigation_props";
 import { get_unauth } from "utils/access";

@@ -11,12 +11,14 @@ interface input {
   onchange?: (e: string) => void;
   type?: React.ComponentProps<typeof TextInput>["textContentType"];
   required?: boolean;
+  editable?: boolean;
 }
 
 export default function Input(props: input) {
   const [showPass, setShowPass] = useState(props.password);
   const [textShow, setText] = useState("Show");
   const [isFocused, setFocused] = useState(false);
+
   const capitalized = (text: string) => {
     text = text.replace(/_/g, " ");
     return text[0].toUpperCase() + text.substring(1);
@@ -51,6 +53,7 @@ export default function Input(props: input) {
           onBlur={() => {
             setFocused(false);
           }}
+          editable={props.editable ?? true}
         />
         {props.password ? (
           <Text
@@ -63,6 +66,8 @@ export default function Input(props: input) {
           >
             <Image
               className="w-[25px] h-[25px]"
+              width={25}
+              height={25}
               source={
                 showPass
                   ? require("assets/eye.png")

@@ -1,3 +1,11 @@
+/*
+ * INFO: This file handles the local data of each user,
+ * meaning to say, it can be access even the device is offline.
+ * This is the one way to gather information if ever that the user
+ * offline and taking attendance.
+ *
+ * Author: Ryann Kim Sesgundo [08-08-25]
+ */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export async function GetItem(key: string) {
