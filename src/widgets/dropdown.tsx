@@ -10,6 +10,7 @@ interface spinner {
   placeholder?: string;
   onchange: (e: any) => void;
   value?: string | number;
+  changeable?: boolean;
 }
 
 export default function Spinner(props: spinner) {
@@ -46,6 +47,7 @@ export default function Spinner(props: spinner) {
           onBlur={() => {
             setFocus(false);
           }}
+          disable={!(props.changeable ?? false)}
         />
       </View>
     </View>

@@ -43,7 +43,6 @@ export default function SignUp({ navigation }: SignupProps) {
 
   // INFO: Department List Setup
   const [department, setDepartment] = useState<dept[]>([]);
-  const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -96,7 +95,6 @@ export default function SignUp({ navigation }: SignupProps) {
 
     if (req.length > 0) {
       const msg = `Kindly fill-up the following input: \n\n${req.join("\n")}`;
-      // setAlertVisible(true)
       Alert.alert("Notice", msg, [
         {
           text: "Close",
@@ -107,7 +105,7 @@ export default function SignUp({ navigation }: SignupProps) {
 
     // TODO: Student ID automation formatting
     if (
-      !signupData.username.at(4) !== "-" ||
+      signupData.username.at(4) !== "-" ||
       /([\W\s]+)/gi.test(signupData.username)
     ) {
       const username = signupData.username.replace(/([\W\s]+)/gi, "");
@@ -118,19 +116,16 @@ export default function SignUp({ navigation }: SignupProps) {
     // TODO: Validators
     if (!IDRegex.test(signupData.username)) {
       setError("Please enter a valid Student ID");
-      setVisible(true);
       return;
     }
 
     if (signupData.password !== confirm) {
       setError("Password are not match. Parang kayo");
-      setVisible(true);
       return;
     }
 
     if (signupData.password.length < 6) {
       setError("Password must be atleast 6 characters long");
-      setVisible(true);
       return;
     }
 
@@ -159,15 +154,18 @@ export default function SignUp({ navigation }: SignupProps) {
             const data = await post_unauth("users/register", signupData);
             if (data.error) {
               setError(data.error);
-              setVisible(true);
               setSending(false);
             }
             if (data.message) {
               setError(data.message);
-              setVisible(true);
               setTimeout(() => {
                 navigation.replace("Login");
               }, 1500);
+            } else {
+              setError(
+                "There's having a problem with the connection, please try again later.",
+              );
+              setSending(false);
             }
           },
         },
@@ -209,6 +207,7 @@ export default function SignUp({ navigation }: SignupProps) {
             valueField="department_id"
             labelField="department_name"
             label="Department"
+            changeable={sending}
           />
           <Input
             hint="012A-3456"
@@ -217,6 +216,7 @@ export default function SignUp({ navigation }: SignupProps) {
             }}
             label="Student ID"
             value={signupData.username}
+            editable={!sending}
           />
           <Input
             label="First Name"
@@ -224,6 +224,7 @@ export default function SignUp({ navigation }: SignupProps) {
               setSignup({ ...signupData, first_name: text });
             }}
             value={signupData.first_name}
+            editable={!sending}
           />
           <Input
             label="Middle Name"
@@ -231,6 +232,7 @@ export default function SignUp({ navigation }: SignupProps) {
               setSignup({ ...signupData, middle_name: text });
             }}
             value={signupData.middle_name}
+            editable={!sending}
           />
           <Input
             label="Last Name"
@@ -238,6 +240,7 @@ export default function SignUp({ navigation }: SignupProps) {
               setSignup({ ...signupData, last_name: text });
             }}
             value={signupData.last_name}
+            editable={!sending}
           />
           <Spinner
             onchange={(e: six) => {
@@ -261,6 +264,7 @@ export default function SignUp({ navigation }: SignupProps) {
             valueField="index"
             labelField="sex"
             label="Sex"
+            changeable={sending}
           />
           <Input
             label="Email"
@@ -268,6 +272,7 @@ export default function SignUp({ navigation }: SignupProps) {
               setSignup({ ...signupData, email: text });
             }}
             value={signupData.email}
+            editable={!sending}
           />
           <Input
             label="Password"
@@ -276,12 +281,14 @@ export default function SignUp({ navigation }: SignupProps) {
               setSignup({ ...signupData, password: text });
             }}
             value={signupData.password}
+            editable={!sending}
           />
           <Input
             label="Confirm Password"
             password={true}
             onchange={setConfirm}
             value={confirm}
+            editable={!sending}
           />
         </Scroller>
         <View className="w-full mt-4">
@@ -305,12 +312,12 @@ export default function SignUp({ navigation }: SignupProps) {
         </View>
       </Card>
       <Snackbar
-        visible={visible}
-        onDismiss={() => setVisible(false)}
+        visible={error.length > 0}
+        onDismiss={() => setError("")}
         action={{
           label: "Close",
           onPress: () => {
-            setVisible(false);
+            setError("");
           },
         }}
       >
