@@ -54,6 +54,10 @@ export default function Splash({ navigation }: SplashProps) {
         const added: string[] = [];
         const objs = Object.keys(response.new);
         for (const n of objs) {
+          // TODO: This is to get all the latest changelogs from the current version
+          if(n === version){
+            break
+          }
           added.push(`${n}:\n${response.new[n].join("\n")}`);
         }
         Alert.alert(
