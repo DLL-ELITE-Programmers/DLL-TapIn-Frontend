@@ -65,11 +65,11 @@ export default function Login({ navigation }: LoginProps) {
     setSending(true);
     const response = await post_unauth("users/login", loginData);
 
+    console.log(JSON.stringify(response));
     if (response.error) {
       setError(response.error);
       setSending(false);
-    }
-    if (response.message) {
+    } else if (response.message) {
       SetItem("user", response.user);
       navigation.replace("LoggedIn");
     } else {

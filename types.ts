@@ -18,6 +18,8 @@ export interface UserCredsOffline {
   email: string;
   sex: number;
   department: string;
+  password: string;
+  confirm: string;
 }
 
 export interface UserProps {

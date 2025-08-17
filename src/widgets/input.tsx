@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Image, Text, TextInput, View } from "react-native";
 
 interface input {
@@ -23,6 +23,12 @@ export default function Input(props: input) {
     text = text.replace(/_/g, " ");
     return text[0].toUpperCase() + text.substring(1);
   };
+
+  useEffect(() => {
+    if (props.password) {
+      setShowPass(true);
+    }
+  }, [props.editable]);
 
   return (
     <View className={`w-full`}>
@@ -58,8 +64,10 @@ export default function Input(props: input) {
         {props.password ? (
           <Text
             onPress={() => {
-              setShowPass((prev) => !prev);
-              setText(showPass ? "Hide" : "Show");
+              if (props.editable) {
+                setShowPass((prev) => !prev);
+                setText(showPass ? "Hide" : "Show");
+              }
             }}
             className="p-2 w-[50px] align-middle text-center h-full items-center justify-center"
             accessibilityLabel={textShow}

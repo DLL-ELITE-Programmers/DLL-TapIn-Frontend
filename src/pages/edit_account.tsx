@@ -9,17 +9,21 @@ import { EditAccountProps } from "src/interfaces/navigation_props";
 import Input from "src/widgets/input";
 import { UserCredsOffline, dept } from "types";
 import Spinner from "src/widgets/dropdown";
-import { get_unauth } from "utils/access";
+import { get_unauth, put } from "utils/access";
 import Button from "src/widgets/button";
+import { Snackbar } from "react-native-paper";
 
 export default function EditAccount({ navigation }: EditAccountProps) {
   const [department, setDepartment] = useState<dept[]>([]);
+  const [sending, setSending] = useState(false);
+  const [message, setMessage] = useState("");
   const [self, setSelf] = useState<UserCredsOffline>({
     username: "",
     first_name: "",
     last_name: "",
     email: "",
-    is_superuser: false,
+    password: "",
+    confirm: "",
   });
 
   useEffect(() => {
@@ -33,16 +37,32 @@ export default function EditAccount({ navigation }: EditAccountProps) {
     })();
   }, []);
 
+  const sendRequest = async () => {
+    setSending(true);
+    const response = await put("user", self);
+    if (response?.message !== undefined) {
+      setMessage(response.message);
+      setSending(false);
+    } else {
+      setMessage(
+        response?.error ??
+          "Sorry, but you might have internet problem or server error.",
+      );
+      setSending(false);
+    }
+  };
+
   return (
     <View className="flex-1">
       <Header />
-      <Card>
+      <Card className="flex-1">
         <PageHeadings
           title="Edit Account"
           subtitle="Modify your account information here"
         />
         <Scroller>
           <Spinner
+            changeable={false}
             onchange={(e: dept) => {
               setSelf({ ...self, department: e.department_id });
             }}
@@ -59,6 +79,7 @@ export default function EditAccount({ navigation }: EditAccountProps) {
             hint="012A-3456"
           />
           <Input
+            editable={!sending}
             label="First Name"
             value={self.first_name}
             onchange={(e) => {
@@ -66,6 +87,7 @@ export default function EditAccount({ navigation }: EditAccountProps) {
             }}
           />
           <Input
+            editable={!sending}
             label="Middle Name"
             value={self.middle_name ?? ""}
             onchange={(e) => {
@@ -73,6 +95,7 @@ export default function EditAccount({ navigation }: EditAccountProps) {
             }}
           />
           <Input
+            editable={!sending}
             label="Last Name"
             value={self.last_name}
             onchange={(e) => {
@@ -80,6 +103,7 @@ export default function EditAccount({ navigation }: EditAccountProps) {
             }}
           />
           <Input
+            editable={!sending}
             label="Email"
             value={self.email}
             onchange={(e) => {
@@ -90,6 +114,7 @@ export default function EditAccount({ navigation }: EditAccountProps) {
             onchange={(v) => {
               setSelf({ ...self, sex: v.index });
             }}
+            changeable={!sending}
             value={self.sex}
             data={[
               {
@@ -109,9 +134,41 @@ export default function EditAccount({ navigation }: EditAccountProps) {
             labelField="sex"
             label="Sex"
           />
+          <Input
+            editable={!sending}
+            value={self.password}
+            label="Password"
+            onchange={(text: string) => {
+              setSelf({ ...self, password: text });
+            }}
+            password={true}
+          />
+          <Input
+            editable={!sending}
+            value={self.confirm}
+            password={true}
+            label="Confirm Password"
+            onchange={(text: string) => {
+              setSelf({ ...self, confirm: text });
+            }}
+          />
         </Scroller>
-        <Button>Save</Button>
+        <Button loading={sending} onclick={sendRequest}>
+          Save
+        </Button>
       </Card>
+      <Snackbar
+        visible={message.length > 0}
+        onDismiss={() => setMessage("")}
+        action={{
+          label: "Close",
+          onPress: () => {
+            setMessage("");
+          },
+        }}
+      >
+        {message}
+      </Snackbar>
     </View>
   );
 }

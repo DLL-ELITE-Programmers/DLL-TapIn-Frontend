@@ -1,4 +1,4 @@
-name: EAS Build Android (Expo Only)
+name: Android Direct Build
 
 on:
   push:
