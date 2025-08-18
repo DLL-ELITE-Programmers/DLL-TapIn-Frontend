@@ -8,15 +8,15 @@ import { ForgotPasswordProps } from "src/interfaces/navigation_props";
 import Button from "src/widgets/button";
 import Input from "src/widgets/input";
 
+
+// TODO: Function is still under development. We need an email account for this one
 export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
   const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState("");
 
   const sendMail = async () => {
     if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i.test(email)) {
-      setError("Please enter a valid email");
-      setVisible(true);
+      setMessage("Please enter a valid email");
     }
   };
   return (
@@ -34,14 +34,14 @@ export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
         </View>
       </Card>
       <Snackbar
-        visible={visible}
-        onDismiss={() => setVisible(false)}
+        visible={message.length > 0}
+        onDismiss={() => setMessage("")}
         action={{
           label: "Close",
-          onPress: () => setVisible(false),
+          onPress: () => setMessage(""),
         }}
       >
-        {error}
+        {message}
       </Snackbar>
     </View>
   );

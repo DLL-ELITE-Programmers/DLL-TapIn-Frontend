@@ -24,7 +24,8 @@ export default function Splash({ navigation }: SplashProps) {
     first_name: "",
     last_name: "",
     email: "",
-    sex: 0
+    sex: 0,
+    remember: false
   });
 
   const [needed, setNeeded] = useState(currentVersion);
@@ -55,7 +56,7 @@ export default function Splash({ navigation }: SplashProps) {
         const objs = Object.keys(response.new);
         for (const n of objs) {
           // TODO: This is to get all the latest changelogs from the current version
-          if(n === version){
+          if (n === version) {
             break
           }
           added.push(`${n}:\n${response.new[n].join("\n")}`);
@@ -72,10 +73,11 @@ export default function Splash({ navigation }: SplashProps) {
       setNeeded(response.require);
     })();
 
+    // TODO: This code will trigger, if the user information is stored and wanted to remmeber
     const timer = setTimeout(() => {
       if (currentVersion >= needed) {
-        if (data.username) {
-          navigation.replace("LoggedIn");
+        if (data.username && data.remember) {
+          navigation.replace("LoggedIn")
         } else {
           navigation.replace("Hero");
         }
@@ -84,23 +86,26 @@ export default function Splash({ navigation }: SplashProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const response = await GetItem("user");
-  //     const info = await get_unauth("users/self", response);
-  //     if (info.error) {
-  //       setData({
-  //         username: "",
-  //         first_name: "",
-  //         last_name: "",
-  //         email: "",
-  //         is_superuser: false,
-  //       });
-  //     } else {
-  //       setData(response);
-  //     }
-  //   })();
-  // }, []);
+  useEffect(() => {
+    // TODO: Remember me function
+    (async () => {
+      const response = await GetItem("user");
+      if (response.remember) {
+        // const info = await get_unauth("users/self", response);
+        // if (info.error) {
+        //   setData({
+        //     username: "",
+        //     first_name: "",
+        //     last_name: "",
+        //     email: "",
+        //     sex: 0
+        //   });
+        // } else {
+        setData(response);
+        // }
+        // }
+      })();
+  }, []);
 
   return (
     <View className="flex-1 w-full justify-center items-center">

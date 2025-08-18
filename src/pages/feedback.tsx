@@ -5,14 +5,22 @@ import Header from "src/component/header";
 import PageHeadings from "src/component/page_heading";
 import Scroller from "src/component/scroller";
 import { FeedbackProps } from "src/interfaces/navigation_props";
-import Btn from "src/widgets/button";
+import Button from "src/widgets/button";
 import Input from "src/widgets/input";
+import { FeedbackInterface } from "types";
 
 export default function Feedback({ navigation }: FeedbackProps) {
-  const [feedTitle, setFeedTitle] = useState("");
-  const [feedMessage, setFeedMessage] = useState("");
+  const [sending, setSending] = useState(false)
+  const [message, setMessage] = useState("")
+  const [feedback, setFeedback] = useState<FeedbackInterface>({
+    title: "",
+    message: ""
+  })
 
-  const submit = async () => {};
+  const submit = async () => {
+    setSending(true)
+
+  };
 
   return (
     <View className="flex-1">
@@ -23,15 +31,22 @@ export default function Feedback({ navigation }: FeedbackProps) {
           subtitle="Send us your experience with the application."
         />
         <Scroller className="flex-1">
-          <Input label="Feedback Title" onchange={setFeedTitle} />
           <Input
+            editable={!sending}
+            label="Feedback Title" onchange={(text: string) => {
+              setFeedback({ ...feedback, title: text })
+            }} />
+          <Input
+            editable={!sending}
             label="Feedback message"
             multiline={true}
-            onchange={setFeedMessage}
+            onchange={(text: string) => {
+              setFeedback({ ...feedback, message: text })
+            }}
           />
-          <Btn onclick={submit}>Send feedback</Btn>
+          <Button loading={sending} onclick={submit}>Send feedback</Button>
         </Scroller>
       </Card>
-    </View>
+    </View >
   );
 }

@@ -65,12 +65,13 @@ export default function Login({ navigation }: LoginProps) {
     setSending(true);
     const response = await post_unauth("users/login", loginData);
 
-    console.log(JSON.stringify(response));
     if (response.error) {
       setError(response.error);
       setSending(false);
     } else if (response.message) {
-      SetItem("user", response.user);
+      const user = response.user
+      user.remember = remember
+      SetItem("user", user);
       navigation.replace("LoggedIn");
     } else {
       setError(
@@ -124,6 +125,7 @@ export default function Login({ navigation }: LoginProps) {
         <View className="flex flex-row justify-between items-center w-full">
           <View className="flex flex-row items-center">
             <Switch
+              disabled={!sending}
               value={remember}
               onValueChange={(val: boolean) => {
                 setRemember(val);

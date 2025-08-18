@@ -31,6 +31,11 @@ export default function LoggedIn({ navigation }: LoggedInProps) {
     return () => clearInterval(interval);
   }, []);
 
+  // INFO: This list has 3 required keys
+  // name: string -> This is to name or label the button
+  // navigate: string -> This is to go to the page. The page must registered in src/pages/index.tsx
+  // needInternet: boolean -> This is to remove the button once the device is offline or online
+  //                          This will also the key to prevent some minor issues in remember me function
   const menu: MenuProps[] = [
     {
       name: "Attend to an Event",

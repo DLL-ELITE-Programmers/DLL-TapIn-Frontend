@@ -18,8 +18,9 @@ export interface UserCredsOffline {
   email: string;
   sex: number;
   department: string;
-  password: string;
-  confirm: string;
+  remember?: boolean
+  password?: string;
+  confirm?: string;
 }
 
 export interface UserProps {
@@ -35,6 +36,14 @@ export interface UserProps {
     department_id: string;
     department_name: string;
   };
+  remember?: boolean
+  password?: string
+  confirm?: string
+}
+
+export interface FeedbackInterface {
+  title: string
+  message: string
 }
 
 export interface event_interface {
