@@ -46,7 +46,7 @@ export async function post_unauth(
 ) {
   const { data } = await axios
     .post(endpoint_middleware(endpoint), params || {})
-    .catch((errir) => {
+    .catch((error) => {
       return {
         data: error,
       };
