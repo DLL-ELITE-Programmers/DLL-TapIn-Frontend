@@ -4,16 +4,28 @@ import Title from "src/component/title";
 import { GetItem } from "src/control/data";
 import { HeroProps } from "src/interfaces/navigation_props";
 import Button from "src/widgets/button";
+import { UserProps } from "types";
 
 export default function Hero({ navigation }: HeroProps) {
   const [required, setRequired] = useState(false);
+  const [data, setData] = useState<UserProps>();
 
   useEffect(() => {
     (async () => {
+      const user = await GetItem("user");
+      setData(user);
       const update = await GetItem("updates");
       setRequired(update);
     })();
   }, []);
+
+  useEffect(() => {
+    if (data) {
+      if (data.username && data?.remember) {
+        navigation.replace("LoggedIn");
+      }
+    }
+  }, [data]);
 
   return (
     <View className="flex flex-col w-full flex-1 p-4 items-center justify-center gap-4 pb-6">

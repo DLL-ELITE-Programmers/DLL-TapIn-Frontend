@@ -16,7 +16,7 @@ export default function QRGenerator({ navigation }: QRGeneratorProps) {
     first_name: "",
     last_name: "",
     email: "",
-    is_superuser: false,
+    sex: 0,
   });
 
   useEffect(() => {

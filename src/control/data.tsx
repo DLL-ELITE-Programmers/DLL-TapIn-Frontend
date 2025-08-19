@@ -13,7 +13,10 @@ export async function GetItem(key: string) {
   return JSON.parse(data ?? "{'error': 'No Data here'}");
 }
 
-export async function SetItem(key: string, data: Object) {
+export async function SetItem(
+  key: string,
+  data: Record<string, any> | Record<string, any>[],
+) {
   await AsyncStorage.setItem(key, JSON.stringify(data, null, 2));
 }
 

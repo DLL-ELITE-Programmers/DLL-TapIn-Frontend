@@ -43,13 +43,18 @@ export default function SignUp({ navigation }: SignupProps) {
 
   // INFO: Department List Setup
   const [department, setDepartment] = useState<dept[]>([]);
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
 
   const IDRegex = /^(\d+)([a-zA-Z]){1}-(\d+)$/i;
 
   useEffect(() => {
     (async () => {
+      const data = await GetItem("user");
+      if (data.username && data.remember) {
+        navigation.replace("LoggedIn");
+      }
+
       const response = await get_unauth("department");
       setDepartment(response);
     })();
@@ -104,28 +109,23 @@ export default function SignUp({ navigation }: SignupProps) {
     }
 
     // TODO: Student ID automation formatting
-    if (
-      signupData.username.at(4) !== "-" ||
-      /([\W\s]+)/gi.test(signupData.username)
-    ) {
-      const username = signupData.username.replace(/([\W\s]+)/gi, "");
-      const user = username.substring(0, 4) + "-" + username.substring(4);
-      signupData.username = user;
-    }
+    const username = signupData.username.replace(/([\W\s]+)/gi, "");
+    const user = username.substring(0, 4) + "-" + username.substring(4);
+    signupData.username = user;
 
     // TODO: Validators
     if (!IDRegex.test(signupData.username)) {
-      setError("Please enter a valid Student ID");
+      setMessage("Please enter a valid Student ID");
       return;
     }
 
     if (signupData.password !== confirm) {
-      setError("Password are not match. Parang kayo");
+      setMessage("Password are not match. Parang kayo");
       return;
     }
 
     if (signupData.password.length < 6) {
-      setError("Password must be atleast 6 characters long");
+      setMessage("Password must be atleast 6 characters long");
       return;
     }
 
@@ -153,16 +153,16 @@ export default function SignUp({ navigation }: SignupProps) {
 
             const data = await post_unauth("users/register", signupData);
             if (data.error) {
-              setError(data.error);
+              setMessage(data.error);
               setSending(false);
             }
             if (data.message) {
-              setError(data.message);
+              setMessage(data.message);
               setTimeout(() => {
                 navigation.replace("Login");
               }, 1500);
             } else {
-              setError(
+              setMessage(
                 "There's having a problem with the connection, please try again later.",
               );
               setSending(false);
@@ -312,16 +312,16 @@ export default function SignUp({ navigation }: SignupProps) {
         </View>
       </Card>
       <Snackbar
-        visible={error.length > 0}
-        onDismiss={() => setError("")}
+        visible={message.length > 0}
+        onDismiss={() => setMessage("")}
         action={{
           label: "Close",
           onPress: () => {
-            setError("");
+            setMessage("");
           },
         }}
       >
-        {error}
+        {message}
       </Snackbar>
     </View>
   );
