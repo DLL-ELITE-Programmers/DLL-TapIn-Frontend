@@ -107,8 +107,8 @@ export default function Splash({ navigation }: SplashProps) {
         // } else {
         setData(response);
         // }
-        // }
-      })();
+      }
+    })();
   }, []);
 
   return (
