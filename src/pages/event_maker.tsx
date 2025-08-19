@@ -25,7 +25,7 @@ export default function EventMaker({ navigation }: EventMakerProps) {
     })();
   }, []);
 
-  const submitEvent = () => {};
+  const submitEvent = () => { };
 
   return (
     <View className="flex-1 w-full gap-2">
@@ -42,7 +42,7 @@ export default function EventMaker({ navigation }: EventMakerProps) {
               valueField="organization_id"
               labelField="organization_name"
               label="Organization"
-              onchange={(e: dept) => {
+              onchange={(e: org) => {
                 setOrganization(e.organization_id);
               }}
             />

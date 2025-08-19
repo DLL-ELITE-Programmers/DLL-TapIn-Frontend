@@ -1,9 +1,9 @@
 /*
- * NOTE: This file witll help to organize the interfaces for each pages
- * related to navigation
+ * INFO: This file will help to organize the interfaces for each pages
+ * related to navigation. Please do visit the src/pages/index.tsx for more.
  *
- * INFO:
- * File created by: Ryann Kim Sesgundo
+ *
+ * Author: Ryann Kim Sesgundo [08-08-25]
  */
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -19,15 +19,20 @@ export type RootStackParamList = {
   EventMaker: undefined;
   LoggedIn: undefined;
   Terms: undefined;
-  Feedback: undefined
+  Feedback: undefined;
+  EditAccount: undefined;
 };
+
+export interface EditAccountProps {
+  navigation: NativeStackNavigationProp<RootStackParamList, "EditAccount">;
+}
 
 export interface EventMakerProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "EventMaker">;
 }
 
 export interface FeedbackProps {
-  navigation: NativeStackNavigationProp<RootStackParamList, "Feedback">
+  navigation: NativeStackNavigationProp<RootStackParamList, "Feedback">;
 }
 
 export interface ForgotPasswordProps {
@@ -41,7 +46,6 @@ export interface HeroProps {
 export interface LoginProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "Login">;
 }
-
 
 export interface LoggedInProps {
   navigation: NativeStackNavigationProp<RootStackParamList, "LoggedIn">;

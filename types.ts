@@ -10,18 +10,40 @@ export type RootStackParamList = {
   LoggedIn: undefined;
 };
 
+export interface UserCredsOffline {
+  username: string;
+  first_name: string;
+  middle_name?: string;
+  last_name: string;
+  email: string;
+  sex: number;
+  department: string;
+  remember?: boolean
+  password?: string;
+  confirm?: string;
+}
+
 export interface UserProps {
   username: string;
   first_name: string;
   middle_name?: string;
   last_name: string;
   email: string;
-  is_superuser: boolean;
+  sex: number;
+  is_superuser?: boolean;
   department_info?: {
     id: number;
     department_id: string;
     department_name: string;
   };
+  remember?: boolean
+  password?: string
+  confirm?: string
+}
+
+export interface FeedbackInterface {
+  title: string
+  message: string
 }
 
 export interface event_interface {

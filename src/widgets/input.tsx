@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Image, Text, TextInput, View } from "react-native";
 
 interface input {
@@ -11,16 +11,24 @@ interface input {
   onchange?: (e: string) => void;
   type?: React.ComponentProps<typeof TextInput>["textContentType"];
   required?: boolean;
+  editable?: boolean;
 }
 
 export default function Input(props: input) {
   const [showPass, setShowPass] = useState(props.password);
   const [textShow, setText] = useState("Show");
   const [isFocused, setFocused] = useState(false);
+
   const capitalized = (text: string) => {
     text = text.replace(/_/g, " ");
     return text[0].toUpperCase() + text.substring(1);
   };
+
+  useEffect(() => {
+    if (props.password) {
+      setShowPass(true);
+    }
+  }, [props.editable]);
 
   return (
     <View className={`w-full`}>
@@ -51,18 +59,23 @@ export default function Input(props: input) {
           onBlur={() => {
             setFocused(false);
           }}
+          editable={props.editable ?? true}
         />
         {props.password ? (
           <Text
             onPress={() => {
-              setShowPass((prev) => !prev);
-              setText(showPass ? "Hide" : "Show");
+              if (props.editable) {
+                setShowPass((prev) => !prev);
+                setText(showPass ? "Hide" : "Show");
+              }
             }}
             className="p-2 w-[50px] align-middle text-center h-full items-center justify-center"
             accessibilityLabel={textShow}
           >
             <Image
               className="w-[25px] h-[25px]"
+              width={25}
+              height={25}
               source={
                 showPass
                   ? require("assets/eye.png")

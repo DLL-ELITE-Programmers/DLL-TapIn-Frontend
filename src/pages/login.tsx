@@ -28,7 +28,6 @@ export default function Login({ navigation }: LoginProps) {
     password: "",
   });
 
-  const [visible, setVisible] = useState(false);
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
 
@@ -38,21 +37,23 @@ export default function Login({ navigation }: LoginProps) {
     // TODO: To check if there's input
     if (!loginData.username || !loginData.password) {
       setError("Please insert your Student ID and/or Password");
-      setVisible(true);
       return;
     }
+
+    // TODO: Polishing ID
+    const username = loginData.username.replace(/([\W\s]+)/gi, "");
+    const user = username.substring(0, 4) + "-" + username.substring(4);
+    loginData.username = user;
 
     // TODO: Student ID validation
     if (!loginRegex.test(loginData.username)) {
       setError("Please check your Student ID.");
-      setVisible(true);
       return;
     }
 
     // TODO: Password validation
     if (loginData.password.length < 6) {
       setError("Password must be atleast 6 characters");
-      setVisible(true);
       return;
     }
 
@@ -62,12 +63,17 @@ export default function Login({ navigation }: LoginProps) {
 
     if (response.error) {
       setError(response.error);
-      setVisible(true);
       setSending(false);
-    }
-    if (response.message) {
-      SetItem("user", response.user);
+    } else if (response.message) {
+      const user = response.user;
+      user.remember = remember;
+      SetItem("user", user);
       navigation.replace("LoggedIn");
+    } else {
+      setError(
+        "There's having a problem with the connection, please try again later.",
+      );
+      setSending(false);
     }
   };
 
@@ -101,6 +107,7 @@ export default function Login({ navigation }: LoginProps) {
           hint="012A-3456"
           label="Student ID"
           value={loginData.username}
+          editable={!sending}
         />
         <Input
           onchange={(text) => {
@@ -109,10 +116,12 @@ export default function Login({ navigation }: LoginProps) {
           value={loginData.password}
           label="Password"
           password={true}
+          editable={!sending}
         />
         <View className="flex flex-row justify-between items-center w-full">
           <View className="flex flex-row items-center">
             <Switch
+              disabled={!sending}
               value={remember}
               onValueChange={(val: boolean) => {
                 setRemember(val);
@@ -149,12 +158,12 @@ export default function Login({ navigation }: LoginProps) {
         </View>
       </Card>
       <Snackbar
-        visible={visible}
-        onDismiss={() => setVisible(false)}
+        visible={error.length > 0}
+        onDismiss={() => setError("")}
         action={{
           label: "Close",
           onPress: () => {
-            setVisible(false);
+            setError("");
           },
         }}
       >
