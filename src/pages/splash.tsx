@@ -5,6 +5,7 @@ import { GetItem, SetItem } from "src/control/data";
 import { SplashProps } from "src/interfaces/navigation_props";
 import { UserProps } from "types";
 import { get_unauth } from "utils/access";
+import * as packageJSON from 'package.json'
 
 import Contants from "expo-constants";
 
@@ -18,6 +19,8 @@ import Contants from "expo-constants";
 // core/viewsets/updates.py on the backend part.
 const currentVersion = -1;
 
+// TODO: This is to make the value auto update
+const versionName = "0.1.0"
 export default function Splash({ navigation }: SplashProps) {
   const [data, setData] = useState<UserProps>({
     username: "",
@@ -32,7 +35,8 @@ export default function Splash({ navigation }: SplashProps) {
 
   useEffect(() => {
     (async () => {
-      const version = Contants?.manifest2?.extra?.expoClient?.version;
+      const vn = packageJSON.version
+      const version = Contants?.manifest2?.extra?.expoClient?.version ?? vn;
       const response = await get_unauth("updates");
       const ver = response.version;
       setNeeded(ver ?? currentVersion);

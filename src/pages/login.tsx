@@ -40,14 +40,10 @@ export default function Login({ navigation }: LoginProps) {
       return;
     }
 
-    if (
-      loginData.username.at(4) !== "-" ||
-      /([\W\s]+)/gi.test(loginData.username)
-    ) {
-      const username = loginData.username.replace(/([\W\s])/gi, "");
-      const user = username.substring(0, 4) + "-" + username.substring(4);
-      loginData.username = user;
-    }
+    // TODO: Polishing ID
+    const username = loginData.username.replace(/([\W\s]+)/gi, "");
+    const user = username.substring(0, 4) + "-" + username.substring(4);
+    loginData.username = user;
 
     // TODO: Student ID validation
     if (!loginRegex.test(loginData.username)) {
@@ -69,8 +65,8 @@ export default function Login({ navigation }: LoginProps) {
       setError(response.error);
       setSending(false);
     } else if (response.message) {
-      const user = response.user
-      user.remember = remember
+      const user = response.user;
+      user.remember = remember;
       SetItem("user", user);
       navigation.replace("LoggedIn");
     } else {
