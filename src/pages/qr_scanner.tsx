@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import {
   BarcodeScanningResult,
   CameraView,
@@ -23,13 +23,13 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   const [eventID, setEventID] = useState("");
   const [eventInfo, setEventInfo] = useState<event_interface>({
     event_description: "",
-    event_id: "123",
+    event_id: "",
+    event_name: "",
     event_venue: "",
-    organization: 1,
+    organization: [1],
   });
 
-  const [error, setError] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     if (!permission?.granted) {
@@ -49,12 +49,10 @@ export default function QRScanner({ navigation }: QRScannerProps) {
         participant: student?.username,
       });
       if (response.error) {
-        setError(response.error);
-        setVisible(true);
+        setMessage(response.error);
         setPleaseWait(false);
       } else {
-        setError(response.message);
-        setVisible(true);
+        setMessage(response.message);
         setStudent({});
       }
     }
@@ -68,17 +66,19 @@ export default function QRScanner({ navigation }: QRScannerProps) {
 
       console.log(time.getTime() - info.time);
       // TODO: Time monitorer
-      if (time.getTime() - info.time <= 60000) {
-        console.log("Still");
-      } else {
-        console.log("Failed");
+      if (time.getTime() - info.time > 60000) {
+        Alert.alert("Notice", "This credentials is expired.", [
+          {
+            text: "Close",
+          },
+        ]);
+        return;
       }
       const user_info = await get_unauth("users", {
         user: info.user,
       });
       if (user_info.error) {
-        setError(user_info.error);
-        setVisible(true);
+        setMessage(user_info.error);
       } else {
         setStudent(user_info);
       }
@@ -90,13 +90,11 @@ export default function QRScanner({ navigation }: QRScannerProps) {
       key: eventID,
     });
     if (response.error) {
-      setError(response.error);
-      setVisible(true);
+      setMessage(response.error);
     }
     if (response.event_id) {
       setEventInfo(response);
-      setError("Done");
-      setVisible(true);
+      setMessage("Done");
     }
   };
 
@@ -156,16 +154,16 @@ export default function QRScanner({ navigation }: QRScannerProps) {
         </Card>
       )}
       <Snackbar
-        visible={visible}
-        onDismiss={() => setVisible(false)}
+        visible={message.length > 0}
+        onDismiss={() => setMessage("")}
         action={{
           label: "Close",
           onPress: () => {
-            setVisible(false);
+            setMessage("");
           },
         }}
       >
-        {error}
+        {message}
       </Snackbar>
     </View>
   );

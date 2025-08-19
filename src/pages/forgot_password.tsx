@@ -19,6 +19,7 @@ export default function ForgotPassword({ navigation }: ForgotPasswordProps) {
       setMessage("Please enter a valid email");
     }
   };
+
   return (
     <View className="flex-1 w-full items-center pt-6 gap-4">
       <Title />

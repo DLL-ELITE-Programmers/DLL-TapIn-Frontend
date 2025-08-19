@@ -1,15 +1,3 @@
-export type RootStackParamList = {
-  Login: undefined;
-  Signup: undefined;
-  QRGenerator: undefined;
-  ForgotPassword: undefined;
-  Hero: undefined;
-  Splash: undefined;
-  QRScanner: undefined;
-  EventMaker: undefined;
-  LoggedIn: undefined;
-};
-
 export interface UserCredsOffline {
   username: string;
   first_name: string;
@@ -18,7 +6,7 @@ export interface UserCredsOffline {
   email: string;
   sex: number;
   department: string;
-  remember?: boolean
+  remember?: boolean;
   password?: string;
   confirm?: string;
 }
@@ -36,14 +24,14 @@ export interface UserProps {
     department_id: string;
     department_name: string;
   };
-  remember?: boolean
-  password?: string
-  confirm?: string
+  remember?: boolean;
+  password?: string;
+  confirm?: string;
 }
 
 export interface FeedbackInterface {
-  title: string
-  message: string
+  title: string;
+  message: string;
 }
 
 export interface event_interface {
@@ -51,7 +39,7 @@ export interface event_interface {
   event_name: string;
   event_description: string;
   event_venue: string;
-  organization: number[];
+  organization: number[] | number;
 }
 
 export interface org {
