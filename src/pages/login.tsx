@@ -1,11 +1,11 @@
 import { Switch, Text, View } from "react-native";
 import Input from "src/widgets/input";
 import Button from "src/widgets/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Title from "src/component/title";
 import { post_unauth } from "utils/access";
 import { Snackbar } from "react-native-paper";
-import { SetItem } from "src/control/data";
+import { GetItem, SetItem } from "src/control/data";
 import Card from "src/component/card";
 import { LoginProps } from "src/interfaces/navigation_props";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -28,15 +28,24 @@ export default function Login({ navigation }: LoginProps) {
     password: "",
   });
 
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const data = await GetItem("user");
+      if (data.username && data.remember) {
+        navigation.replace("LoggedIn");
+      }
+    })();
+  }, []);
 
   const login = async (navigation: any) => {
     const loginRegex = /^(\d+)([a-zA-Z]){1}-(\d+)$/i;
 
     // TODO: To check if there's input
     if (!loginData.username || !loginData.password) {
-      setError("Please insert your Student ID and/or Password");
+      setMessage("Please insert your Student ID and/or Password");
       return;
     }
 
@@ -47,13 +56,13 @@ export default function Login({ navigation }: LoginProps) {
 
     // TODO: Student ID validation
     if (!loginRegex.test(loginData.username)) {
-      setError("Please check your Student ID.");
+      setMessage("Please check your Student ID.");
       return;
     }
 
     // TODO: Password validation
     if (loginData.password.length < 6) {
-      setError("Password must be atleast 6 characters");
+      setMessage("Password must be atleast 6 characters");
       return;
     }
 
@@ -62,7 +71,7 @@ export default function Login({ navigation }: LoginProps) {
     const response = await post_unauth("users/login", loginData);
 
     if (response.error) {
-      setError(response.error);
+      setMessage(response.error);
       setSending(false);
     } else if (response.message) {
       const user = response.user;
@@ -70,7 +79,7 @@ export default function Login({ navigation }: LoginProps) {
       SetItem("user", user);
       navigation.replace("LoggedIn");
     } else {
-      setError(
+      setMessage(
         "There's having a problem with the connection, please try again later.",
       );
       setSending(false);
@@ -121,7 +130,7 @@ export default function Login({ navigation }: LoginProps) {
         <View className="flex flex-row justify-between items-center w-full">
           <View className="flex flex-row items-center">
             <Switch
-              disabled={!sending}
+              disabled={sending}
               value={remember}
               onValueChange={(val: boolean) => {
                 setRemember(val);
@@ -130,7 +139,9 @@ export default function Login({ navigation }: LoginProps) {
             <Text
               className="font-xs"
               onPress={() => {
-                setRemember((prev) => !prev);
+                if (!sending) {
+                  setRemember((prev) => !prev);
+                }
               }}
             >
               {remember ? "Remembered" : "Remember me"}
@@ -158,16 +169,16 @@ export default function Login({ navigation }: LoginProps) {
         </View>
       </Card>
       <Snackbar
-        visible={error.length > 0}
-        onDismiss={() => setError("")}
+        visible={message.length > 0}
+        onDismiss={() => setMessage("")}
         action={{
           label: "Close",
           onPress: () => {
-            setError("");
+            setMessage("");
           },
         }}
       >
-        {error}
+        {message}
       </Snackbar>
     </View>
   );

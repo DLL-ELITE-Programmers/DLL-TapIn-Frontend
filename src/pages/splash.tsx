@@ -5,7 +5,7 @@ import { GetItem, SetItem } from "src/control/data";
 import { SplashProps } from "src/interfaces/navigation_props";
 import { UserProps } from "types";
 import { get_unauth } from "utils/access";
-import * as packageJSON from 'package.json'
+import * as packageJSON from "package.json";
 
 import Contants from "expo-constants";
 
@@ -20,22 +20,24 @@ import Contants from "expo-constants";
 const currentVersion = -1;
 
 // TODO: This is to make the value auto update
-const versionName = "0.1.0"
+const versionName = "0.1.0";
 export default function Splash({ navigation }: SplashProps) {
-  const [data, setData] = useState<UserProps>({
-    username: "",
-    first_name: "",
-    last_name: "",
-    email: "",
-    sex: 0,
-    remember: false
-  });
+  const [data, setData] = useState<UserProps>();
+  // username: "",
+  // first_name: "",
+  // last_name: "",
+  // email: "",
+  // sex: 0,
+  // remember: false,
 
   const [needed, setNeeded] = useState(currentVersion);
 
   useEffect(() => {
     (async () => {
-      const vn = packageJSON.version
+      const getUser = await GetItem("user");
+      console.log(getUser);
+      setData(getUser);
+      const vn = packageJSON.version;
       const version = Contants?.manifest2?.extra?.expoClient?.version ?? vn;
       const response = await get_unauth("updates");
       const ver = response.version;
@@ -67,7 +69,7 @@ export default function Splash({ navigation }: SplashProps) {
         }
         Alert.alert(
           "New Verson Update",
-          `${version}\n${response.message}\n\n${added.join("\n\n")} `,
+          `${response.message}\n\n${added.join("\n\n")} `,
           buttons,
           {
             cancelable: response.require <= currentVersion,
@@ -76,40 +78,25 @@ export default function Splash({ navigation }: SplashProps) {
       }
       setNeeded(response.require);
     })();
-
-    // TODO: This code will trigger, if the user information is stored and wanted to remmeber
-    const timer = setTimeout(() => {
-      if (currentVersion >= needed) {
-        if (data.username && data.remember) {
-          navigation.replace("LoggedIn")
-        } else {
-          navigation.replace("Hero");
-        }
-      }
-    }, 2000);
-    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    // TODO: Remember me function
-    (async () => {
-      const response = await GetItem("user");
-      if (response.remember) {
-        // const info = await get_unauth("users/self", response);
-        // if (info.error) {
-        //   setData({
-        //     username: "",
-        //     first_name: "",
-        //     last_name: "",
-        //     email: "",
-        //     sex: 0
-        //   });
-        // } else {
-        setData(response);
-        // }
+    // TODO: This code will trigger, if the user information is stored and wanted to remmeber
+    const timer = setTimeout(() => {
+      if (data) {
+        if (currentVersion >= needed) {
+          if (data.username && data.remember) {
+            navigation.replace("LoggedIn");
+          } else {
+            navigation.replace("Hero");
+          }
+        }
+      } else {
+        navigation.replace("Hero");
       }
-    })();
-  }, []);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [data]);
 
   return (
     <View className="flex-1 w-full justify-center items-center">
