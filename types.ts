@@ -43,6 +43,8 @@ export interface event_interface {
 }
 
 export interface org {
+  deparment: number[]
+  id: number
   organization_id: string;
   organization_name: string;
 }

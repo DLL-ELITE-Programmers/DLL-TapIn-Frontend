@@ -47,7 +47,7 @@ export default function Spinner(props: spinner) {
           onBlur={() => {
             setFocus(false);
           }}
-          disable={!(props.changeable ?? false)}
+          disable={!(props.changeable ?? true)}
         />
       </View>
     </View>
