@@ -57,13 +57,13 @@ export default function Splash({ navigation }: SplashProps) {
         for (const n of objs) {
           // TODO: This is to get all the latest changelogs from the current version
           if (n === version) {
-            break
+            break;
           }
           added.push(`${n}:\n${response.new[n].join("\n")}`);
         }
         Alert.alert(
           "New Verson Update",
-          `${response.message}\n\n${added.join("\n\n")} `,
+          `${version}\n${response.message}\n\n${added.join("\n\n")} `,
           buttons,
           {
             cancelable: response.require <= currentVersion,
