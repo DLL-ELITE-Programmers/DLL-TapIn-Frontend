@@ -101,7 +101,7 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   return (
     <View className="w-full flex-1">
       <Header />
-      {eventInfo.event_name.length == 10 ? (
+      {eventInfo.event_id.length >= 10 ? (
         <Card>
           <View className="w-full items-center">
             <Text
