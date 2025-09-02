@@ -21,6 +21,7 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   const [student, setStudent] = useState<UserProps>();
   const [pleaseWait, setPleaseWait] = useState(false);
   const [eventID, setEventID] = useState("");
+  const [coding, setCoding] = useState(false)
   const [eventInfo, setEventInfo] = useState<event_interface>({
     event_description: "",
     event_id: "",
@@ -86,14 +87,17 @@ export default function QRScanner({ navigation }: QRScannerProps) {
   };
 
   const checkEvent = async () => {
+    setCoding(true)
     const response = await get_unauth("events", {
       key: eventID,
     });
     if (response.error) {
       setMessage(response.error);
+      setCoding(false)
     }
     if (response.event_id) {
       setEventInfo(response);
+      setCoding(false)
       setMessage("Done");
     }
   };
@@ -134,7 +138,7 @@ export default function QRScanner({ navigation }: QRScannerProps) {
             </Text>
           </View>
           {student?.username ? (
-            <Button onclick={submitStudent}>Present</Button>
+            <Button onclick={submitStudent} loading={pleaseWait}>Present</Button>
           ) : null}
         </Card>
       ) : (
@@ -148,8 +152,9 @@ export default function QRScanner({ navigation }: QRScannerProps) {
               onchange={setEventID}
               label="Event Passcode"
               password={true}
+              editable={!coding}
             />
-            <Button onclick={checkEvent}>Check passcode</Button>
+            <Button onclick={checkEvent} loading={coding}>Check passcode</Button>
           </View>
         </Card>
       )}
