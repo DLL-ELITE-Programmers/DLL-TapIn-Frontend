@@ -7,7 +7,7 @@
  * Author: Ryann Kim Sesgundo [08-08-25]
  */
 
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { GetItem } from "src/control/data";
 
 const url = "https://dlltapinserver.asse.devtunnels.ms:8000/seems-so-bad"; // INFO: Deployment test
@@ -24,34 +24,34 @@ const endpoint_middleware = (endpoint: string) => {
   return `${url}${endpoint}`;
 };
 
+const response = async ( data: AxiosResponse, status: number ) => {
+  if(status >= 200 && status < 300){
+    return data
+  }else{
+    return {
+      "error": "Server cannot be reach, please try again or reconnect your device to the internet"
+    }
+  }
+}
+
 export async function get_unauth(
   endpoint: string,
   params?: Record<string, any>,
 ) {
-  const { data } = await axios
+  const { data, status } = await axios
     .get(endpoint_middleware(endpoint), {
       params: params,
     })
-    .catch((error) => {
-      return {
-        data: error,
-      };
-    });
-  return data;
+  return response(data, status);
 }
 
 export async function post_unauth(
   endpoint: string,
   params?: Record<string, any>,
 ) {
-  const { data } = await axios
+  const { data, status } = await axios
     .post(endpoint_middleware(endpoint), params || {})
-    .catch((error) => {
-      return {
-        data: error,
-      };
-    });
-  return data;
+    return response(data, status);
 }
 
 export async function get(endpoint: string, params?: Record<string, any>) {
@@ -62,20 +62,14 @@ export async function get(endpoint: string, params?: Record<string, any>) {
     };
   }
 
-  const { data } = await axios
+  const { data, status } = await axios
     .get(endpoint_middleware(endpoint), {
       params: params,
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-    .catch((error) => {
-      return {
-        data: error,
-      };
-    });
-
-  return data;
+    return response(data, status);
 }
 
 export async function post(endpoint: string, params: Record<string, any>) {
@@ -85,18 +79,13 @@ export async function post(endpoint: string, params: Record<string, any>) {
       error: "Unknown token",
     };
   }
-  const { data } = await axios
+  const { data, status } = await axios
     .post(endpoint_middleware(endpoint), params, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-    .catch((error) => {
-      return {
-        data: error,
-      };
-    });
-  return data;
+    return response(data, status);
 }
 
 export async function put(endpoint: string, params: Record<string, any>) {
@@ -106,15 +95,11 @@ export async function put(endpoint: string, params: Record<string, any>) {
       error: "Unknown token",
     };
   }
-  const { data } = await axios
+  const { data, status } = await axios
     .put(endpoint_middleware(endpoint), params, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-    })
-    .catch((error) => {
-      return {
-        data: error,
-      };
     });
+    return response(data, status);
 }
