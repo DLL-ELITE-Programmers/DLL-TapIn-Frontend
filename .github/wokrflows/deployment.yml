@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  content: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,9 +17,14 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version:${{ matrix.node-version }}
 
-      - run: npm ci
+      - name: Update and Installation of Dependencies
+        run: |
+          npm install npm-check-updates
+          ncu - u
+          npm install
+          npm install gh-pages
 
       - name: Create .env
         run: |
@@ -26,4 +34,5 @@ jobs:
           NODE_ENV=production
           EOF
 
-      - run: npm run deploy
+      - run: npm run build
+      - run: npx gh-pages -b deploy -d dist
