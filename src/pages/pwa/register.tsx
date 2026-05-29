@@ -6,18 +6,23 @@ interface FormProps {
 	onClose: () => void
 }
 
-export default function Login(props: FormProps) {
+export default function Registration(props: FormProps) {
 	const [studentId, setStudentId] = useState("")
 	const [password, setPassword] = useState("")
+	const [confirmPassword, setConfirmPassword] = useState("")
 	const [showPassword, setShowPassword] = useState(false)
 
-	const handleLogin = (e: React.FormEvent) => {
+	const handleRegister = (e: React.FormEvent) => {
 		e.preventDefault()
-		console.log("Logging in with:", { studentId, password })
+		if (password !== confirmPassword) {
+			alert("Passwords do not match!")
+			return
+		}
+		console.log("Registering with:", { studentId, password })
 	}
 
 	return (
-		<div className={`fixed ${props.visible ? "bottom-0" : "-bottom-[100%]"} bg-sky-100 h-[calc(55%-0.5rem)] w-full transition-all duration-500 ease-in-out rounded-t-3xl p-6 shadow-2xl flex flex-col items-center`}>
+		<div className={`fixed ${props.visible ? "bottom-0" : "-bottom-[100%]"} bg-sky-100 h-[calc(65%-0.5rem)] w-full transition-all duration-500 ease-in-out rounded-t-3xl p-6 shadow-2xl flex flex-col items-center`}>
 			<button
 				onClick={props.onClose}
 				className="absolute top-4 right-4 p-2 text-sky-900 hover:bg-sky-200 rounded-full transition-colors"
@@ -25,10 +30,10 @@ export default function Login(props: FormProps) {
 				<FaX />
 			</button>
 
-			<form onSubmit={handleLogin} className="w-full max-w-sm flex flex-col gap-4 mt-4">
+			<form onSubmit={handleRegister} className="w-full max-w-sm flex flex-col gap-4 mt-4">
 				<div className="flex flex-col gap-1 mb-2">
-					<span className="oswald text-2xl text-sky-900">Welcome Back!</span>
-					<span className="text-sm text-sky-700 font-medium">Please login to your account</span>
+					<span className="oswald text-2xl text-sky-900">Welcome Dalubcenian!</span>
+					<span className="text-sm text-sky-700 font-medium">Please register your account</span>
 				</div>
 
 				<div className="flex flex-col gap-4">
@@ -69,20 +74,25 @@ export default function Login(props: FormProps) {
 						</div>
 					</div>
 
-					<div className="flex justify-end">
-						<button
-							type="button"
-							className="text-xs font-bold text-sky-600 hover:text-sky-800 transition-colors uppercase tracking-tight"
-						>
-							Forgot Password?
-						</button>
+					<div className="flex flex-col gap-1">
+						<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Confirm Password</label>
+						<div className="relative">
+							<input
+								type={showPassword ? "text" : "password"}
+								value={confirmPassword}
+								onChange={(e) => setConfirmPassword(e.target.value)}
+								placeholder="Re-enter your password"
+								className="w-full bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm pr-12"
+								required
+							/>
+						</div>
 					</div>
 
 					<button
 						type="submit"
 						className="bg-sky-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-sky-200 hover:bg-sky-700 active:scale-95 transition-all mt-2"
 					>
-						LOGIN
+						REGISTER
 					</button>
 				</div>
 			</form>
