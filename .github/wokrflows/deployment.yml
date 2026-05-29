@@ -1,0 +1,38 @@
+name: Auto Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  content: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version:${{ matrix.node-version }}
+
+      - name: Update and Installation of Dependencies
+        run: |
+          npm install npm-check-updates
+          ncu - u
+          npm install
+          npm install gh-pages
+
+      - name: Create .env
+        run: |
+          cat > .env << EOF
+          API_URL=${{ secrets.API_URL }}
+          API_KEY=${{ secrets.API_KEY }}
+          NODE_ENV=production
+          EOF
+
+      - run: npm run build
+      - run: npx gh-pages -b deploy -d dist
