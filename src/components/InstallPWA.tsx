@@ -11,7 +11,10 @@ interface BeforeInstallPromptEvent extends Event {
 
 export default function InstallPWA() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [showPopup, setShowPopup] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [isCompatible] = useState(() => {
+    return ('BeforeInstallPromptEvent' in window) || ('onbeforeinstallprompt' in window);
+  });
 
   useEffect(() => {
     const handler = (e: Event) => {
@@ -19,8 +22,7 @@ export default function InstallPWA() {
       e.preventDefault();
       // Stash the event so it can be triggered later.
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      // Show the install button or popup
-      setShowPopup(true);
+      setIsReady(true);
     };
 
     window.addEventListener('beforeinstallprompt', handler);
@@ -31,7 +33,14 @@ export default function InstallPWA() {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      if (!isCompatible) {
+        alert("PWA installation is not supported by your browser's direct prompt. Please use your browser's menu (e.g., 'Add to Home Screen') to install.");
+      } else {
+        alert("The installation prompt is not ready yet. Please wait a moment or try refreshing.");
+      }
+      return;
+    }
 
     // Show the install prompt
     deferredPrompt.prompt();
@@ -42,36 +51,36 @@ export default function InstallPWA() {
 
     // We've used the prompt, and can't use it again, throw it away
     setDeferredPrompt(null);
-    setShowPopup(false);
+    setIsReady(false);
   };
 
-  if (!showPopup) return null;
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-2xl p-4 z-50 transition-all duration-300">
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-          <img src="/favicon.svg" alt="App Icon" className="w-8 h-8 invert brightness-0" />
+    <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg p-6 max-w-md w-full transition-all duration-300">
+      <div className="flex items-center gap-4">
+        <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
+          <img src="/favicon.svg" alt="App Icon" className="w-10 h-10 invert brightness-0" />
         </div>
         <div className="flex-1">
-          <h3 className="font-semibold text-zinc-900 dark:text-zinc-100">Install DLL Tap-IN</h3>
-          <p className="text-sm text-zinc-500 dark:text-zinc-400 mt-1">
-            Install our app for a better experience and offline access.
+          <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Install DLL Tap-IN</h3>
+          <p className="text-zinc-500 dark:text-zinc-400 mt-1">
+            {isCompatible 
+              ? "Install our app for a better experience and offline access."
+              : "To install, open your browser menu and select 'Add to Home Screen'."}
           </p>
         </div>
       </div>
-      <div className="flex gap-2 mt-4">
-        <button
-          onClick={() => setShowPopup(false)}
-          className="flex-1 px-4 py-2 text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
-        >
-          Later
-        </button>
+      <div className="mt-6">
         <button
           onClick={handleInstallClick}
-          className="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+          disabled={!isReady && isCompatible}
+          className={`w-full px-6 py-3 text-base font-semibold text-white rounded-xl transition-all shadow-md hover:shadow-lg active:transform active:scale-[0.98] ${
+            !isReady && isCompatible 
+              ? "bg-blue-400 cursor-not-allowed opacity-70" 
+              : "bg-blue-600 hover:bg-blue-700"
+          }`}
         >
-          Install
+          {isReady ? "Install Application" : isCompatible ? "Preparing..." : "How to Install"}
         </button>
       </div>
     </div>

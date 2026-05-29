@@ -6,6 +6,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    sourcemap: false,
+    minify: "terser"
+  },
   plugins: [
     react(),
     babel({ presets: [reactCompilerPreset()] }),
@@ -28,7 +32,8 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
-        start_url: '/#/pwa/',
+        start_url: '/',
+        scope: '/',
 
         icons: [
           {
