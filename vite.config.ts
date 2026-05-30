@@ -4,6 +4,7 @@ import babel from '@rolldown/plugin-babel'
 import { VitePWA } from 'vite-plugin-pwa'
 import tailwindcss from '@tailwindcss/vite'
 import path from 'path'
+import basicSsl from '@vitejs/plugin-basic-ssl'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -15,6 +16,7 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
+    basicSsl(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
@@ -66,6 +68,10 @@ export default defineConfig({
       }
     })
   ],
+  server: {
+    https: true,
+    host: true
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src")
