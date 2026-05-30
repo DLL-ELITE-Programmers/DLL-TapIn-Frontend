@@ -16,7 +16,7 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] }),
     tailwindcss(),
-    basicSsl(),
+    // basicSsl(),
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
@@ -68,10 +68,10 @@ export default defineConfig({
       }
     })
   ],
-  server: {
-    https: true,
-    host: true
-  },
+  // server: {
+  //   https: true,
+  //   host: true
+  // },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src")

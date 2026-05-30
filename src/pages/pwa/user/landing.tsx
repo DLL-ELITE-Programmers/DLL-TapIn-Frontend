@@ -1,10 +1,13 @@
 import { useNavigate } from "react-router"
+import UserDetails from "./user"
+import { useState } from "react"
 
 const actions = [
 	{
 		name: "User Information",
 		description: "This is just to see your personal information like name, course, year and section",
-		url: "info"
+		url: "userInfo",
+		float: true
 	},
 	{
 		name: "Scan QR",
@@ -23,9 +26,9 @@ const authorized = true
 
 export default function UserLandingPage() {
 	const navigate = useNavigate()
-
+	const [visible, setVisible] = useState("")
 	return (
-		<div className="flex flex-col overflow-hidden overflow-y-auto gap-2 p-2">
+		<div className="flex flex-col overflow-hidden overflow-y-auto gap-2 p-2 w-full">
 			{
 				actions.map((action) => {
 					if ((action.authorize && authorized) || (!action.authorize)) {
@@ -33,7 +36,11 @@ export default function UserLandingPage() {
 							<div
 								className="flex flex-col bg-sky-50 p-2 rounded"
 								onClick={() => {
-									navigate(`${action.url}`)
+									if (!action.float) {
+										navigate(`${action.url}`)
+									} else {
+										setVisible(action.url.toLowerCase())
+									}
 								}}>
 								<span className="text-[1.25rem]">{action.name}</span>
 								<span className="text-[0.75rem]">{action.description}</span>
@@ -42,6 +49,7 @@ export default function UserLandingPage() {
 					}
 				})
 			}
+			<UserDetails visible={visible === "userinfo"} onClose={() => setVisible("")} />
 		</div>
 	)
 }
