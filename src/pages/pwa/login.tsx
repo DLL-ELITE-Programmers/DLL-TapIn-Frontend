@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { FaEye, FaEyeSlash, FaX } from "react-icons/fa6"
+import { useNavigate } from "react-router"
 
 interface FormProps {
 	visible: boolean
@@ -10,9 +11,11 @@ export default function Login(props: FormProps) {
 	const [studentId, setStudentId] = useState("")
 	const [password, setPassword] = useState("")
 	const [showPassword, setShowPassword] = useState(false)
+	const navigate = useNavigate()
 
 	const handleLogin = (e: React.FormEvent) => {
 		e.preventDefault()
+		navigate("user")
 		console.log("Logging in with:", { studentId, password })
 	}
 
