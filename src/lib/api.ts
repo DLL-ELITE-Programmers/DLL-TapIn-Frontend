@@ -1,4 +1,4 @@
-import axios, { type AxiosResponse } from "axios";
+import axios from "axios";
 import process from "process";
 
 type Params = Record<string, unknown>
@@ -7,7 +7,7 @@ const api = axios.create({
 	baseURL: process.env.URL!
 })
 
-const response = (data: AxiosResponse, status: number) => {
+const response = (data: Params, status: number) => {
 	if (data.error || (status < 300 && status >= 200)) {
 		return {
 			error: data.error
