@@ -1,26 +1,28 @@
 import axios from "axios";
-import process from "process";
 
 import storage from "./storage"
 
 type Params = Record<string, unknown>
 
 const api = axios.create({
-	baseURL: process.env.URL!
+	baseURL: import.meta.env.VITE_URL
 })
 
 const response = (data: Params, status: number) => {
-	if (data.error || (status < 300 && status >= 200)) {
+	if (data.error) {
 		return {
 			error: data.error
 		}
 	}
 	else {
-		return { data }
+		return data
 	}
 }
 
 export async function get(endpoint: string, params?: Params) {
+	if (!endpoint.endsWith("/")) {
+		endpoint += "/"
+	}
 	const { data, status } = await api.get(endpoint, {
 		params
 	})
@@ -28,6 +30,9 @@ export async function get(endpoint: string, params?: Params) {
 }
 
 export async function post(endpoint: string, _data: Params, params?: Params) {
+	if (!endpoint.endsWith("/")) {
+		endpoint += "/"
+	}
 	const { data, status } = await api.post(endpoint, _data, {
 		params
 	})
@@ -35,6 +40,9 @@ export async function post(endpoint: string, _data: Params, params?: Params) {
 }
 
 export async function auth_get(endpoint: string, params?: Params) {
+	if (!endpoint.endsWith("/")) {
+		endpoint += "/"
+	}
 	const key = storage("key")
 	if (key.error) {
 		return key
@@ -53,6 +61,9 @@ export async function auth_post(endpoint: string, _data: Params, params?: Params
 	const key = storage("key")
 	if (key.error) {
 		return key
+	}
+	if (!endpoint.endsWith("/")) {
+		endpoint += "/"
 	}
 	const { data, status } = await api.post(endpoint, _data, {
 		params,
