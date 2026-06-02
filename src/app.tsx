@@ -6,7 +6,7 @@ import DLLLogo from "./assets/dll_logo.png"
 
 export default function App() {
 	return (
-		<div className="h-dvh w-dvw bg-[url('bg.png')] bg-norepeat bg-cover bg-center overflow-hidden">
+		<div className="h-dvh w-dvw select-none bg-[url('bg.png')] bg-norepeat bg-cover bg-center overflow-hidden">
 			<div className="bg-amber-50/50 h-full w-full backdrop-blur-xs">
 				<HashRouter>
 					<Routes>
