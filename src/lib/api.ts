@@ -8,7 +8,7 @@ const api = axios.create({
 	baseURL: import.meta.env.VITE_URL
 })
 
-const response = (data: Params, status: number) => {
+const response = (data: Params) => {
 	if (data.error) {
 		return {
 			error: data.error
@@ -23,20 +23,20 @@ export async function get(endpoint: string, params?: Params) {
 	if (!endpoint.endsWith("/")) {
 		endpoint += "/"
 	}
-	const { data, status } = await api.get(endpoint, {
+	const { data } = await api.get(endpoint, {
 		params
 	})
-	return response(data, status)
+	return response(data)
 }
 
 export async function post(endpoint: string, _data: Params, params?: Params) {
 	if (!endpoint.endsWith("/")) {
 		endpoint += "/"
 	}
-	const { data, status } = await api.post(endpoint, _data, {
+	const { data } = await api.post(endpoint, _data, {
 		params
 	})
-	return response(data, status)
+	return response(data)
 }
 
 export async function auth_get(endpoint: string, params?: Params) {
@@ -47,14 +47,14 @@ export async function auth_get(endpoint: string, params?: Params) {
 	if (key.error) {
 		return key
 	}
-	const { data, status } = await api.get(endpoint, {
+	const { data } = await api.get(endpoint, {
 		params,
 		headers: {
 			Authorization: `Bearer ${key}`,
 			"Content-Type": "application/json"
 		}
 	})
-	return response(data, status)
+	return response(data)
 }
 
 export async function auth_post(endpoint: string, _data: Params, params?: Params) {
@@ -65,12 +65,12 @@ export async function auth_post(endpoint: string, _data: Params, params?: Params
 	if (!endpoint.endsWith("/")) {
 		endpoint += "/"
 	}
-	const { data, status } = await api.post(endpoint, _data, {
+	const { data } = await api.post(endpoint, _data, {
 		params,
 		headers: {
 			Authorization: `Bearer ${key}`,
 			"Content-Type": "application/json"
 		}
 	})
-	return response(data, status)
+	return response(data)
 }
