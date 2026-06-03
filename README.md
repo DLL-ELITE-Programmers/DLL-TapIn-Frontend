@@ -1,17 +1,17 @@
 # DLL Tapin
 ### DLL BSIT Department x DLL ELITE x DLL IT Paradigm
 
-A modern Progressive Web App (PWA) designed for quick and seamless interactions.
+A modern Progressive Web App (PWA) designed for quick and seamless interactions within the institution.
 
 ## 🚀 Tech Stack
 
-- **Framework:** [React 19](https://react.dev/)
-- **Build Tool:** [Vite](https://vitejs.dev/)
-- **Styling:** [Tailwind CSS 4](https://tailwindcss.com/)
-- **Routing:** [React Router 7](https://reactrouter.com/)
-- **State/Data Fetching:** [Axios](https://axios-http.com/)
+- **Framework:** [React 19.2.7](https://react.dev/)
+- **Build Tool:** [Vite 8.0.16](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS 4.3.0](https://tailwindcss.com/)
+- **Routing:** [React Router 7.16.0](https://reactrouter.com/)
+- **State/Data Fetching:** [Axios 1.16.1](https://axios-http.com/)
 - **PWA Support:** [Vite Plugin PWA](https://vite-pwa-org.netlify.app/)
-- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Language:** [TypeScript 6.0.3](https://www.typescriptlang.org/)
 
 - **Backend:** [Django Rest Framework](https://www.django-rest-framework.org/)
 - **Database:** [Postgrest/Aiven](https://www.postgresql.org/)
@@ -42,20 +42,44 @@ A modern Progressive Web App (PWA) designed for quick and seamless interactions.
 └── tsconfig.json        # TypeScript configuration
 ```
 
-## 👥 Credits
-* Kurt Atoat [Project Initiator and UI Designer]
-* Ryann Kim Sesgundo [Project Head Full Stack Developer]
-* Abdul Barry Adam [Project Developer]
-* Rogemson Molina [Project UI Designer]
+## 👥 Credits and Contributors
 
-* Bernard Gabito [Project Tester and Distributor]
-* Peter Paul Eclavea [Projecct Tester]
+### Core Team
+* **Kurt Atoat** - Project Initiator and UI Designer
+* **Ryann Kim Sesgundo** - Project Head Full Stack Developer
+* **Abdul Barry Adam** - Project Developer
+* **Rogemson Molina** - Project UI Designer
 
-* Carlos Ragudo [Cybersecurity Pentester]
-* Terrence Martin Terrega [Cybersecurity Pentester]
+### Testing and Distribution
+* **Bernard Gabito** - Project Tester and Distributor
+* **Peter Paul Eclavea** - Project Tester
 
-**AI Agents**
-* Google Gemini [Documentation]
-* ChatGPT
-* Claude
+### Cybersecurity
+* **Carlos Ragudo** - Cybersecurity Pentester
+* **Terrence Martin Terrega** - Cybersecurity Pentester
 
+### Documentation and AI Support
+* **Google Gemini** - Documentation and AI Assistance
+* **ChatGPT**
+* **Claude**
+
+## 🤝 Contribution Guidelines
+
+We welcome contributions from students and faculty. Please follow these practices to maintain project health:
+
+1. **Branching:** Always create a new branch for any feature or bug fix. Use descriptive names like `feature/qr-scanner` or `fix/login-bug`.
+2. **Merging:** Once a feature is complete and merged into the main branch, the feature branch **must be deleted** immediately.
+3. **Commenting:** As this project serves as a learning resource for students, use **proper, professional comments**. Explain the "why" behind complex logic to help future student developers understand the code.
+4. **Code Quality:** Ensure your code follows the established patterns and passes linting.
+
+## ⚖️ License
+
+This project is licensed under a custom **Institutional and Educational License**. 
+
+**Copyright (c) 2026 DLL IT Department, DLL IT Paradigm, DLL ELITE.**
+
+- **Institutional/Educational Use Only:** Restricted to academic and institutional purposes.
+- **No Commercial Use:** The project and its data must never be sold or used for commercial gain.
+- **Security Research:** Any cybersecurity-related testing must be approved by the institutional program.
+
+See [LICENSE.md](LICENSE.md) for the full terms.
