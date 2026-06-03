@@ -1,6 +1,9 @@
-import { useState, useRef } from "react"
 import { FaEye, FaEyeSlash, FaX } from "react-icons/fa6"
+import { post } from "@/lib/api"
+import { useState, useRef } from "react"
+import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
+import storage from "@/lib/storage"
 
 interface FormProps {
 	visible: boolean
@@ -11,6 +14,7 @@ export default function Login(props: FormProps) {
 	const [studentId, setStudentId] = useState("")
 	const [password, setPassword] = useState("")
 	const [showPassword, setShowPassword] = useState(false)
+
 	const navigate = useNavigate()
 
 	const [dragOffset, setDragOffset] = useState(0)
@@ -34,10 +38,23 @@ export default function Login(props: FormProps) {
 		setDragOffset(0)
 	}
 
-	const handleLogin = (e: React.FormEvent) => {
+	const handleLogin = async (e: React.FormEvent) => {
 		e.preventDefault()
-		navigate("user")
-		console.log("Logging in with:", { studentId, password })
+		const api = await post("users/login", {
+			username: studentId,
+			password: password
+		})
+		if (api.error) {
+			toast(api.error, {
+				position: "top-center",
+				type: "error"
+			})
+		} else if (api.message) {
+			storage("user", api.user)
+			storage("key", api.access)
+			storage("refresh", api.refresh)
+			navigate("user")
+		}
 	}
 
 	return (

@@ -1,5 +1,6 @@
 import { FaX } from "react-icons/fa6"
 import { useState, useRef } from "react"
+import storage from "@/lib/storage"
 
 interface Props {
 	visible: boolean
@@ -11,6 +12,8 @@ export default function UserDetails(props: Props) {
 	const [course, setCourse] = useState("BSIT")
 	const [yearSection, setYearSection] = useState("4A")
 	const [studentId, setStudentId] = useState("2021-0001")
+
+	const userInfo = storage("user")
 
 	const [dragOffset, setDragOffset] = useState(0)
 	const startY = useRef(0)
@@ -76,7 +79,7 @@ export default function UserDetails(props: Props) {
 							<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Student ID</label>
 							<input
 								type="text"
-								value={studentId}
+								value={userInfo.username}
 								onChange={(e) => setStudentId(e.target.value)}
 								className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
 							/>
@@ -87,7 +90,7 @@ export default function UserDetails(props: Props) {
 								<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Course</label>
 								<input
 									type="text"
-									value={course}
+									value={userInfo.department}
 									onChange={(e) => setCourse(e.target.value)}
 									className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
 								/>

@@ -2,6 +2,7 @@ import { useState } from "react";
 import DLLLogo from "./../../assets/dll_logo.png"
 import Login from "./login";
 import Registration from "./register";
+import { ToastContainer } from "react-toastify";
 
 export default function LandingPage() {
 	const [login, setLogin] = useState(false)
@@ -47,6 +48,7 @@ export default function LandingPage() {
 
 			<Login visible={login} onClose={() => setLogin(false)} />
 			<Registration visible={register} onClose={() => setRegister(false)} />
+			<ToastContainer />
 		</div>
 	)
 }
