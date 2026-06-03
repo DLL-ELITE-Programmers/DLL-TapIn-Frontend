@@ -117,7 +117,10 @@ export default function UserDetails(props: Props) {
 								<input
 									type="text"
 									value={userInfo.department}
-									onChange={(e) => setCourse(e.target.value)}
+									onChange={(e) => setUserInfo(prev => ({
+										...prev,
+										department: e.target.value
+									}))}
 									className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
 								/>
 							</div>
@@ -126,7 +129,10 @@ export default function UserDetails(props: Props) {
 								<input
 									type="text"
 									value={4}
-									onChange={(e) => setYearSection(e.target.value)}
+									onChange={(e) => setUserInfo(prev => ({
+										...prev,
+										section: e.target.value
+									}))}
 									className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm text-center"
 								/>
 							</div>
