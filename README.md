@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="public/logo.png" width=200 />
+    <img src="public/logo-256.png" width=200 />
     <h1>DLL VeriScan</h1>
     <p>Formerly DLL TapIn</p>
     <h4>DLL BSIT Department x IT Paradigm x DLL E.L.I.T.E</h4>
