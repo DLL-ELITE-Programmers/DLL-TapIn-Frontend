@@ -128,7 +128,7 @@ export default function UserDetails(props: Props) {
 								<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Year & Section</label>
 								<input
 									type="text"
-									value={4}
+									value={userInfo.section}
 									onChange={(e) => setUserInfo(prev => ({
 										...prev,
 										section: e.target.value
