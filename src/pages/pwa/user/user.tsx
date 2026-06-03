@@ -8,12 +8,7 @@ interface Props {
 }
 
 export default function UserDetails(props: Props) {
-	const [name, setName] = useState("John Doe")
-	const [course, setCourse] = useState("BSIT")
-	const [yearSection, setYearSection] = useState("4A")
-	const [studentId, setStudentId] = useState("2021-0001")
-
-	const userInfo = storage("user")
+	const [userInfo, setUserInfo] = useState(storage("user"))
 
 	const [dragOffset, setDragOffset] = useState(0)
 	const startY = useRef(0)
@@ -44,7 +39,7 @@ export default function UserDetails(props: Props) {
 			/>
 			<div
 				style={{ transform: `translateX(-50%) translateY(${dragOffset}px)` }}
-				className={`fixed z-50 left-1/2 ${props.visible ? "bottom-2" : "-bottom-full"} bg-sky-100 h-[calc(85%-0.5rem)] w-[calc(100%-1rem)] ${dragOffset > 0 ? "" : "transition-all duration-500 ease-in-out"} rounded-3xl p-6 shadow-2xl flex flex-col items-center`}>
+				className={`fixed z-50 left-1/2 ${props.visible ? "bottom-2" : "-bottom-full"} bg-sky-100 h-[calc(85%-0.5rem)] w-[calc(100%-1rem)] ${dragOffset > 0 ? "" : "transition-all duration-500 ease-in-out"} rounded-3xl p-6 shadow-2xl flex flex-col items-center overflow-y-auto`}>
 				<div
 					onTouchStart={handleTouchStart}
 					onTouchMove={handleTouchMove}
@@ -66,22 +61,53 @@ export default function UserDetails(props: Props) {
 
 					<div className="flex flex-col gap-4 w-full">
 						<div className="flex flex-col gap-1">
-							<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Full Name</label>
+							<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">First Name</label>
 							<input
 								type="text"
-								value={name}
-								onChange={(e) => setName(e.target.value)}
+								value={userInfo.first_name}
+								disabled={userInfo.first_name !== ""}
+								onChange={(e) => setUserInfo(prev => ({
+									...prev,
+									first_name: e.target.value
+								}))}
 								className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
 							/>
 						</div>
-
+						<div className="flex flex-col gap-1">
+							<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Middle Name</label>
+							<input
+								type="text"
+								value={userInfo.middle_name}
+								disabled={userInfo.middle_name !== ""}
+								onChange={(e) => setUserInfo(prev => ({
+									...prev,
+									middle_name: e.target.value
+								}))}
+								className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
+							/>
+						</div><div className="flex flex-col gap-1">
+							<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Last Name</label>
+							<input
+								type="text"
+								value={userInfo.last_name}
+								disabled={userInfo.last_name !== ""}
+								onChange={(e) => setUserInfo(prev => ({
+									...prev,
+									last_name: e.target.value
+								}))}
+								className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
+							/>
+						</div>
 						<div className="flex flex-col gap-1">
 							<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Student ID</label>
 							<input
 								type="text"
 								value={userInfo.username}
-								onChange={(e) => setStudentId(e.target.value)}
-								className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
+								disabled={userInfo.username !== ""}
+								onChange={(e) => setUserInfo(prev => ({
+									...prev,
+									username: e.target.value
+								}))} className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
 							/>
 						</div>
 
@@ -99,7 +125,7 @@ export default function UserDetails(props: Props) {
 								<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Year & Section</label>
 								<input
 									type="text"
-									value={yearSection}
+									value={4}
 									onChange={(e) => setYearSection(e.target.value)}
 									className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm text-center"
 								/>
