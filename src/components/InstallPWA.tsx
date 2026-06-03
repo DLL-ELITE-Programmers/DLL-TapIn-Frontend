@@ -58,13 +58,11 @@ export default function InstallPWA() {
   return (
     <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg p-6 max-w-md w-full transition-all duration-300">
       <div className="flex items-center gap-4">
-        <div className="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-          <img src="/favicon.svg" alt="App Icon" className="w-10 h-10 invert brightness-0" />
-        </div>
+
         <div className="flex-1">
           <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Install DLL Tap-IN</h3>
           <p className="text-zinc-500 dark:text-zinc-400 mt-1">
-            {isCompatible 
+            {isCompatible
               ? "Install our app for a better experience and offline access."
               : "To install, open your browser menu and select 'Add to Home Screen'."}
           </p>
@@ -74,11 +72,10 @@ export default function InstallPWA() {
         <button
           onClick={handleInstallClick}
           disabled={!isReady && isCompatible}
-          className={`w-full px-6 py-3 text-base font-semibold text-white rounded-xl transition-all shadow-md hover:shadow-lg active:transform active:scale-[0.98] ${
-            !isReady && isCompatible 
-              ? "bg-blue-400 cursor-not-allowed opacity-70" 
+          className={`w-full px-6 py-3 text-base font-semibold text-white rounded-xl transition-all shadow-md hover:shadow-lg active:transform active:scale-[0.98] ${!isReady && isCompatible
+              ? "bg-blue-400 cursor-not-allowed opacity-70"
               : "bg-blue-600 hover:bg-blue-700"
-          }`}
+            }`}
         >
           {isReady ? "Install Application" : isCompatible ? "Preparing..." : "How to Install"}
         </button>

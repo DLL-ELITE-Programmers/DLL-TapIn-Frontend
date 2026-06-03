@@ -6,3 +6,8 @@
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  width: 5px;
+}

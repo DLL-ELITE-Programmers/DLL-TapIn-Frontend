@@ -1,5 +1,6 @@
 import { useState, useRef } from "react"
 import { FaEye, FaEyeSlash, FaX } from "react-icons/fa6"
+import { isMobile } from "@/lib/utils"
 
 interface FormProps {
 	visible: boolean
@@ -16,10 +17,12 @@ export default function Registration(props: FormProps) {
 	const startY = useRef(0)
 
 	const handleTouchStart = (e: React.TouchEvent) => {
+		if (!isMobile) return
 		startY.current = e.touches[0].clientY
 	}
 
 	const handleTouchMove = (e: React.TouchEvent) => {
+		if (!isMobile) return
 		const deltaY = e.touches[0].clientY - startY.current
 		if (deltaY > 0) {
 			setDragOffset(deltaY)
@@ -27,6 +30,7 @@ export default function Registration(props: FormProps) {
 	}
 
 	const handleTouchEnd = () => {
+		if (!isMobile) return
 		if (dragOffset > 100) {
 			props.onClose()
 		}
@@ -45,18 +49,34 @@ export default function Registration(props: FormProps) {
 	return (
 		<>
 			<div
-				className={`fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-500 z-40 ${props.visible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+				className={`fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 z-40 ${props.visible ? "opacity-100" : "opacity-0 pointer-events-none"}`}
 				onClick={props.onClose}
 			/>
 			<div
-				style={{ transform: `translateX(-50%) translateY(${dragOffset}px)` }}
-				className={`fixed z-50 left-1/2 ${props.visible ? "bottom-2" : "-bottom-full"} bg-sky-100 h-[calc(75%-0.5rem)] w-[calc(100%-1rem)] ${dragOffset > 0 ? "" : "transition-all duration-500 ease-in-out"} rounded-3xl p-6 shadow-2xl flex flex-col items-center`}>
-				<div
-					onTouchStart={handleTouchStart}
-					onTouchMove={handleTouchMove}
-					onTouchEnd={handleTouchEnd}
-					className="w-12 h-1.5 bg-sky-300/50 rounded-full mb-4 shrink-0 cursor-grab active:cursor-grabbing"
-				></div>
+				style={{
+					transform: isMobile
+						? `translateX(-50%) translateY(${dragOffset}px)`
+						: `translateX(-50%) translateY(-50%) scale(${props.visible ? 1 : 0.95})`
+				}}
+				className={`fixed z-50 left-1/2 
+					${isMobile
+						? (props.visible ? "bottom-2" : "-bottom-full")
+						: (props.visible ? "top-1/2 opacity-100" : "top-1/2 opacity-0 pointer-events-none")
+					} 
+					bg-sky-100 
+					${isMobile ? "h-[calc(75%-0.5rem)] w-[calc(100%-1rem)]" : "w-[90%] max-w-md h-auto"} 
+					${dragOffset > 0 ? "" : "transition-all duration-500 ease-in-out"} 
+					rounded-3xl p-6 shadow-2xl flex flex-col items-center`}>
+
+				{isMobile && (
+					<div
+						onTouchStart={handleTouchStart}
+						onTouchMove={handleTouchMove}
+						onTouchEnd={handleTouchEnd}
+						className="w-12 h-1.5 bg-sky-300/50 rounded-full mb-4 shrink-0 cursor-grab active:cursor-grabbing"
+					/>
+				)}
+
 				<button
 					onClick={props.onClose}
 					className="absolute top-6 right-6 p-2 text-sky-900 hover:bg-sky-200 rounded-full transition-colors"

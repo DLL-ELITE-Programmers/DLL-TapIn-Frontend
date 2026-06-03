@@ -2,7 +2,7 @@ import { HashRouter, Navigate, Route, Routes } from "react-router";
 import Pages from "./pages";
 import InstallPWA from "./components/InstallPWA";
 import { isMobile, isPWA } from "./lib/utils";
-import DLLLogo from "./assets/dll_logo.png"
+import Logo from "./assets/logo.png"
 
 export default function App() {
 	return (
@@ -13,7 +13,7 @@ export default function App() {
 						<Route path="/" element={
 							(isPWA || isMobile) ? <Navigate to="/pwa" replace /> :
 								<div className="flex flex-col gap-8 items-center justify-center h-full w-full p-4">
-									<img className="w-[30%] md:w-[15%] drop-shadow-lg" src={DLLLogo} />
+									<img className="w-[30%] md:w-[15%] drop-shadow-lg rounded-full" src={Logo} />
 									<InstallPWA />
 								</div>
 						} />

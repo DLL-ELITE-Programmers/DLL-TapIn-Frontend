@@ -1,7 +1,13 @@
-# DLL Tapin
-### DLL BSIT Department x DLL ELITE x DLL IT Paradigm
+<div align="center">
+    <img src="public/logo.png" width=200 />
+    <h1>DLL VeriScan</h1>
+    <p>Formerly DLL TapIn</p>
+    <h4>DLL BSIT Department x IT Paradigm x DLL E.L.I.T.E</h4>
+</div>
 
 A modern Progressive Web App (PWA) designed for quick and seamless interactions within the institution.
+
+---
 
 ## 🚀 Tech Stack
 
