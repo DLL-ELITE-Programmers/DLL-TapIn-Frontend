@@ -1,6 +1,7 @@
 import { FaX } from "react-icons/fa6"
 import { useState, useRef } from "react"
 import storage from "@/lib/storage"
+import type { userinfo } from "@/lib/interface"
 
 interface Props {
 	visible: boolean
@@ -8,7 +9,7 @@ interface Props {
 }
 
 export default function UserDetails(props: Props) {
-	const [userInfo, setUserInfo] = useState(storage("user"))
+	const [userInfo, setUserInfo] = useState<userinfo>(storage("user"))
 
 	const [dragOffset, setDragOffset] = useState(0)
 	const startY = useRef(0)
@@ -114,15 +115,19 @@ export default function UserDetails(props: Props) {
 						<div className="flex flex-row gap-4 w-full">
 							<div className="flex flex-col gap-1 w-[calc(60%-0.5rem)]">
 								<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Course</label>
-								<input
-									type="text"
+								<select
+									className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
 									value={userInfo.department}
 									onChange={(e) => setUserInfo(prev => ({
 										...prev,
-										department: e.target.value
-									}))}
-									className="bg-white border-2 border-sky-200 rounded-xl px-4 py-3 outline-none focus:border-sky-500 transition-colors shadow-sm"
-								/>
+										department: parseInt(e.target.value)
+									}))}>
+									<option value={0}>BSIT</option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+									<option value=""></option>
+								</select>
 							</div>
 							<div className="flex flex-col gap-1 w-[calc(40%-0.5rem)]">
 								<label className="text-xs font-bold text-sky-800 uppercase tracking-wider ml-1">Year & Section</label>

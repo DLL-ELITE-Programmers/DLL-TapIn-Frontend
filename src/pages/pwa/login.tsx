@@ -5,6 +5,7 @@ import { toast } from "react-toastify"
 import { useNavigate } from "react-router"
 import storage from "@/lib/storage"
 import { isMobile } from "@/lib/utils"
+import type { usercredentials } from "@/lib/interface"
 
 interface FormProps {
 	visible: boolean
@@ -47,7 +48,7 @@ export default function Login(props: FormProps) {
 		const api = await post("users/login", {
 			username: studentId,
 			password: password
-		})
+		}) as usercredentials
 		if (api.error) {
 			toast(api.error, {
 				position: "top-center",
