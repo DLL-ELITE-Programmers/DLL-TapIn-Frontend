@@ -1,19 +1,22 @@
 import { useNavigate } from "react-router"
 import UserDetails from "./user"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { networkStatus } from "@/lib/network"
 
 const actions = [
 	{
 		name: "User Information",
 		description: "This is just to see your personal information like name, course, year and section",
 		url: "userInfo",
-		float: true
+		float: true,
+		online: false
 	},
 	{
 		name: "Scan QR",
 		description: "Use this to scan the QR Code showed by the student.",
 		url: "scan",
-		authorize: true
+		authorize: true,
+		online: true,
 	},
 	{
 		name: "Generate QR",
@@ -27,11 +30,18 @@ const authorized = true
 export default function UserLandingPage() {
 	const navigate = useNavigate()
 	const [visible, setVisible] = useState("")
+
+	const [online, setOnline] = useState(networkStatus())
+
+	useEffect(() => {
+		setOnline(networkStatus())
+	}, [networkStatus()])
+
 	return (
 		<div className="flex flex-col overflow-hidden overflow-y-auto gap-2 p-2 w-full">
 			{
 				actions.map((action) => {
-					if ((action.authorize && authorized) || (!action.authorize)) {
+					if ((action.authorize && authorized) || (!action.authorize) || (action.online && online)) {
 						return (
 							<div
 								className="flex flex-col bg-sky-50 p-2 rounded"

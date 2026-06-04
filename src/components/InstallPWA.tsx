@@ -60,7 +60,7 @@ export default function InstallPWA() {
       <div className="flex items-center gap-4">
 
         <div className="flex-1">
-          <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Install DLL Tap-IN</h3>
+          <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-100">Install DLL VeriScan</h3>
           <p className="text-zinc-500 dark:text-zinc-400 mt-1">
             {isCompatible
               ? "Install our app for a better experience and offline access."
@@ -73,8 +73,8 @@ export default function InstallPWA() {
           onClick={handleInstallClick}
           disabled={!isReady && isCompatible}
           className={`w-full px-6 py-3 text-base font-semibold text-white rounded-xl transition-all shadow-md hover:shadow-lg active:transform active:scale-[0.98] ${!isReady && isCompatible
-              ? "bg-blue-400 cursor-not-allowed opacity-70"
-              : "bg-blue-600 hover:bg-blue-700"
+            ? "bg-blue-400 cursor-not-allowed opacity-70"
+            : "bg-blue-600 hover:bg-blue-700"
             }`}
         >
           {isReady ? "Install Application" : isCompatible ? "Preparing..." : "How to Install"}
